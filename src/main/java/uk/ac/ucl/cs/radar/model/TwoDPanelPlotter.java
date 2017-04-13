@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
@@ -69,12 +71,13 @@ public class TwoDPanelPlotter extends JPanel {
 	        chartPanel.setRangeZoomable(true);
 	        this.add(chartPanel, BorderLayout.CENTER);
 	        //this.pack();
-	        this.setAutoscrolls(true);
-	       
+	        this.setAutoscrolls(true);    
 	        this.setVisible(true);
-
-	        Helper.writeImageToFolder(outputpath + "Figure/", Helper.getImage(this), "PNG", semanticModel.getModelName());
-	     			
+	        
+	        this.setVisible(true);
+	        
+	        //Helper.writeImageToFolder(outputpath + "Figure/", Helper.getImage(this), "PNG", semanticModel.getModelName());
+		
 		}catch (IllegalArgumentException e){
 			throw new IllegalArgumentException (e.getMessage());
 		}catch (Exception e){

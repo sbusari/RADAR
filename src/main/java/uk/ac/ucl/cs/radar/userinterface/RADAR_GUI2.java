@@ -42,6 +42,7 @@ import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 import javax.swing.JTextArea;
 
+import uk.ac.ucl.cs.radar.userinterface.ImageLabel;
 import uk.ac.ucl.cs.radar.model.AnalysisResult;
 import uk.ac.ucl.cs.radar.model.Decision;
 import uk.ac.ucl.cs.radar.model.Model;
@@ -52,6 +53,7 @@ import uk.ac.ucl.cs.radar.model.ScatterPlotPanel3D;
 import uk.ac.ucl.cs.radar.model.TwoDPanelPlotter;
 import uk.ac.ucl.cs.radar.model.TwoDPlotter;
 import uk.ac.ucl.cs.radar.userinterface.ProgressMonitorDemo.Task;
+import uk.ac.ucl.cs.radar.utilities.ConfigSetting;
 import uk.ac.ucl.cs.radar.utilities.Helper;
 
 import java.awt.datatransfer.DataFlavor;
@@ -282,7 +284,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		rdbtnMAC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (rdbtnMAC.isSelected()){
-					executable = "/usr/local/bin/dot";
+					executable = ConfigSetting.MACEXE;
 					textGraphvizExecutablePath.setText(executable);
 					btnBrowseExecutablePath.setVisible(false);
 				}
@@ -293,7 +295,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		rdbtnWindows.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (rdbtnWindows.isSelected()){
-					executable = "c:/Program Files (x86)/Graphviz 2.28/bin/dot.exe";
+					executable = ConfigSetting.WINEXE;
 					textGraphvizExecutablePath.setText(executable);
 					btnBrowseExecutablePath.setVisible(false);
 				}
@@ -304,7 +306,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		rdbtnLinux.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (rdbtnLinux.isSelected()){
-					executable = "/usr/bin/dot";
+					executable = ConfigSetting.LINUXEXE;
 					textGraphvizExecutablePath.setText(executable);
 					btnBrowseExecutablePath.setVisible(false);
 				}
@@ -348,9 +350,9 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		}
 		openModelExamples();
 		initialiseAnalysisSettings();
-		tabbedPane.addTab("Editor",editModel);
-		tabbedPane.addTab("Analysis Result",analysisResult);
-		tabbedPane.addTab("Console",console);
+		tabbedPane.addTab(ConfigSetting.EDITORTAB,editModel);
+		tabbedPane.addTab(ConfigSetting.TABANALYSISRESULT,analysisResult);
+		tabbedPane.addTab(ConfigSetting.CONSOLETAB,console);
 		
 		tabbedPane.setSelectedComponent(editModel);
 		
@@ -364,44 +366,44 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 	void viewCBAModel(){
 		mntmRefactoringrdr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				modelExample = "CBA";
-				viewModelExample("CBA");
+				modelExample = ConfigSetting.CBA;
+				viewModelExample(modelExample);
 			}
 		});
 	}
 	void viewBSPDMModel(){
 		mntmBuildingSecurityPolicy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				modelExample = "BSPDM";
+				modelExample = ConfigSetting.BSPDM;
 				initialiseModelSubgraphAndInfoValueObjective();
-				viewModelExample("BSPDM");
+				viewModelExample(modelExample);
 			}
 		});
 	}
 	void viewFDMModel(){
 		mntmFinancialFraudDetection.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				modelExample = "FDM";
+				modelExample = ConfigSetting.FDM;
 				initialiseModelSubgraphAndInfoValueObjective();
-				viewModelExample("FDM");
+				viewModelExample(modelExample);
 			}
 		});
 	}
 	void viewSASModel(){
 		mntmSituationAwarenessSystem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				modelExample = "SAS";
+				modelExample = ConfigSetting.SAS;
 				initialiseModelSubgraphAndInfoValueObjective();
-				viewModelExample("SAS");
+				viewModelExample(modelExample);
 			}
 		});
 	}
 	void viewECSModel(){
 		mntmSatelliteImageProcessing.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				modelExample = "ECS";
+				modelExample = ConfigSetting.ECM;
 				initialiseModelSubgraphAndInfoValueObjective();
-				viewModelExample("ECS");
+				viewModelExample(modelExample);
 			}
 		});
 	}
@@ -462,17 +464,17 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		// populate the info value objective and subgraph objective 
 		String infoValueAndSubgraphObjective ="";
 		switch(modelExample){
-			case "CBA": infoValueAndSubgraphObjective = "ENB"; break;
-			case "FDM": infoValueAndSubgraphObjective = "FraudDetectionBenefit"; break;
-			case "ECS": infoValueAndSubgraphObjective = "ExpectedUtility"; break;
-			case "BSPDM": infoValueAndSubgraphObjective = "ExpectedCostOfDisclosures"; break;
-			case "SAS" : infoValueAndSubgraphObjective = "ENB"; break;
+			case "CBA": infoValueAndSubgraphObjective = ConfigSetting.INFOVALUESUBGRAPHOBJECTIVE_CBA; break;
+			case "FDM": infoValueAndSubgraphObjective = ConfigSetting.INFOVALUESUBGRAPHOBJECTIVE_FDM; break;
+			case "ECS": infoValueAndSubgraphObjective = ConfigSetting.INFOVALUESUBGRAPHOBJECTIVE_ECM; break;
+			case "BSPDM": infoValueAndSubgraphObjective = ConfigSetting.INFOVALUESUBGRAPHOBJECTIVE_BSPDM; break;
+			case "SAS" : infoValueAndSubgraphObjective = ConfigSetting.INFOVALUESUBGRAPHOBJECTIVE_SAS; break;
 		}
 		textSubgraphObjective.setText(infoValueAndSubgraphObjective);
 		textInformationValueObjective.setText(infoValueAndSubgraphObjective);
 	}
 	void initialiseAnalysisSettings(){
-		textNbrSimulation.setText("10000");
+		textNbrSimulation.setText(String.valueOf(ConfigSetting.NUMBER_OF_SIMULATION));
 		textOutputDirectory.setText(outPutDirectory);
 		initialiseModelSubgraphAndInfoValueObjective();
 		
@@ -480,7 +482,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 	void analysisSettings(){
 		mntmAnalysisSettings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String title = "Analysis Settings";
+				String title = ConfigSetting.TABANALYSISSETTINGS;
 				initialiseAnalysisSettings();
 				tabbedPane.addTab(title, null, analysisSettingsPanel, null);
 				tabbedPane.setSelectedComponent(analysisSettingsPanel);
@@ -491,8 +493,8 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 	}
 	void displayModeldDecision(){
 		if (semanticModel != null){
-			String modelResultPath = outPutDirectory + semanticModel.getModelName() + "/ICSE/AnalysisResult/" ;
-			String title = "Decisions";
+			//String modelResultPath = outPutDirectory + semanticModel.getModelName() + "/ICSE/AnalysisResult/" ;
+			String title = ConfigSetting.TABDECISIONS;
 			
 			JPanel  decision= new JPanel();
 			decision.setName(title);
@@ -525,7 +527,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 	void displayModelDecisionsToolBar (){
 		chckbxmntmModelDecisions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String tabName = "Decisions";
+				String tabName = ConfigSetting.TABDECISIONS;
 				AbstractButton aButton = (AbstractButton)e.getSource();
 				boolean selected = aButton.getModel().isSelected();
 				if (selected){
@@ -549,12 +551,9 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 	}
 	void displayDecisionDependencyGraph(){
 		if (semanticModel != null){
-			String modelResultPath = outPutDirectory + semanticModel.getModelName() + "/ICSE/AnalysisResult/" ;
-			String imageOutput = modelResultPath + "/";
 			String decisionGraph = semanticModel.generateDecisionDiagram(result.getAllSolutions());
-			//Helper.printResults (modelResultPath + "graph/", decisionGraph, semanticModel.getModelName() + "dgraph.dot", false);
 			decisionDependencyGraphPanel = new JPanel(new BorderLayout());
-			String graphType = "DD-Graph";
+			String graphType = ConfigSetting.TABDECISIONGRAPH;
 			decisionDependencyGraphPanel.setName(graphType);
 			decisionDependencyGraphImageLabel = new ImageLabel ("");
 			decisionDependencyGraphIcon  = viewDotGraph(decisionGraph,"png", graphType, decisionDependencyGraphPanel,decisionDependencyGraphImageLabel);
@@ -568,7 +567,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 	void displayDecisionDependencyGraphMenuBar(){
 		chckbxmntmDecisionDependencyGraph.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String tabName = "DD-Graph";
+				String tabName = ConfigSetting.TABDECISIONGRAPH;;
 				AbstractButton aButton = (AbstractButton)e.getSource();
 				boolean selected = aButton.getModel().isSelected();
 				if (selected){
@@ -591,13 +590,10 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 	}
 	void displayANDORGraph (){
 		if (semanticModel != null){
-			String modelResultPath = outPutDirectory + semanticModel.getModelName() + "/ICSE/AnalysisResult/" ;
-			String imageOutput = modelResultPath + "/";
 			String variableGraph = semanticModel.generateDOTRefinementGraph(semanticModel, result.getSubGraphObjective());
-			//Helper.printResults (modelResultPath + "graph/", variableGraph, semanticModel.getModelName() +"vgraph.dot", false);
 			variableGraphPanel = new JPanel(new BorderLayout());
 			variableGraphImageLabel = new ImageLabel ("");
-			String graphType = "AND/OR-Graph";
+			String graphType = ConfigSetting.TABGOALGRAPH;
 			variableGraphPanel.setName(graphType);
 			variableGraphIcon = viewDotGraph(variableGraph,"png", graphType, variableGraphPanel,variableGraphImageLabel);
 			chckbxmntmVariableAndorGraph.setSelected(true);
@@ -610,7 +606,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 	void displayANDORGraphMenuBar(){
 		chckbxmntmVariableAndorGraph.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String tabName = "AND/OR-Graph";
+				String tabName =ConfigSetting.TABGOALGRAPH;
 				AbstractButton aButton = (AbstractButton)e.getSource();
 				boolean selected = aButton.getModel().isSelected();
 				if (selected){
@@ -635,9 +631,8 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		if (result != null){
 			String modelResultPath = outPutDirectory + semanticModel.getModelName() + "/ICSE/AnalysisResult/" ;
 			String imageOutput = modelResultPath + "/";
-			String title = "Pareto-Front";
+			String title = ConfigSetting.TABPARETO;
 			if (result.getShortListObjectives().get(0).length == 2){
-				//TwoDPlotter twoDPlot = new TwoDPlotter();
 				TwoDPanelPlotter twoDPlot = new TwoDPanelPlotter();
 				twoDPlot.setSize(editModel.getSize());
 				twoDPlot.setName(title);
@@ -675,7 +670,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 	void displayParetoFrontMenuBar(){
 		chckbxmntmParetoFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String tabName = "Pareto-Front";
+				String tabName = ConfigSetting.TABPARETO;
 				AbstractButton aButton = (AbstractButton)e.getSource();
 				boolean selected = aButton.getModel().isSelected();
 				// synonymous to when the chkbox is clicked
@@ -719,14 +714,11 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 			public void actionPerformed(ActionEvent e) {
 				AbstractButton aButton = (AbstractButton)e.getSource();
 				boolean selected = aButton.getModel().isSelected();
-				String tabName = "Information Value Analysis";
+				String tabName = ConfigSetting.TABINFOVALUEANALYSIS;
 				if (selected){
 					if (!tabbedComponentExits(tabName)){
 						displayInformationValueAnalysis();
 					}
-					//chckbxmntmInformationValueAnalysis.setState(true);
-					
-					//aButton.getModel().setSelected(true);
 				}else{
 					// remove it from tabbed bar
 					Component [] allTabbedComponent = tabbedPane.getComponents();
@@ -735,16 +727,14 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 							tabbedPane.remove(comp);
 						}
 					}
-					//chckbxmntmInformationValueAnalysis.setState(false);
 					chckbxmntmInformationValueAnalysis.setSelected(false);
-					//aButton.getModel().setSelected(false);
 				}
 			}
 		});
 		
 	}
 	void displayInformationValueAnalysis(){
-		String tabName = "Information Value Analysis";
+		String tabName = ConfigSetting.TABINFOVALUEANALYSIS;
 		if (result != null){
 			
 			JPanel  infoValueAnalysis= new JPanel();
@@ -779,7 +769,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 	}
 	
 	void displayOptimisationAnalysis(){
-		String tabName = "Optimisation Analysis";
+		String tabName = ConfigSetting.TABOPTIMISATIONANALYSIS;
 		if (result != null){
 			JPanel  optimisationAnalysis= new JPanel();
 			optimisationAnalysis.setName(tabName);
@@ -828,7 +818,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 	void displayOptimisationAnalysisMenuBar(){
 		chckbxmntmOptimisationAnalysis.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String tabName = "Optimisation Analysis";
+				String tabName = ConfigSetting.TABOPTIMISATIONANALYSIS;
 				AbstractButton aButton = (AbstractButton)e.getSource();
 				boolean selected = aButton.getModel().isSelected();
 				// synonymous to wgen the chkbox is clicked
@@ -1008,6 +998,64 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 
     }
   
+    void createPlot(String modelResultPath){
+    	try {
+	    	String imageOutput = modelResultPath + "/";
+			String title = ConfigSetting.TABPARETO;
+			if (result.getShortListObjectives().get(0).length == 2){
+				//TwoDPlotter twoDPlot = new TwoDPlotter();
+				TwoDPanelPlotter twoDPlot = new TwoDPanelPlotter();
+				twoDPlot.setSize(editModel.getSize());
+				twoDPlot.setName(title);
+				twoDPlot.setLayout(new BorderLayout());
+				//viewPareto(twoDPlot, title);
+				twoDPlot.plot(semanticModel,imageOutput, result);
+			}else if (result.getShortListObjectives().get(0).length == 3){
+				ScatterPlotPanel3D sc3D2= new ScatterPlotPanel3D( );
+				sc3D2.setSize(editModel.getSize());
+				sc3D2.setName(title);
+				sc3D2.setLayout(new BorderLayout());
+				//viewPareto(sc3D2, title);
+				sc3D2.plot(semanticModel, imageOutput, result);
+			}
+			chckbxmntmParetoFront.setSelected(true);
+    	} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage() , "", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+    }
+    void creatANDORGraph (String modelResultPath){
+    	try {
+    		String variableGraph = semanticModel.generateDOTRefinementGraph(semanticModel, result.getSubGraphObjective());
+			Helper.printResults (modelResultPath + "graph/", variableGraph, semanticModel.getModelName() +"vgraph.dot", false);
+			variableGraphPanel = new JPanel(new BorderLayout());
+			variableGraphImageLabel = new ImageLabel ("");
+			String graphType = ConfigSetting.TABGOALGRAPH;
+			variableGraphPanel.setName(graphType);
+			variableGraphIcon = viewDotGraph(variableGraph,"png", graphType, variableGraphPanel,variableGraphImageLabel);
+			chckbxmntmVariableAndorGraph.setSelected(true);
+	
+    	} catch (IOException e) {
+    		JOptionPane.showMessageDialog(null, e.getMessage() , "", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+    }
+    void createDecisionGraph(String modelResultPath){
+    	try {
+	    	String decisionGraph = semanticModel.generateDecisionDiagram(result.getAllSolutions());
+			Helper.printResults (modelResultPath + "graph/", decisionGraph, semanticModel.getModelName() + "dgraph.dot", false);
+			decisionDependencyGraphPanel = new JPanel(new BorderLayout());
+			decisionDependencyGraphImageLabel = new ImageLabel("");
+			String graphType = ConfigSetting.TABDECISIONGRAPH;
+			decisionDependencyGraphPanel.setName(graphType);
+			decisionDependencyGraphIcon  = viewDotGraph(decisionGraph,"png", graphType, decisionDependencyGraphPanel,decisionDependencyGraphImageLabel);
+			chckbxmntmDecisionDependencyGraph.setSelected(true);
+    	} catch (IOException e) {
+    		JOptionPane.showMessageDialog(null, e.getMessage() , "", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+    }
     void generateAnalysisGraphs(){
     	try {
 	    	String analysisResult = result.analysisToString();
@@ -1017,58 +1065,22 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 			Helper.printResults (modelResultPath , analysisResult, semanticModel.getModelName() +".out", false);
 			Helper.printResults (modelResultPath , analysisResultToCSV, semanticModel.getModelName() +".csv", false);
 			
-			if (false){
-				String imageOutput = modelResultPath + "/";
-				String title = "Pareto-Front";
-				if (result.getShortListObjectives().get(0).length == 2){
-					//TwoDPlotter twoDPlot = new TwoDPlotter();
-					TwoDPanelPlotter twoDPlot = new TwoDPanelPlotter();
-					twoDPlot.setSize(editModel.getSize());
-					twoDPlot.setName(title);
-					twoDPlot.setLayout(new BorderLayout());
-					viewPareto(twoDPlot, title);
-					twoDPlot.plot(semanticModel,imageOutput, result);
-				}else if (result.getShortListObjectives().get(0).length == 3){
-					ScatterPlotPanel3D sc3D2= new ScatterPlotPanel3D( );
-					sc3D2.setSize(editModel.getSize());
-					sc3D2.setName(title);
-					sc3D2.setLayout(new BorderLayout());
-					viewPareto(sc3D2, title);
-					sc3D2.plot(semanticModel, imageOutput, result);
-				}
-				chckbxmntmParetoFront.setSelected(true);
-				
+			if (true){
+				createPlot(modelResultPath);
 			}
 			// generate graphs
 			if (true){
-				
-				String variableGraph = semanticModel.generateDOTRefinementGraph(semanticModel, result.getSubGraphObjective());
-				Helper.printResults (modelResultPath + "graph/", variableGraph, semanticModel.getModelName() +"vgraph.dot", false);
-				variableGraphPanel = new JPanel(new BorderLayout());
-				variableGraphImageLabel = new ImageLabel ("");
-				String graphType = "AND/OR-Graph";
-				variableGraphPanel.setName(graphType);
-				variableGraphIcon = viewDotGraph(variableGraph,"png", graphType, variableGraphPanel,variableGraphImageLabel);
-				chckbxmntmVariableAndorGraph.setSelected(true);
-				
+				creatANDORGraph(modelResultPath);
 			}
 			if (true){
-				String decisionGraph = semanticModel.generateDecisionDiagram(result.getAllSolutions());
-				Helper.printResults (modelResultPath + "graph/", decisionGraph, semanticModel.getModelName() + "dgraph.dot", false);
-				decisionDependencyGraphPanel = new JPanel(new BorderLayout());
-				decisionDependencyGraphImageLabel = new ImageLabel("");
-				String graphType = "DD-Graph";
-				decisionDependencyGraphPanel.setName(graphType);
-				decisionDependencyGraphIcon  = viewDotGraph(decisionGraph,"png", graphType, decisionDependencyGraphPanel,decisionDependencyGraphImageLabel);
-				chckbxmntmDecisionDependencyGraph.setSelected(true);
+				createDecisionGraph(modelResultPath);
 			}
-		
 			System.out.println("Finished!");
 			modelSolved =true;
 			solvedModel = ""; // textModelArea.getText();
     	} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+    		JOptionPane.showMessageDialog(null, e.getMessage() , "", JOptionPane.ERROR_MESSAGE);
+			return;
 		}
     }
 	void asynchronousSolve (){
@@ -1089,11 +1101,11 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 	}
 	void openModelExamples(){
 		switch(modelExample){
-			case "CBA": openedFilePath = outPutDirectory + "CBA.rdr"; break;
-			case "FDM": openedFilePath = outPutDirectory + "FDM.rdr"; break;
-			case "ECS": openedFilePath = outPutDirectory + "ECS.rdr"; break;
-			case "BSPDM": openedFilePath = outPutDirectory + "BSPDM.rdr";  break;
-			case "SAS" : openedFilePath = outPutDirectory + "SAS.rdr"; break;
+			case "CBA": openedFilePath = outPutDirectory + ConfigSetting.CBA + ".rdr"; break;
+			case "FDM": openedFilePath = outPutDirectory + ConfigSetting.FDM + ".rdr"; break;
+			case "ECS": openedFilePath = outPutDirectory + ConfigSetting.ECM + ".rdr"; break;
+			case "BSPDM": openedFilePath = outPutDirectory + ConfigSetting.BSPDM + ".rdr";  break;
+			case "SAS" : openedFilePath = outPutDirectory + ConfigSetting.SAS + ".rdr"; break;
 		}
         loadExistingModel(openedFilePath);
 	}
@@ -1116,13 +1128,13 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		Component [] allTabbedComponent = tabbedPane.getComponents();
 		if (allTabbedComponent != null && allTabbedComponent.length >0){
 			for (Component comp: allTabbedComponent){
-				if (comp.getName() != null && comp.getName().equals("Editor")){
+				if (comp.getName() != null && comp.getName().equals(ConfigSetting.EDITORTAB)){
 					analysisComponentExist = true;
 				}
 			}
 		}
 		if (!analysisComponentExist){
-			tabbedPane.addTab("Editor", editModel);
+			tabbedPane.addTab(ConfigSetting.EDITORTAB, editModel);
 			tabbedPane.setSelectedComponent(editModel);
 		}else{
 			if (modelTextPane != null && !modelTextPane.getText().equals("")){
@@ -1141,10 +1153,10 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 						}
 					}
 					// load new edit model board.
-					tabbedPane.addTab("Editor",editModel);
+					tabbedPane.addTab(ConfigSetting.EDITORTAB,editModel);
 					tabbedPane.setSelectedComponent(editModel);
-					tabbedPane.addTab("Analysis Result",analysisResult);
-					tabbedPane.addTab("Console",console);
+					tabbedPane.addTab(ConfigSetting.TABANALYSISRESULT,analysisResult);
+					tabbedPane.addTab(ConfigSetting.CONSOLETAB,console);
 					clearEditModel();
 					clearAnalysisResult();
 					clearConsole();
@@ -1647,7 +1659,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 	}
 	private String inputValidation (){
 		String message = "";
-		message += InputValidator.verifyEmptyField (textNbrSimulation, "number of simulation", "Integer");
+		message += InputValidator.verifyEmptyField (textNbrSimulation, "Number of simulation", "Integer");
 		//message += InputValidator.verifyEmptyField (textOutputDirectory, "output directory", "String");
 		message += InputValidator.verifyFieldDataType (textSubgraphObjective.getText(), "Subgraph Objective", "String");
 		message += InputValidator.verifyFieldDataType (textInformationValueObjective.getText(), "Information Value Objective", "String");
@@ -1844,13 +1856,6 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 			tabbedPane.setSelectedComponent(analysisResult);
 		}
 		
-		
-		/*modelResultFrame.setVisible(true);
-		modelResultFrame.setTitle("Analysis Results" );
-		modelResultFrame.pack();
-		modelResultFrame.setLocationRelativeTo(null);
-		modelResultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);*/
-		
 	}
 	void viewPareto (JPanel panel, String title){
 		Component [] allTabbedComponent = tabbedPane.getComponents();
@@ -1891,7 +1896,6 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		}
 		tabbedPane.addTab( graphType, panel);
 		tabbedPane.setSelectedComponent(panel);
-		//tabbedPane.setSelectedIndex(i);
 		tabbedPane.repaint();
 	}
 	void minimiseViewToolBar(){
@@ -1913,12 +1917,12 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		String graphType ="";
 		Component currentComponent = tabbedPane.getSelectedComponent();
 		//if (currentComponent == variableGraphPanel){
-		if (currentComponent.getName() == "AND/OR-Graph"){
-			graphType = "AND/OR-Graph";
+		if (currentComponent.getName() == ConfigSetting.TABGOALGRAPH){
+			graphType = ConfigSetting.TABGOALGRAPH;
 			resizeGraphOnPanel(graphType,variableGraphIcon,variableGraphImageLabel, "decrease");
 		}
-		else if (currentComponent.getName() == "DD-Graph"){
-			graphType = "DD-Graph";
+		else if (currentComponent.getName() == ConfigSetting.TABDECISIONGRAPH){
+			graphType = ConfigSetting.TABDECISIONGRAPH;
 			resizeGraphOnPanel(graphType,decisionDependencyGraphIcon,decisionDependencyGraphImageLabel, "decrease");
 		}
 	}
@@ -1939,12 +1943,12 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 	void maximiseView (){
 		String graphType ="";
 		Component currentComponent = tabbedPane.getSelectedComponent();
-		if (currentComponent.getName() == "AND/OR-Graph"){
-			graphType = "AND/OR-Graph";
+		if (currentComponent.getName() == ConfigSetting.TABGOALGRAPH){
+			graphType = ConfigSetting.TABGOALGRAPH;
 			resizeGraphOnPanel(graphType,variableGraphIcon,variableGraphImageLabel, "increase");
 		}
-		else if (currentComponent.getName() == "DD-Graph"){
-			graphType = "DD-Graph";
+		else if (currentComponent.getName() == ConfigSetting.TABDECISIONGRAPH){
+			graphType = ConfigSetting.TABDECISIONGRAPH;
 			resizeGraphOnPanel(graphType,decisionDependencyGraphIcon,decisionDependencyGraphImageLabel, "increase");
 		}
 	}
@@ -1959,17 +1963,8 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		String repesentationType= "dot";
 		File out = new File(outPutDirectory+ "out"+gv.getImageDpi()+"."+ imageType); // Mac
 		byte[] image = gv.getGraph(gv.getDotSource(), imageType, repesentationType);
-		//Image scaledImage = image.getScaledInstance(panel.getWidth(), panel.getHeight(),Image.SCALE_SMOOTH);
 		gv.writeGraphToFile( image, out );
 		ImageIcon imageIcon = new ImageIcon(image);
-		//JLabel variableImageLabel = new JLabel ("", variableImageIcon, JLabel.CENTER);
-		
-		/*ImageLabel variableImageLabel = new ImageLabel ("");
-		variableImageLabel.setIcon(variableImageIcon);
-		variableImageLabel.setHorizontalAlignment(JLabel.CENTER);
-		JScrollPane scrollVariableImageLabel = new JScrollPane(variableImageLabel);*/
-		
-		//imageLabel.setHorizontalAlignment(JLabel.NORTH);
 		imageLabel.setIcon(imageIcon);
 		JScrollPane scrollVariableImageLabel = new JScrollPane(imageLabel);
 		scrollVariableImageLabel.setPreferredSize(new Dimension(850, 450));
@@ -1997,53 +1992,14 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 			
 			// generate graphs
 			if (true){
-				
-				String variableGraph = semanticModel.generateDOTRefinementGraph(semanticModel, result.getSubGraphObjective());
-				Helper.printResults (modelResultPath + "graph/", variableGraph, semanticModel.getModelName() +"vgraph.dot", false);
-				variableGraphPanel = new JPanel(new BorderLayout());
-				variableGraphPanel.setForeground(Color.LIGHT_GRAY);
-				variableGraphImageLabel = new ImageLabel("");
-				String graphType = "AND/OR-Graph";
-				variableGraphPanel.setName(graphType);
-				variableGraphImageLabel.setHorizontalAlignment(JLabel.NORTH);
-				variableGraphIcon = viewDotGraph(variableGraph,"png", graphType, variableGraphPanel,variableGraphImageLabel);
-				variableGraphImageLabel.setIcon(variableGraphIcon);
+				createPlot(modelResultPath);
+			}
+			// generate graphs
+			if (true){
+				creatANDORGraph(modelResultPath);
 			}
 			if (true){
-				String decisionGraph = semanticModel.generateDecisionDiagram(result.getAllSolutions());
-				Helper.printResults (modelResultPath + "graph/", decisionGraph, semanticModel.getModelName() + "dgraph.dot", false);
-				decisionDependencyGraphPanel = new JPanel(new BorderLayout());
-				decisionDependencyGraphPanel.setForeground(Color.LIGHT_GRAY);
-				decisionDependencyGraphImageLabel = new ImageLabel("");
-				decisionDependencyGraphImageLabel.setHorizontalAlignment(JLabel.NORTH);
-				String graphType = "DD-Graph";
-				decisionDependencyGraphPanel.setName(graphType);
-				decisionDependencyGraphIcon = viewDotGraph(decisionGraph,"png", graphType, decisionDependencyGraphPanel,decisionDependencyGraphImageLabel);
-				decisionDependencyGraphImageLabel.setIcon(decisionDependencyGraphIcon);
-			}
-			if (true){
-				String imageOutput = modelResultPath + "/"; 
-				String title = "Pareto-Front";
-				if (result.getShortListObjectives().get(0).length == 2){
-					//TwoDPlotter twoDPlot = new TwoDPlotter();
-					TwoDPanelPlotter twoDPlot = new TwoDPanelPlotter();
-					twoDPlot.setForeground(Color.LIGHT_GRAY);
-					
-					twoDPlot.setSize(editModel.getSize());
-					twoDPlot.setName(title);
-					twoDPlot.setLayout(new BorderLayout());
-					viewPareto(twoDPlot, title);
-					twoDPlot.plot(semanticModel,imageOutput, result);
-				}else if (result.getShortListObjectives().get(0).length == 3){
-					ScatterPlotPanel3D sc3D2= new ScatterPlotPanel3D( );
-					sc3D2.setForeground(Color.LIGHT_GRAY);
-					sc3D2.setSize(editModel.getSize());
-					sc3D2.setName(title);
-					sc3D2.setLayout(new BorderLayout());
-					viewPareto(sc3D2, title);
-					sc3D2.plot(semanticModel, imageOutput, result);
-				}
-				
+				createDecisionGraph(modelResultPath);
 			}
 			System.out.println("Finished!");
 			modelSolved =true;
@@ -2389,14 +2345,14 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		JSeparator separator_12 = new JSeparator();
 		mnWindow.add(separator_12);
 		
-		chckbxmntmVariableAndorGraph = new JCheckBoxMenuItem("Variable AND/OR Graph");
+		chckbxmntmVariableAndorGraph = new JCheckBoxMenuItem("Goal Graph");
 		
 		mnWindow.add(chckbxmntmVariableAndorGraph);
 		
 		JSeparator separator_13 = new JSeparator();
 		mnWindow.add(separator_13);
 		
-		chckbxmntmDecisionDependencyGraph = new JCheckBoxMenuItem("Decision Dependency Graph");
+		chckbxmntmDecisionDependencyGraph = new JCheckBoxMenuItem("Decision Graph");
 		
 		mnWindow.add(chckbxmntmDecisionDependencyGraph);
 		
@@ -2469,6 +2425,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		tabbedPane = new ClosableTabbedPane() {
 
 			public boolean tabAboutToClose(int tabIndex) {
+				
 				String tab = tabbedPane.getTabTitleAt(tabIndex);
 				int choice = JOptionPane.showConfirmDialog(frame,
 						"You are about to close '" + tab
@@ -2489,10 +2446,10 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		analysisResult.setForeground(Color.LIGHT_GRAY);
 		
 		analysisSettingsPanel = new JPanel();
-		//tabbedPane.addTab("Analysis Settings", null, analysisSettingsPanel, null);
+		//tabbedPane.addTab(ConfigSetting.TABANALYSISSETTINGS, null, analysisSettingsPanel, null);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Analysis Settings", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
+		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), ConfigSetting.TABANALYSISSETTINGS, TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		
 		JPanel panelGraphvizSettings = new JPanel();
 		panelGraphvizSettings.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "GraphViz Settings", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
@@ -2682,8 +2639,8 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		
 		editModel = new JPanel();
 		editModel.setForeground(Color.LIGHT_GRAY);
-		editModel.setName("Editor");
-		tabbedPane.addTab("Editor",editModel);
+		editModel.setName(ConfigSetting.EDITORTAB);
+		tabbedPane.addTab(ConfigSetting.EDITORTAB,editModel);
 		//tabbedPane.setBackgroundAt(1, Color.GRAY);
 		
 		modelTextPane = new ModelTextPane();
@@ -2693,8 +2650,8 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		editModel.add(scrollPaneEditModel);
 		
 		console = new JPanel();
-		console.setName("Console");
-		tabbedPane.addTab("Console", console);
+		console.setName(ConfigSetting.CONSOLETAB);
+		tabbedPane.addTab(ConfigSetting.CONSOLETAB, console);
 		console.setForeground(Color.LIGHT_GRAY);
 		
 		scrollPaneConsole = new JScrollPane();
@@ -2707,27 +2664,42 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		console.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{scrollPaneConsole}));
 		
 		
-		tabbedPane.addTab("Analysis Result",analysisResult);
+		tabbedPane.addTab(ConfigSetting.TABANALYSISRESULT,analysisResult);
 		
 		scrollPaneOptimisationDetails = new JScrollPane();
 		scrollPaneOptimisationDetails.setPreferredSize(new Dimension(850, 100));
 		analysisResult.add(scrollPaneOptimisationDetails);
 		
-		tableOptimisationDetails = new JTable();
+		tableOptimisationDetails = new JTable(){
+			private static final long serialVersionUID = 1L;
+	        public boolean isCellEditable(int row, int column) {                
+	                return false;               
+	        };
+		};
 		scrollPaneOptimisationDetails.setViewportView(tableOptimisationDetails);
 		
 		scrollPaneOptimisationSolutions = new JScrollPane();
 		scrollPaneOptimisationSolutions.setPreferredSize(new Dimension(850, 200));
 		analysisResult.add(scrollPaneOptimisationSolutions);
 		
-		tableOptimisationSolutions = new JTable();
+		tableOptimisationSolutions = new JTable(){
+			private static final long serialVersionUID = 1L;
+	        public boolean isCellEditable(int row, int column) {                
+	                return false;               
+	        };
+		};
 		scrollPaneOptimisationSolutions.setViewportView(tableOptimisationSolutions);
 		
 		scrollPaneInfoValueAnalysis = new JScrollPane();
 		scrollPaneInfoValueAnalysis.setPreferredSize(new Dimension(850, 140));
 		analysisResult.add(scrollPaneInfoValueAnalysis);
 		
-		tableInfoValueAnalysis = new JTable();
+		tableInfoValueAnalysis = new JTable(){
+			private static final long serialVersionUID = 1L;
+	        public boolean isCellEditable(int row, int column) {                
+	                return false;               
+	        };
+		};
 		scrollPaneInfoValueAnalysis.setViewportView(tableInfoValueAnalysis);
 		tabbedPane.setBackgroundAt(2, Color.GRAY);
 		

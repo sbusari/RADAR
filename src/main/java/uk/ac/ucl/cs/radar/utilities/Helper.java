@@ -13,6 +13,7 @@ import java.io.OutputStreamWriter;
 import java.util.Locale;
 
 import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
 public class Helper {
 
@@ -92,5 +93,16 @@ public class Helper {
 	    }
 	    return bi;
 	}
+	
+	public static BufferedImage createImage(JPanel panel) {
+	    int w = panel.getWidth();
+	    int h = panel.getHeight();
+	    BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+	    Graphics2D g = bi.createGraphics();
+	    panel.printAll(g);
+	    return bi;
+	}
+	
+	
 
 }

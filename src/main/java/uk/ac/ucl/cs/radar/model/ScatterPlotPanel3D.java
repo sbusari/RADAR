@@ -169,7 +169,7 @@ public class ScatterPlotPanel3D extends JPanel {
         this.setAutoscrolls(true);
         this.setVisible(true);
         
-        Helper.writeImageToFolder(outputpath  + "Figure/", Helper.getImage(this), "PNG", semanticModel.getModelName());
+        //Helper.writeImageToFolder(outputpath  + "Figure/", Helper.getImage(this), "PNG", semanticModel.getModelName());
     }
     
 }
