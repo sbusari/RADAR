@@ -42,7 +42,6 @@ import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 import javax.swing.JTextArea;
 
-import uk.ac.ucl.cs.radar.userinterface.ImageLabel;
 import uk.ac.ucl.cs.radar.model.AnalysisResult;
 import uk.ac.ucl.cs.radar.model.Decision;
 import uk.ac.ucl.cs.radar.model.Model;
@@ -903,6 +902,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
     	
         @Override
         public Void doInBackground() {
+        	tabbedPane.setSelectedComponent(console);
             AnalysisResult tempResult = null;
             progress = 0;
             setProgress(0);
@@ -914,42 +914,35 @@ public class RADAR_GUI2 implements PropertyChangeListener {
                 // perform analysis
                 while (progress < 100 && !isCancelled()) {
                 	if (analysisIndex == -1){
-                		progressMessage =  "Checking cyclic dependencies in model." ;
-                		consoleTextArea.append("Checking cyclic dependencies in model.\n");
+                		consoleTextArea.append("Checking cyclic dependencies in the model ");
                 	}
                     if (analysisIndex == 0){
-                    	progressMessage = "Step "+ (analysisIndex+1) +": Generating design space." ;
-                    	consoleTextArea.append("Step "+ (analysisIndex+1) +": Generating design space.\n");
+                    	consoleTextArea.append("Analysis Step "+ (analysisIndex+1) +": Generating design space ");
                     }
                     if (analysisIndex == 1){
-                    	progressMessage ="Step "+ (analysisIndex+1) + ": Simulating the design space.";
-                    	consoleTextArea.append("Step "+ (analysisIndex+1) + ": Simulating the design space.\n");
+                    	consoleTextArea.append("Analysis Step "+ (analysisIndex+1) + ": Simulating the design space ");
                     }
                     if (analysisIndex == 2){
-                    	progressMessage ="Step "+ (analysisIndex+1) + ": Shortlisting Pareto optimal solutions.";
-                    	consoleTextArea.append("Step "+ (analysisIndex+1) + ": Shortlisting Pareto optimal solutions.\n");
+                    	consoleTextArea.append("Analysis Step "+ (analysisIndex+1) + ": Shortlisting Pareto optimal solutions ");
                     }
                     if (analysisIndex == 3){
-                    	progressMessage ="Step "+ (analysisIndex+1) + ": Computing expected value of information.";
-                    	consoleTextArea.append("Step "+ (analysisIndex+1) + ": Computing expected value of information.\n");
+                    	consoleTextArea.append("Analysis Step "+ (analysisIndex+1) + ": Computing expected value of information ");
                     }
                 	setProgress(Math.min(progress, 100));
                 	Thread.sleep(1000);
                     tempResult = ModelSolver.solve(semanticModel, tempResult, analysisIndex);
-                    consoleTextArea.append(tempResult.getConsoleMessage()+"\n");
+                    consoleTextArea.append(tempResult.getConsoleMessage()+"");
                     progress += 20;
                     setProgress(Math.min(progress, 100));
                     analysisIndex++;
                     
                 }
                 Thread.sleep(100);
-                consoleTextArea.append("Generating Pareto fronts, AND-OR graph and decision dependency graph"+"\n");
-                progressMessage = "Analysis completed";
+                consoleTextArea.append("Generating Pareto fronts, Goal Graph and Decsion Graph"+" \n \n");
             	result = tempResult;
             	if(textFieldDecimalPrecision.getText() != ""){
             		result.addDecimalPrecision(Integer.parseInt(textFieldDecimalPrecision.getText()));
             	}
-            	
             	setProgress(Math.min(90, 100));
             } catch (InterruptedException ignore) {}
             return null;
@@ -962,7 +955,8 @@ public class RADAR_GUI2 implements PropertyChangeListener {
     		btnSolve.setEnabled(true);
     		itemParseModel.setEnabled(true);
     		itemSolveModel.setEnabled(true);
-            progressMonitor.setProgress(0);
+            //progressMonitor.setProgress(0);
+    		consoleTextArea.append("\n" + result.analysisToString());
             // add these here to avoid the exception thrown when in inside the do in background method.
             loadResultInFrame();
 			generateAnalysisGraphs();
@@ -977,21 +971,23 @@ public class RADAR_GUI2 implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         if ("progress" == evt.getPropertyName() ) {
             int progress = (Integer) evt.getNewValue();
-            progressMonitor.setProgress(progress);
+            //progressMonitor.setProgress(progress);
             String message =String.format("Completed %d%% of analysis\n", progress);
-            progressMonitor.setNote(progressMessage);
+            //progressMonitor.setNote(progressMessage);
             //progressMonitor.setNote(message);
             //consoleTextArea.append(message);
-            if (progressMonitor.isCanceled() || task.isDone()) {
+            //if (progressMonitor.isCanceled() || task.isDone()) {
+            if (task.isDone()) {
                 Toolkit.getDefaultToolkit().beep();
-                if (progressMonitor.isCanceled()) {
+                /*if (progressMonitor.isCanceled()) {
                     task.cancel(true);
                     progressBarCancelled = true;
                     Thread.currentThread().stop();
                     consoleTextArea.append("Analysis canceled.\n");
                 } else {
                 	consoleTextArea.append("Analysis completed.\n");
-                }
+                }*/
+                consoleTextArea.append("Analysis Summary.\n");
                 consoleTextArea.setEnabled(true);
             }
         }
@@ -1084,11 +1080,11 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		}
     }
 	void asynchronousSolve (){
-		progressMonitor = new ProgressMonitor(frame,
+		
+		/*progressMonitor = new ProgressMonitor(frame,
                 "Analysing the  " + semanticModel.getModelName().toUpperCase() + " model.",
                 "", 0, 100);
-		//progressMonitor.setPreferredSize( new Dimension (100, 50));
-		progressMonitor.setProgress(0);
+		progressMonitor.setProgress(0);*/
 		task = new Task();
 		task.addPropertyChangeListener(RADAR_GUI2.this);
 		task.execute();
@@ -1591,6 +1587,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		
 	}
 	void solveModel(){
+		tabbedPane.setSelectedComponent(console);
 		if (modelTextPane.getText().isEmpty()){
 			JOptionPane.showMessageDialog(null, "You need to write a new decision model,\nor select from existing decision models.");
 			return;
@@ -1844,18 +1841,15 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		Component [] allTabbedComponent = tabbedPane.getComponents();
 		if (allTabbedComponent != null && allTabbedComponent.length >0){
 			for (Component comp: allTabbedComponent){
-				if (comp.getName() != null && comp.getName().equals("Analysis Result")){
+				if (comp.getName() != null && comp.getName().equals(ConfigSetting.TABANALYSISRESULT)){
 					analysisComponentExist = true;
 				}
 			}
 		}
 		if (!analysisComponentExist){
-			tabbedPane.addTab("Analysis Result", analysisResult);
-			tabbedPane.setSelectedComponent(analysisResult);
-		}else{
-			tabbedPane.setSelectedComponent(analysisResult);
+			tabbedPane.addTab(ConfigSetting.TABANALYSISRESULT, analysisResult);
 		}
-		
+		tabbedPane.setSelectedComponent(console);
 	}
 	void viewPareto (JPanel panel, String title){
 		Component [] allTabbedComponent = tabbedPane.getComponents();
@@ -1916,7 +1910,6 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 	void minimiseView(){
 		String graphType ="";
 		Component currentComponent = tabbedPane.getSelectedComponent();
-		//if (currentComponent == variableGraphPanel){
 		if (currentComponent.getName() == ConfigSetting.TABGOALGRAPH){
 			graphType = ConfigSetting.TABGOALGRAPH;
 			resizeGraphOnPanel(graphType,variableGraphIcon,variableGraphImageLabel, "decrease");
@@ -2094,9 +2087,9 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 			case "Decisions": chckbxmntmModelDecisions.setSelected(false); break;
 			case "Optimisation Analysis": chckbxmntmOptimisationAnalysis.setSelected(false); break;
 			case "Information Value Analysis": chckbxmntmInformationValueAnalysis.setSelected(false); break;
-			case "AND/OR-Graph": chckbxmntmVariableAndorGraph.setSelected(false); break;
-			case "DD-Graph": chckbxmntmDecisionDependencyGraph.setSelected(false); break;
-			case "Pareto-Front": chckbxmntmParetoFront.setSelected(false); break;
+			case "Goal Graph": chckbxmntmVariableAndorGraph.setSelected(false); break;
+			case "Decision Graph": chckbxmntmDecisionDependencyGraph.setSelected(false); break;
+			case "Pareto Front": chckbxmntmParetoFront.setSelected(false); break;
 		}
 	}
 	void addDirectorySlash(String path, char separator){

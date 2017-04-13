@@ -381,19 +381,19 @@ public class AnalysisResult {
 		totalRuntime = designSpaceRuntime+simulationRuntime+ optimisationRuntime+informationValueRuntime;
 		TableBuilder tableBuilder = new TableBuilder ();
 		tableBuilder.addRow (new String []{"Optimisation", "Analysis"});
-		tableBuilder.addRow ("----------------------", "\n");
+		tableBuilder.addRow ("-----------------------------------------", "");
 		for(int j=0; j < objectives.size(); j++){
 			String optimisationDirection = objectives.get(j).getIsMinimisation() ? "Min" : "Max";
-			tableBuilder.addRow (new String []{"Objective: ",optimisationDirection + objectives.get(j).getLabel() +"\n" });
+			tableBuilder.addRow (new String []{"Objective: ",optimisationDirection + objectives.get(j).getLabel() +"" });
 		}
-		tableBuilder.addRow ("SolutionSpace:", solutionSpace +"\n");
+		tableBuilder.addRow ("SolutionSpace:", solutionSpace +"");
 		//tableBuilder.addRow ("Minimal SolutionSet:", value.size() +"\n");
-		tableBuilder.addRow ("Design Sapce:", allSolutions.size() +"\n");
-		tableBuilder.addRow ("Shortlisted:", shortlist.size() +"\n");
-		tableBuilder.addRow ("Nbr. Variables:", nbrVariables + "\n");
-		tableBuilder.addRow ("Nbr. Parameters:", nbrParameters + "\n");
-		tableBuilder.addRow ("Nbr. Decisions:", nbrOfDecision + "\n");
-		tableBuilder.addRow ("Total Runtime(s):", totalRuntime +"\n");
+		tableBuilder.addRow ("Design Sapce:", allSolutions.size() +"");
+		tableBuilder.addRow ("Shortlisted:", shortlist.size() +"");
+		tableBuilder.addRow ("Nbr. Variables:", nbrVariables + "");
+		tableBuilder.addRow ("Nbr. Parameters:", nbrParameters + "");
+		tableBuilder.addRow ("Nbr. Decisions:", nbrOfDecision + "");
+		tableBuilder.addRow ("Total Runtime(s):", totalRuntime +"");
 		return tableBuilder.toString();
 	}
 	public List<String> optimisationAnalysisDetails (){

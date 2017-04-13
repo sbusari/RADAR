@@ -95,90 +95,62 @@ public class ModelSolver {
 		AnalysisResult result = null;
 		if (intermediateResult == null){
 			String message = "";
-			// get all objectives
 			List<Objective> objectives = m.getObjectives();
-			// get all decisions
 			List<Decision> decisions = m.getDecisions();
-			// instantiate the result object
 			result = new AnalysisResult(objectives,decisions);
-			//message += "Checking cyclic dependecies between variables in model.\n";
-			// check for cylic dependencies in quality variables.
+			long cyclicCheckStartTime = System.currentTimeMillis();
 			try{
 				m.getCyclicDependentVariables();
 			}catch (Exception e){
 				throw new RuntimeException (e.getMessage());
 			}
-			
-			//message+= "Finished checking cyclic dependecies in model.\n";
-			message+= "----------------------------------------------------------------------------.\n";
-			result.setConsoleMessage(message);
-			System.out.println("Finished checking cyclic dependecies");
+			long cyclicCheckEndTime = System.currentTimeMillis() -cyclicCheckStartTime;
+			result.setConsoleMessage(message + " (time: "+cyclicCheckEndTime + " milliseconds).\n" );
 		}else{
 			result = intermediateResult;
 		}
 		//design space generation
 		if (analysisIndex == 0){
 			String message = "";
-			//message+= "Generating the design space. \n";
-			//long StartBeforeUsedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 			long designSpaceStartTime = System.currentTimeMillis();
-			// get all solutions
 			List<Solution> allSolutions = m.getAllSolutions().list();
 			result.addAllSolutions(allSolutions);
-			// solution space
 			result.addSolutionSpace(m.getSolutionSpace());
-			// add subgraph obejective
 			result.addSubGraphObejctive(m.getSubGraphObjective());
 			long designSpaceEndTime = System.currentTimeMillis()-designSpaceStartTime ;
 			result.addDesignSpaceRunTime(designSpaceEndTime/1000);
-			System.out.println("Generating design space.");
-			message += "Generated the design space in "+ designSpaceEndTime/1000 + " seconds.\n";
-			message += "----------------------------------------------------------------------------.\n";
+			message += "(time: "+ designSpaceEndTime + " milliseconds).\n";
 			result.setConsoleMessage(message);
 		}
 		// simulation
 		if (analysisIndex == 1){
 			String message = "";
-			//message+= "Simulating the design space.\n";
-			// Evaluate objectives for all solutions
-			System.out.println("Evaluation and computation of optimal solutions to begin");
 			long simulationStartTime = System.currentTimeMillis();
-			int i =0;
-			for (Solution s: result.getAllSolutions()){
-				//result.addEvaluation(s, m.evaluate(objectives, s));	
+			for (Solution s: result.getAllSolutions()){	
 				result.addEvaluation(s, new Simulator().evaluate(result.getObjectives(), s,m));	
-				i++;
 			}
 			long simulationEndTime = System.currentTimeMillis()-simulationStartTime ;
 			result.addSimulationRuntime(simulationEndTime/1000);
-			message += "Simulated the design space in "+ simulationEndTime/1000 +" seconds.\n";
-			message += "----------------------------------------------------------------------------.\n";
+			message += "(time: "+ simulationEndTime +" milliseconds).\n";
 			result.setConsoleMessage(message);
 		}
 		// optimisation
 		if (analysisIndex == 2){
 			String message = "";
-			//message+= "Shortlisting the Pareto Optimal solutions.\n";
 			long optimisationStartTime = System.currentTimeMillis();
-			// add -ve sign for maximisaiton
 			Map<Solution, double[]> evaluatedSolutions = m.addMaximisationSign(result.getEvaluatedSolutions());
-			// Shortlists Pareto-optimal solutions
 			result.addShortlist(new Optimiser().getParetoSet(evaluatedSolutions, result.getObjectives()));
-			System.out.println("Optimal solutions computed");
 			result.addNumberOfVariables(m.getQualityVariables().size());
 			result.addNumberOfDecisions(m.getDecisions().size());
 			long optimisationEndTime = System.currentTimeMillis()-optimisationStartTime ;
 			result.addOptimisationRuntime(optimisationEndTime/1000);
-			message += "Shortlisted Pareto Optimal solutions in "+ optimisationEndTime/1000 +" seconds.\n";
-			message += "----------------------------------------------------------------------------.\n";
+			message += "(time: "+ optimisationEndTime +" milliseconds).\n";
 			result.setConsoleMessage(message);
 		}
 		//information value Analysis
 		if (analysisIndex == 3){
 			String message = "";
-			//message+= "Computing the expected value of total and partial perfect information.\n";
 			long InformationValueAnalysisStartTime = System.currentTimeMillis();
-			// Computes Value of Information
 			Objective infoValueObjective = m.getInfoValueObjective();
 			List<String> paramNames = m.getParameters();
 			List<Parameter> parameters = Model.getParameterList(paramNames, m);
@@ -191,9 +163,7 @@ public class ModelSolver {
 			result.addNumberOfParameters(nbrParam);
 			result.addSubGraphObejctive(m.getSubGraphObjective());
 			result.addEviObjective(infoValueObjective);
-			System.out.println("Information value computed");
-			message+= "Computed expected value of information in "+ InformationValueAnalysisEndTime/1000 + " seconds.\n";
-			message+= "----------------------------------------------------------------------------.\n";
+			message+= "(time:  "+ InformationValueAnalysisEndTime + " milliseconds).\n";
 			result.setConsoleMessage(message);
 		}
 		return result;

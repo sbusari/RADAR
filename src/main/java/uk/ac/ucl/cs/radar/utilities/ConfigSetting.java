@@ -17,7 +17,7 @@ public class ConfigSetting {
 	public static String TABDECISIONS= "Analysis Settings";
 	public static String TABDECISIONGRAPH= "Decision Graph";
 	public static String TABGOALGRAPH= "Goal Graph";
-	public static String TABPARETO= "Paret Front";
+	public static String TABPARETO= "Pareto Front";
 	public static String TABINFOVALUEANALYSIS= "Information Value Analysis";
 	public static String TABOPTIMISATIONANALYSIS= "Optimisation Analysis";
 	
