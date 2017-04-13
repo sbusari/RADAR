@@ -1,0 +1,17 @@
+Optimisation Analysis, 
+Objective ,MaxExpectedBenefit
+Objective ,MinRisk
+SolutionSpace ,2
+Design Space ,2
+Shortlisted ,2
+Nbr. Variables ,4
+Nbr. Parameters ,3
+Nbr. Decisions ,1
+Total Runtime(s) ,0
+
+ID,Incident Encoding,ExpectedBenefit,Risk,Optimal
+1,Computer-Based,1.35,0.29,Yes
+2,Paper-Based,1.50,0.95,Yes
+
+Information Value Analysis, 
+
