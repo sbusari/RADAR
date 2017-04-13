@@ -1,0 +1,74 @@
+Optimisation           Analysis                          
+---------------------- 
+                                 
+Objective:             MinExpectedCostOfDisclosures
+     
+Objective:             MinRiskOfCatastrophicDisclosures
+ 
+SolutionSpace:         6
+                                
+Minimal SolutionSet:   6
+                                
+Shortlisted:           2
+                                
+Nbr. Variables:        23
+                               
+Nbr. Parameters:       11
+                               
+Nbr. Decisions:        2
+                                
+Runtime(s):            0
+                                
+ID Building entry security Document Sharing Policy  ExpectedCostOfDisclosures RiskOfCatastrophicDisclosures Optimal
+ 
+1  not guarded             Recommend Email          903.7001721876119         0.0                           Yes
+     
+2  guarded                 Recommend Email          903.7001721876119         0.0                           Yes
+     
+3  guarded                 Recommend External Media 1052645.4132220382        0.2985                        No
+      
+4  not guarded             Recommend External Media 3181382.229694668         0.6464                        No
+      
+5  not guarded             Neutral                  2937.025559609734         0.0                           No
+      
+6  guarded                 Neutral                  2937.025559609734         0.0                           No
+      
+
+Information Value Analysis          
+                          
+--------------------------          
+
+                         
+Objective:                          ExpectedCostOfDisclosures
+ 
+EVTPI:                              0.0
+
+                      
+Parameter                           EVPPI 
+                    
+----------                          ----- 
+
+                   
+Ratio_HighConfidentialityDocs       0.0
+                       
+Ratio_MediumConfidentialityDocs     0.0
+                       
+Ratio_LowConfidentialityDocs        0.0
+                       
+Cost_HighConfidentialityLeak        0.0
+                       
+Cost_MediumConfidentialityLeak      0.0
+                       
+Cost_LowConfidentialityLeak         0.0
+                       
+SharedDriveLeakRange                0.0
+                       
+Nbr_OfficeIntrusions[not guarded]   0.0
+                       
+Nbr_OfficeIntrusions[guarded]       0.0
+                       
+Percentage_MediaStolenPerInstrusion 0.0
+                       
+Nbr_DocsPerMedia                    0.0
+                       
+

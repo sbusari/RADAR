@@ -1,0 +1,25 @@
+Optimisation Analysis, 
+Objective ,MaxENB
+Objective ,MinLP
+SolutionSpace ,2
+Minimal SolutionSet ,2
+Shortlisted ,2
+Nbr. Variables ,3
+Nbr. Parameters ,4
+Nbr. Decisions ,1
+Runtime(s) ,0
+
+ID,Architecture choice,ENB,LP,Optimal
+1,As-is,0.9998876900065845,0.0,Yes
+2,Refactoring,1.9879888112208879,0.2301,Yes
+
+Information Value Analysis, 
+Objective,ENB
+EVTPI,0.6492338812897849
+
+Parameter,EVPPI
+Benefit[As-is],3.1200102530415386E-4
+Benefit[Refactoring],0.5425768428804276
+Cost[As-is],4.382843814951798E-4
+Cost[Refactoring],0.1393142829703573
+

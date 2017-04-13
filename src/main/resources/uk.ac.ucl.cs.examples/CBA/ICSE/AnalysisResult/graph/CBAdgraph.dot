@@ -1,0 +1,4 @@
+digraph G { 
+"0"[label="Architecture choice", shape = polygon, sides =8 ]"1"[label="As-is"]"0" -> "1"
+"2"[label="Refactoring"]"0" -> "2"
+}

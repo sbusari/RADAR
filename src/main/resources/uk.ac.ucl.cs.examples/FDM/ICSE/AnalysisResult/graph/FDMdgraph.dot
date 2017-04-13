@@ -1,0 +1,12 @@
+digraph G { 
+"0"[label="blocking policy", shape = polygon, sides =8 ]"1"[label="block first"]"0" -> "1"
+"2"[label="investigate first"]"0" -> "2"
+"3"[label="processing type", shape = polygon, sides =8 ]"4"[label="continuous"]"3" -> "4"
+"5"[label="batch"]"3" -> "5"
+"6"[label="fraud detection method", shape = polygon, sides =8 ]"7"[label="classifier"]"6" -> "7"
+"8"[label="alert threshold", shape = polygon, sides =8 ]"7" -> "8"
+"9"[label="rule-based"]"6" -> "9"
+"8"[label="alert threshold", shape = polygon, sides =8 ]"11"[label="high"]"8" -> "11"
+"12"[label="medium"]"8" -> "12"
+"13"[label="low"]"8" -> "13"
+}

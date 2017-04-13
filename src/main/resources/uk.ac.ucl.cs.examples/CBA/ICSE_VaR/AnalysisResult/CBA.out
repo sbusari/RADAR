@@ -1,0 +1,52 @@
+Optimisation           Analysis 
+---------------------- 
+        
+Objective:             MaxENB
+  
+Objective:             MinVaR
+  
+SolutionSpace:         2
+       
+Minimal SolutionSet:   2
+       
+Shortlisted:           1
+       
+Nbr. Variables:        3
+       
+Nbr. Parameters:       4
+       
+Nbr. Decisions:        1
+       
+Runtime(s):            0
+       
+ID Architecture choice ENB                VaR                Optimal
+ 
+1  Refactoring         1.9768611272258003 -2.408144332219819 Yes
+     
+2  As-is               1.000085948390792  0.9011087380334449 No
+      
+
+Information Value Analysis 
+        
+-------------------------- 
+
+       
+Objective:                 ENB
+     
+EVTPI:                     0.0
+
+    
+Parameter                  EVPPI 
+  
+----------                 ----- 
+
+ 
+Benefit[As-is]             0.0
+     
+Benefit[Refactoring]       0.0
+     
+Cost[As-is]                0.0
+     
+Cost[Refactoring]          0.0
+     
+

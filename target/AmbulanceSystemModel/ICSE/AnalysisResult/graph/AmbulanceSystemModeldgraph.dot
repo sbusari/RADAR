@@ -1,4 +1,0 @@
-digraph G { 
-"0"[label="Incident Encoding", shape = polygon, sides =8 ]"1"[label="Paper-Based"]"0" -> "1"
-"2"[label="Computer-Based"]"0" -> "2"
-}

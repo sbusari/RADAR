@@ -1,0 +1,958 @@
+digraph G { 
+rankdir = BT 
+"BatteryUsage_weight"[shape = box, style = rounded] 
+AndRef0[shape = point] 
+1[label="Location Finding", shape = polygon, sides =8]1->"BatteryUsage_LocationFinding"
+"BatteryUsage_LocationFinding[GPS]"[shape = box, style = rounded] 
+AndRef0->1
+"BatteryUsage_LocationFinding[GPS]"->AndRef0 [dir = none] 
+AndRef1[shape = point] 
+1[label="Location Finding", shape = polygon, sides =8]"BatteryUsage_LocationFinding[radio triangulation]"[shape = box, style = rounded] 
+AndRef1->1
+"BatteryUsage_LocationFinding[radio triangulation]"->AndRef1 [dir = none] 
+"BatteryUsage_LocationFinding"[shape = box, style = rounded] 
+AndRef2[shape = point] 
+3[label="File Sharing", shape = polygon, sides =8]3->"BatteryUsage_FileSharing"
+"BatteryUsage_FileSharing[OpenIntent]"[shape = box, style = rounded] 
+AndRef2->3
+"BatteryUsage_FileSharing[OpenIntent]"->AndRef2 [dir = none] 
+AndRef3[shape = point] 
+3[label="File Sharing", shape = polygon, sides =8]"BatteryUsage_FileSharing[In house]"[shape = box, style = rounded] 
+AndRef3->3
+"BatteryUsage_FileSharing[In house]"->AndRef3 [dir = none] 
+"BatteryUsage_FileSharing"[shape = box, style = rounded] 
+AndRef4[shape = point] 
+5[label="Report Syncing", shape = polygon, sides =8]5->"BatteryUsage_ReportSyncing"
+"BatteryUsage_ReportSyncing[Explicit]"[shape = box, style = rounded] 
+AndRef4->5
+"BatteryUsage_ReportSyncing[Explicit]"->AndRef4 [dir = none] 
+AndRef5[shape = point] 
+5[label="Report Syncing", shape = polygon, sides =8]"BatteryUsage_ReportSyncing[Implicit]"[shape = box, style = rounded] 
+AndRef5->5
+"BatteryUsage_ReportSyncing[Implicit]"->AndRef5 [dir = none] 
+"BatteryUsage_ReportSyncing"[shape = box, style = rounded] 
+AndRef6[shape = point] 
+7[label="Chat Protocol", shape = polygon, sides =8]7->"BatteryUsage_ChatProtocol"
+"BatteryUsage_ChatProtocol[XMPP (Open Fire)]"[shape = box, style = rounded] 
+AndRef6->7
+"BatteryUsage_ChatProtocol[XMPP (Open Fire)]"->AndRef6 [dir = none] 
+AndRef7[shape = point] 
+7[label="Chat Protocol", shape = polygon, sides =8]"BatteryUsage_ChatProtocol[In house]"[shape = box, style = rounded] 
+AndRef7->7
+"BatteryUsage_ChatProtocol[In house]"->AndRef7 [dir = none] 
+"BatteryUsage_ChatProtocol"[shape = box, style = rounded] 
+AndRef8[shape = point] 
+9[label="Map Access", shape = polygon, sides =8]9->"BatteryUsage_MapAccess"
+"BatteryUsage_MapAccess[On Demand (Google)]"[shape = box, style = rounded] 
+AndRef8->9
+"BatteryUsage_MapAccess[On Demand (Google)]"->AndRef8 [dir = none] 
+AndRef9[shape = point] 
+9[label="Map Access", shape = polygon, sides =8]"BatteryUsage_MapAccess[Cache on server]"[shape = box, style = rounded] 
+AndRef9->9
+"BatteryUsage_MapAccess[Cache on server]"->AndRef9 [dir = none] 
+AndRef10[shape = point] 
+9[label="Map Access", shape = polygon, sides =8]"BatteryUsage_MapAccess[Preloaded (ESRI)]"[shape = box, style = rounded] 
+AndRef10->9
+"BatteryUsage_MapAccess[Preloaded (ESRI)]"->AndRef10 [dir = none] 
+"BatteryUsage_MapAccess"[shape = box, style = rounded] 
+AndRef11[shape = point] 
+12[label="Hardware Platform", shape = polygon, sides =8]12->"BatteryUsage_HardwarePlatform"
+"BatteryUsage_HardwarePlatform[Nexus I (HTC)]"[shape = box, style = rounded] 
+AndRef11->12
+"BatteryUsage_HardwarePlatform[Nexus I (HTC)]"->AndRef11 [dir = none] 
+AndRef12[shape = point] 
+12[label="Hardware Platform", shape = polygon, sides =8]"BatteryUsage_HardwarePlatform[Droid (Motorola)]"[shape = box, style = rounded] 
+AndRef12->12
+"BatteryUsage_HardwarePlatform[Droid (Motorola)]"->AndRef12 [dir = none] 
+"BatteryUsage_HardwarePlatform"[shape = box, style = rounded] 
+AndRef13[shape = point] 
+14[label="Connectivity", shape = polygon, sides =8]14->"BatteryUsage_Connectivity"
+"BatteryUsage_Connectivity[Wifi]"[shape = box, style = rounded] 
+AndRef13->14
+"BatteryUsage_Connectivity[Wifi]"->AndRef13 [dir = none] 
+AndRef14[shape = point] 
+14[label="Connectivity", shape = polygon, sides =8]"BatteryUsage_Connectivity[3G on Nexus I]"[shape = box, style = rounded] 
+AndRef14->14
+"BatteryUsage_Connectivity[3G on Nexus I]"->AndRef14 [dir = none] 
+AndRef15[shape = point] 
+14[label="Connectivity", shape = polygon, sides =8]"BatteryUsage_Connectivity[3G on Droid]"[shape = box, style = rounded] 
+AndRef15->14
+"BatteryUsage_Connectivity[3G on Droid]"->AndRef15 [dir = none] 
+AndRef16[shape = point] 
+14[label="Connectivity", shape = polygon, sides =8]"BatteryUsage_Connectivity[Bluetooth]"[shape = box, style = rounded] 
+AndRef16->14
+"BatteryUsage_Connectivity[Bluetooth]"->AndRef16 [dir = none] 
+"BatteryUsage_Connectivity"[shape = box, style = rounded] 
+AndRef17[shape = point] 
+18[label="Database", shape = polygon, sides =8]18->"BatteryUsage_DataBase"
+"BatteryUsage_DataBase[MySQL]"[shape = box, style = rounded] 
+AndRef17->18
+"BatteryUsage_DataBase[MySQL]"->AndRef17 [dir = none] 
+AndRef18[shape = point] 
+18[label="Database", shape = polygon, sides =8]"BatteryUsage_DataBase[sqLite]"[shape = box, style = rounded] 
+AndRef18->18
+"BatteryUsage_DataBase[sqLite]"->AndRef18 [dir = none] 
+"BatteryUsage_DataBase"[shape = box, style = rounded] 
+AndRef19[shape = point] 
+20[label="Architectural Pattern", shape = polygon, sides =8]20->"BatteryUsage_ArchitecturalPattern"
+"BatteryUsage_ArchitecturalPattern[Peer-to-peer]"[shape = box, style = rounded] 
+AndRef19->20
+"BatteryUsage_ArchitecturalPattern[Peer-to-peer]"->AndRef19 [dir = none] 
+AndRef20[shape = point] 
+20[label="Architectural Pattern", shape = polygon, sides =8]"BatteryUsage_ArchitecturalPattern[Client-Server]"[shape = box, style = rounded] 
+AndRef20->20
+"BatteryUsage_ArchitecturalPattern[Client-Server]"->AndRef20 [dir = none] 
+AndRef21[shape = point] 
+20[label="Architectural Pattern", shape = polygon, sides =8]"BatteryUsage_ArchitecturalPattern[Push-based]"[shape = box, style = rounded] 
+AndRef21->20
+"BatteryUsage_ArchitecturalPattern[Push-based]"->AndRef21 [dir = none] 
+"BatteryUsage_ArchitecturalPattern"[shape = box, style = rounded] 
+AndRef22[shape = point] 
+23[label="Data Exchange Format", shape = polygon, sides =8]23->"BatteryUsage_DataExchangeFormat"
+"BatteryUsage_DataExchangeFormat[XML]"[shape = box, style = rounded] 
+AndRef22->23
+"BatteryUsage_DataExchangeFormat[XML]"->AndRef22 [dir = none] 
+AndRef23[shape = point] 
+23[label="Data Exchange Format", shape = polygon, sides =8]"BatteryUsage_DataExchangeFormat[Compressed XML]"[shape = box, style = rounded] 
+AndRef23->23
+"BatteryUsage_DataExchangeFormat[Compressed XML]"->AndRef23 [dir = none] 
+AndRef24[shape = point] 
+23[label="Data Exchange Format", shape = polygon, sides =8]"BatteryUsage_DataExchangeFormat[Unformatted data]"[shape = box, style = rounded] 
+AndRef24->23
+"BatteryUsage_DataExchangeFormat[Unformatted data]"->AndRef24 [dir = none] 
+"BatteryUsage_DataExchangeFormat"[shape = box, style = rounded] 
+"BatteryUsage"[shape = box, style = rounded] 
+AndRef25[shape = point] 
+AndRef25->"BatteryUsage"
+"BatteryUsage_LocationFinding"->AndRef25 [dir = none] 
+"BatteryUsage_FileSharing"->AndRef25 [dir = none] 
+"BatteryUsage_ReportSyncing"->AndRef25 [dir = none] 
+"BatteryUsage_ChatProtocol"->AndRef25 [dir = none] 
+"BatteryUsage_MapAccess"->AndRef25 [dir = none] 
+"BatteryUsage_HardwarePlatform"->AndRef25 [dir = none] 
+"BatteryUsage_Connectivity"->AndRef25 [dir = none] 
+"BatteryUsage_DataBase"->AndRef25 [dir = none] 
+"BatteryUsage_ArchitecturalPattern"->AndRef25 [dir = none] 
+"BatteryUsage_DataExchangeFormat"->AndRef25 [dir = none] 
+"BatteryUsage_best"[shape = box, style = rounded] 
+"BatteryUsage_worst"[shape = box, style = rounded] 
+"BatteryUsage_Preference"[shape = box, style = rounded] 
+AndRef26[shape = point] 
+AndRef26->"BatteryUsage_Preference"
+"BatteryUsage"->AndRef26 [dir = none] 
+"BatteryUsage_best"->AndRef26 [dir = none] 
+"BatteryUsage_worst"->AndRef26 [dir = none] 
+"ResponseTime_weight"[shape = box, style = rounded] 
+AndRef27[shape = point] 
+28[label="Location Finding", shape = polygon, sides =8]28->"ResponseTime_LocationFinding"
+"ResponseTime_LocationFinding[GPS]"[shape = box, style = rounded] 
+AndRef27->28
+"ResponseTime_LocationFinding[GPS]"->AndRef27 [dir = none] 
+AndRef28[shape = point] 
+28[label="Location Finding", shape = polygon, sides =8]"ResponseTime_LocationFinding[radio triangulation]"[shape = box, style = rounded] 
+AndRef28->28
+"ResponseTime_LocationFinding[radio triangulation]"->AndRef28 [dir = none] 
+"ResponseTime_LocationFinding"[shape = box, style = rounded] 
+AndRef29[shape = point] 
+30[label="File Sharing", shape = polygon, sides =8]30->"ResponseTime_FileSharing"
+"ResponseTime_FileSharing[OpenIntent]"[shape = box, style = rounded] 
+AndRef29->30
+"ResponseTime_FileSharing[OpenIntent]"->AndRef29 [dir = none] 
+AndRef30[shape = point] 
+30[label="File Sharing", shape = polygon, sides =8]"ResponseTime_FileSharing[In house]"[shape = box, style = rounded] 
+AndRef30->30
+"ResponseTime_FileSharing[In house]"->AndRef30 [dir = none] 
+"ResponseTime_FileSharing"[shape = box, style = rounded] 
+AndRef31[shape = point] 
+32[label="Report Syncing", shape = polygon, sides =8]32->"ResponseTime_ReportSyncing"
+"ResponseTime_ReportSyncing[Explicit]"[shape = box, style = rounded] 
+AndRef31->32
+"ResponseTime_ReportSyncing[Explicit]"->AndRef31 [dir = none] 
+AndRef32[shape = point] 
+32[label="Report Syncing", shape = polygon, sides =8]"ResponseTime_ReportSyncing[Implicit]"[shape = box, style = rounded] 
+AndRef32->32
+"ResponseTime_ReportSyncing[Implicit]"->AndRef32 [dir = none] 
+"ResponseTime_ReportSyncing"[shape = box, style = rounded] 
+AndRef33[shape = point] 
+34[label="Chat Protocol", shape = polygon, sides =8]34->"ResponseTime_ChatProtocol"
+"ResponseTime_ChatProtocol[XMPP (Open Fire)]"[shape = box, style = rounded] 
+AndRef33->34
+"ResponseTime_ChatProtocol[XMPP (Open Fire)]"->AndRef33 [dir = none] 
+AndRef34[shape = point] 
+34[label="Chat Protocol", shape = polygon, sides =8]"ResponseTime_ChatProtocol[In house]"[shape = box, style = rounded] 
+AndRef34->34
+"ResponseTime_ChatProtocol[In house]"->AndRef34 [dir = none] 
+"ResponseTime_ChatProtocol"[shape = box, style = rounded] 
+AndRef35[shape = point] 
+36[label="Map Access", shape = polygon, sides =8]36->"ResponseTime_MapAccess"
+"ResponseTime_MapAccess[On Demand (Google)]"[shape = box, style = rounded] 
+AndRef35->36
+"ResponseTime_MapAccess[On Demand (Google)]"->AndRef35 [dir = none] 
+AndRef36[shape = point] 
+36[label="Map Access", shape = polygon, sides =8]"ResponseTime_MapAccess[Cache on server]"[shape = box, style = rounded] 
+AndRef36->36
+"ResponseTime_MapAccess[Cache on server]"->AndRef36 [dir = none] 
+AndRef37[shape = point] 
+36[label="Map Access", shape = polygon, sides =8]"ResponseTime_MapAccess[Preloaded (ESRI)]"[shape = box, style = rounded] 
+AndRef37->36
+"ResponseTime_MapAccess[Preloaded (ESRI)]"->AndRef37 [dir = none] 
+"ResponseTime_MapAccess"[shape = box, style = rounded] 
+AndRef38[shape = point] 
+39[label="Hardware Platform", shape = polygon, sides =8]39->"ResponseTime_HardwarePlatform"
+"ResponseTime_HardwarePlatform[Nexus I (HTC)]"[shape = box, style = rounded] 
+AndRef38->39
+"ResponseTime_HardwarePlatform[Nexus I (HTC)]"->AndRef38 [dir = none] 
+AndRef39[shape = point] 
+39[label="Hardware Platform", shape = polygon, sides =8]"ResponseTime_HardwarePlatform[Droid (Motorola)]"[shape = box, style = rounded] 
+AndRef39->39
+"ResponseTime_HardwarePlatform[Droid (Motorola)]"->AndRef39 [dir = none] 
+"ResponseTime_HardwarePlatform"[shape = box, style = rounded] 
+AndRef40[shape = point] 
+41[label="Connectivity", shape = polygon, sides =8]41->"ResponseTime_Connectivity"
+"ResponseTime_Connectivity[Wifi]"[shape = box, style = rounded] 
+AndRef40->41
+"ResponseTime_Connectivity[Wifi]"->AndRef40 [dir = none] 
+AndRef41[shape = point] 
+41[label="Connectivity", shape = polygon, sides =8]"ResponseTime_Connectivity[3G on Nexus I]"[shape = box, style = rounded] 
+AndRef41->41
+"ResponseTime_Connectivity[3G on Nexus I]"->AndRef41 [dir = none] 
+AndRef42[shape = point] 
+41[label="Connectivity", shape = polygon, sides =8]"ResponseTime_Connectivity[3G on Droid]"[shape = box, style = rounded] 
+AndRef42->41
+"ResponseTime_Connectivity[3G on Droid]"->AndRef42 [dir = none] 
+AndRef43[shape = point] 
+41[label="Connectivity", shape = polygon, sides =8]"ResponseTime_Connectivity[Bluetooth]"[shape = box, style = rounded] 
+AndRef43->41
+"ResponseTime_Connectivity[Bluetooth]"->AndRef43 [dir = none] 
+"ResponseTime_Connectivity"[shape = box, style = rounded] 
+AndRef44[shape = point] 
+45[label="Database", shape = polygon, sides =8]45->"ResponseTime_DataBase"
+"ResponseTime_DataBase[MySQL]"[shape = box, style = rounded] 
+AndRef44->45
+"ResponseTime_DataBase[MySQL]"->AndRef44 [dir = none] 
+AndRef45[shape = point] 
+45[label="Database", shape = polygon, sides =8]"ResponseTime_DataBase[sqLite]"[shape = box, style = rounded] 
+AndRef45->45
+"ResponseTime_DataBase[sqLite]"->AndRef45 [dir = none] 
+"ResponseTime_DataBase"[shape = box, style = rounded] 
+AndRef46[shape = point] 
+47[label="Architectural Pattern", shape = polygon, sides =8]47->"ResponseTime_ArchitecturalPattern"
+"ResponseTime_ArchitecturalPattern[Peer-to-peer]"[shape = box, style = rounded] 
+AndRef46->47
+"ResponseTime_ArchitecturalPattern[Peer-to-peer]"->AndRef46 [dir = none] 
+AndRef47[shape = point] 
+47[label="Architectural Pattern", shape = polygon, sides =8]"ResponseTime_ArchitecturalPattern[Client-Server]"[shape = box, style = rounded] 
+AndRef47->47
+"ResponseTime_ArchitecturalPattern[Client-Server]"->AndRef47 [dir = none] 
+AndRef48[shape = point] 
+47[label="Architectural Pattern", shape = polygon, sides =8]"ResponseTime_ArchitecturalPattern[Push-based]"[shape = box, style = rounded] 
+AndRef48->47
+"ResponseTime_ArchitecturalPattern[Push-based]"->AndRef48 [dir = none] 
+"ResponseTime_ArchitecturalPattern"[shape = box, style = rounded] 
+AndRef49[shape = point] 
+50[label="Data Exchange Format", shape = polygon, sides =8]50->"ResponseTime_DataExchangeFormat"
+"ResponseTime_DataExchangeFormat[XML]"[shape = box, style = rounded] 
+AndRef49->50
+"ResponseTime_DataExchangeFormat[XML]"->AndRef49 [dir = none] 
+AndRef50[shape = point] 
+50[label="Data Exchange Format", shape = polygon, sides =8]"ResponseTime_DataExchangeFormat[Compressed XML]"[shape = box, style = rounded] 
+AndRef50->50
+"ResponseTime_DataExchangeFormat[Compressed XML]"->AndRef50 [dir = none] 
+AndRef51[shape = point] 
+50[label="Data Exchange Format", shape = polygon, sides =8]"ResponseTime_DataExchangeFormat[Unformatted data]"[shape = box, style = rounded] 
+AndRef51->50
+"ResponseTime_DataExchangeFormat[Unformatted data]"->AndRef51 [dir = none] 
+"ResponseTime_DataExchangeFormat"[shape = box, style = rounded] 
+"ResponseTime"[shape = box, style = rounded] 
+AndRef52[shape = point] 
+AndRef52->"ResponseTime"
+"ResponseTime_LocationFinding"->AndRef52 [dir = none] 
+"ResponseTime_FileSharing"->AndRef52 [dir = none] 
+"ResponseTime_ReportSyncing"->AndRef52 [dir = none] 
+"ResponseTime_ChatProtocol"->AndRef52 [dir = none] 
+"ResponseTime_MapAccess"->AndRef52 [dir = none] 
+"ResponseTime_HardwarePlatform"->AndRef52 [dir = none] 
+"ResponseTime_Connectivity"->AndRef52 [dir = none] 
+"ResponseTime_DataBase"->AndRef52 [dir = none] 
+"ResponseTime_ArchitecturalPattern"->AndRef52 [dir = none] 
+"ResponseTime_DataExchangeFormat"->AndRef52 [dir = none] 
+"ResponseTime_worst"[shape = box, style = rounded] 
+"ResponseTime_best"[shape = box, style = rounded] 
+"ResponseTime_Preference"[shape = box, style = rounded] 
+AndRef53[shape = point] 
+AndRef53->"ResponseTime_Preference"
+"ResponseTime"->AndRef53 [dir = none] 
+"ResponseTime_worst"->AndRef53 [dir = none] 
+"ResponseTime_best"->AndRef53 [dir = none] 
+"Reliability_weight"[shape = box, style = rounded] 
+AndRef54[shape = point] 
+55[label="Location Finding", shape = polygon, sides =8]55->"Reliability_LocationFinding"
+"Reliability_LocationFinding[GPS]"[shape = box, style = rounded] 
+AndRef54->55
+"Reliability_LocationFinding[GPS]"->AndRef54 [dir = none] 
+AndRef55[shape = point] 
+55[label="Location Finding", shape = polygon, sides =8]"Reliability_LocationFinding[radio triangulation]"[shape = box, style = rounded] 
+AndRef55->55
+"Reliability_LocationFinding[radio triangulation]"->AndRef55 [dir = none] 
+"Reliability_LocationFinding"[shape = box, style = rounded] 
+AndRef56[shape = point] 
+57[label="File Sharing", shape = polygon, sides =8]57->"Reliability_FileSharing"
+"Reliability_FileSharing[OpenIntent]"[shape = box, style = rounded] 
+AndRef56->57
+"Reliability_FileSharing[OpenIntent]"->AndRef56 [dir = none] 
+AndRef57[shape = point] 
+57[label="File Sharing", shape = polygon, sides =8]"Reliability_FileSharing[In house]"[shape = box, style = rounded] 
+AndRef57->57
+"Reliability_FileSharing[In house]"->AndRef57 [dir = none] 
+"Reliability_FileSharing"[shape = box, style = rounded] 
+AndRef58[shape = point] 
+59[label="Report Syncing", shape = polygon, sides =8]59->"Reliability_ReportSyncing"
+"Reliability_ReportSyncing[Explicit]"[shape = box, style = rounded] 
+AndRef58->59
+"Reliability_ReportSyncing[Explicit]"->AndRef58 [dir = none] 
+AndRef59[shape = point] 
+59[label="Report Syncing", shape = polygon, sides =8]"Reliability_ReportSyncing[Implicit]"[shape = box, style = rounded] 
+AndRef59->59
+"Reliability_ReportSyncing[Implicit]"->AndRef59 [dir = none] 
+"Reliability_ReportSyncing"[shape = box, style = rounded] 
+AndRef60[shape = point] 
+61[label="Chat Protocol", shape = polygon, sides =8]61->"Reliability_ChatProtocol"
+"Reliability_ChatProtocol[XMPP (Open Fire)]"[shape = box, style = rounded] 
+AndRef60->61
+"Reliability_ChatProtocol[XMPP (Open Fire)]"->AndRef60 [dir = none] 
+AndRef61[shape = point] 
+61[label="Chat Protocol", shape = polygon, sides =8]"Reliability_ChatProtocol[In house]"[shape = box, style = rounded] 
+AndRef61->61
+"Reliability_ChatProtocol[In house]"->AndRef61 [dir = none] 
+"Reliability_ChatProtocol"[shape = box, style = rounded] 
+AndRef62[shape = point] 
+63[label="Map Access", shape = polygon, sides =8]63->"Reliability_MapAccess"
+"Reliability_MapAccess[On Demand (Google)]"[shape = box, style = rounded] 
+AndRef62->63
+"Reliability_MapAccess[On Demand (Google)]"->AndRef62 [dir = none] 
+AndRef63[shape = point] 
+63[label="Map Access", shape = polygon, sides =8]"Reliability_MapAccess[Cache on server]"[shape = box, style = rounded] 
+AndRef63->63
+"Reliability_MapAccess[Cache on server]"->AndRef63 [dir = none] 
+AndRef64[shape = point] 
+63[label="Map Access", shape = polygon, sides =8]"Reliability_MapAccess[Preloaded (ESRI)]"[shape = box, style = rounded] 
+AndRef64->63
+"Reliability_MapAccess[Preloaded (ESRI)]"->AndRef64 [dir = none] 
+"Reliability_MapAccess"[shape = box, style = rounded] 
+AndRef65[shape = point] 
+66[label="Hardware Platform", shape = polygon, sides =8]66->"Reliability_HardwarePlatform"
+"Reliability_HardwarePlatform[Nexus I (HTC)]"[shape = box, style = rounded] 
+AndRef65->66
+"Reliability_HardwarePlatform[Nexus I (HTC)]"->AndRef65 [dir = none] 
+AndRef66[shape = point] 
+66[label="Hardware Platform", shape = polygon, sides =8]"Reliability_HardwarePlatform[Droid (Motorola)]"[shape = box, style = rounded] 
+AndRef66->66
+"Reliability_HardwarePlatform[Droid (Motorola)]"->AndRef66 [dir = none] 
+"Reliability_HardwarePlatform"[shape = box, style = rounded] 
+AndRef67[shape = point] 
+68[label="Connectivity", shape = polygon, sides =8]68->"Reliability_Connectivity"
+"Reliability_Connectivity[Wifi]"[shape = box, style = rounded] 
+AndRef67->68
+"Reliability_Connectivity[Wifi]"->AndRef67 [dir = none] 
+AndRef68[shape = point] 
+68[label="Connectivity", shape = polygon, sides =8]"Reliability_Connectivity[3G on Nexus I]"[shape = box, style = rounded] 
+AndRef68->68
+"Reliability_Connectivity[3G on Nexus I]"->AndRef68 [dir = none] 
+AndRef69[shape = point] 
+68[label="Connectivity", shape = polygon, sides =8]"Reliability_Connectivity[3G on Droid]"[shape = box, style = rounded] 
+AndRef69->68
+"Reliability_Connectivity[3G on Droid]"->AndRef69 [dir = none] 
+AndRef70[shape = point] 
+68[label="Connectivity", shape = polygon, sides =8]"Reliability_Connectivity[Bluetooth]"[shape = box, style = rounded] 
+AndRef70->68
+"Reliability_Connectivity[Bluetooth]"->AndRef70 [dir = none] 
+"Reliability_Connectivity"[shape = box, style = rounded] 
+AndRef71[shape = point] 
+72[label="Database", shape = polygon, sides =8]72->"Reliability_DataBase"
+"Reliability_DataBase[MySQL]"[shape = box, style = rounded] 
+AndRef71->72
+"Reliability_DataBase[MySQL]"->AndRef71 [dir = none] 
+AndRef72[shape = point] 
+72[label="Database", shape = polygon, sides =8]"Reliability_DataBase[sqLite]"[shape = box, style = rounded] 
+AndRef72->72
+"Reliability_DataBase[sqLite]"->AndRef72 [dir = none] 
+"Reliability_DataBase"[shape = box, style = rounded] 
+AndRef73[shape = point] 
+74[label="Architectural Pattern", shape = polygon, sides =8]74->"Reliability_ArchitecturalPattern"
+"Reliability_ArchitecturalPattern[Peer-to-peer]"[shape = box, style = rounded] 
+AndRef73->74
+"Reliability_ArchitecturalPattern[Peer-to-peer]"->AndRef73 [dir = none] 
+AndRef74[shape = point] 
+74[label="Architectural Pattern", shape = polygon, sides =8]"Reliability_ArchitecturalPattern[Client-Server]"[shape = box, style = rounded] 
+AndRef74->74
+"Reliability_ArchitecturalPattern[Client-Server]"->AndRef74 [dir = none] 
+AndRef75[shape = point] 
+74[label="Architectural Pattern", shape = polygon, sides =8]"Reliability_ArchitecturalPattern[Push-based]"[shape = box, style = rounded] 
+AndRef75->74
+"Reliability_ArchitecturalPattern[Push-based]"->AndRef75 [dir = none] 
+"Reliability_ArchitecturalPattern"[shape = box, style = rounded] 
+AndRef76[shape = point] 
+77[label="Data Exchange Format", shape = polygon, sides =8]77->"Reliability_DataExchangeFormat"
+"Reliability_DataExchangeFormat[XML]"[shape = box, style = rounded] 
+AndRef76->77
+"Reliability_DataExchangeFormat[XML]"->AndRef76 [dir = none] 
+AndRef77[shape = point] 
+77[label="Data Exchange Format", shape = polygon, sides =8]"Reliability_DataExchangeFormat[Compressed XML]"[shape = box, style = rounded] 
+AndRef77->77
+"Reliability_DataExchangeFormat[Compressed XML]"->AndRef77 [dir = none] 
+AndRef78[shape = point] 
+77[label="Data Exchange Format", shape = polygon, sides =8]"Reliability_DataExchangeFormat[Unformatted data]"[shape = box, style = rounded] 
+AndRef78->77
+"Reliability_DataExchangeFormat[Unformatted data]"->AndRef78 [dir = none] 
+"Reliability_DataExchangeFormat"[shape = box, style = rounded] 
+"Reliability"[shape = box, style = rounded] 
+AndRef79[shape = point] 
+AndRef79->"Reliability"
+"Reliability_LocationFinding"->AndRef79 [dir = none] 
+"Reliability_FileSharing"->AndRef79 [dir = none] 
+"Reliability_ReportSyncing"->AndRef79 [dir = none] 
+"Reliability_ChatProtocol"->AndRef79 [dir = none] 
+"Reliability_MapAccess"->AndRef79 [dir = none] 
+"Reliability_HardwarePlatform"->AndRef79 [dir = none] 
+"Reliability_Connectivity"->AndRef79 [dir = none] 
+"Reliability_DataBase"->AndRef79 [dir = none] 
+"Reliability_ArchitecturalPattern"->AndRef79 [dir = none] 
+"Reliability_DataExchangeFormat"->AndRef79 [dir = none] 
+"Reliability_worst"[shape = box, style = rounded] 
+"Reliability_best"[shape = box, style = rounded] 
+"Reliability_Preference"[shape = box, style = rounded] 
+AndRef80[shape = point] 
+AndRef80->"Reliability_Preference"
+"Reliability"->AndRef80 [dir = none] 
+"Reliability_worst"->AndRef80 [dir = none] 
+"Reliability_best"->AndRef80 [dir = none] 
+"RampUpTime_weight"[shape = box, style = rounded] 
+AndRef81[shape = point] 
+82[label="Location Finding", shape = polygon, sides =8]82->"RampUpTime_LocationFinding"
+"RampUpTime_LocationFinding[GPS]"[shape = box, style = rounded] 
+AndRef81->82
+"RampUpTime_LocationFinding[GPS]"->AndRef81 [dir = none] 
+AndRef82[shape = point] 
+82[label="Location Finding", shape = polygon, sides =8]"RampUpTime_LocationFinding[radio triangulation]"[shape = box, style = rounded] 
+AndRef82->82
+"RampUpTime_LocationFinding[radio triangulation]"->AndRef82 [dir = none] 
+"RampUpTime_LocationFinding"[shape = box, style = rounded] 
+AndRef83[shape = point] 
+84[label="File Sharing", shape = polygon, sides =8]84->"RampUpTime_FileSharing"
+"RampUpTime_FileSharing[OpenIntent]"[shape = box, style = rounded] 
+AndRef83->84
+"RampUpTime_FileSharing[OpenIntent]"->AndRef83 [dir = none] 
+AndRef84[shape = point] 
+84[label="File Sharing", shape = polygon, sides =8]"RampUpTime_FileSharing[In house]"[shape = box, style = rounded] 
+AndRef84->84
+"RampUpTime_FileSharing[In house]"->AndRef84 [dir = none] 
+"RampUpTime_FileSharing"[shape = box, style = rounded] 
+AndRef85[shape = point] 
+86[label="Report Syncing", shape = polygon, sides =8]86->"RampUpTime_ReportSyncing"
+"RampUpTime_ReportSyncing[Explicit]"[shape = box, style = rounded] 
+AndRef85->86
+"RampUpTime_ReportSyncing[Explicit]"->AndRef85 [dir = none] 
+AndRef86[shape = point] 
+86[label="Report Syncing", shape = polygon, sides =8]"RampUpTime_ReportSyncing[Implicit]"[shape = box, style = rounded] 
+AndRef86->86
+"RampUpTime_ReportSyncing[Implicit]"->AndRef86 [dir = none] 
+"RampUpTime_ReportSyncing"[shape = box, style = rounded] 
+AndRef87[shape = point] 
+88[label="Chat Protocol", shape = polygon, sides =8]88->"RampUpTime_ChatProtocol"
+"RampUpTime_ChatProtocol[XMPP (Open Fire)]"[shape = box, style = rounded] 
+AndRef87->88
+"RampUpTime_ChatProtocol[XMPP (Open Fire)]"->AndRef87 [dir = none] 
+AndRef88[shape = point] 
+88[label="Chat Protocol", shape = polygon, sides =8]"RampUpTime_ChatProtocol[In house]"[shape = box, style = rounded] 
+AndRef88->88
+"RampUpTime_ChatProtocol[In house]"->AndRef88 [dir = none] 
+"RampUpTime_ChatProtocol"[shape = box, style = rounded] 
+AndRef89[shape = point] 
+90[label="Map Access", shape = polygon, sides =8]90->"RampUpTime_MapAccess"
+"RampUpTime_MapAccess[On Demand (Google)]"[shape = box, style = rounded] 
+AndRef89->90
+"RampUpTime_MapAccess[On Demand (Google)]"->AndRef89 [dir = none] 
+AndRef90[shape = point] 
+90[label="Map Access", shape = polygon, sides =8]"RampUpTime_MapAccess[Cache on server]"[shape = box, style = rounded] 
+AndRef90->90
+"RampUpTime_MapAccess[Cache on server]"->AndRef90 [dir = none] 
+AndRef91[shape = point] 
+90[label="Map Access", shape = polygon, sides =8]"RampUpTime_MapAccess[Preloaded (ESRI)]"[shape = box, style = rounded] 
+AndRef91->90
+"RampUpTime_MapAccess[Preloaded (ESRI)]"->AndRef91 [dir = none] 
+"RampUpTime_MapAccess"[shape = box, style = rounded] 
+AndRef92[shape = point] 
+93[label="Hardware Platform", shape = polygon, sides =8]93->"RampUpTime_HardwarePlatform"
+"RampUpTime_HardwarePlatform[Nexus I (HTC)]"[shape = box, style = rounded] 
+AndRef92->93
+"RampUpTime_HardwarePlatform[Nexus I (HTC)]"->AndRef92 [dir = none] 
+AndRef93[shape = point] 
+93[label="Hardware Platform", shape = polygon, sides =8]"RampUpTime_HardwarePlatform[Droid (Motorola)]"[shape = box, style = rounded] 
+AndRef93->93
+"RampUpTime_HardwarePlatform[Droid (Motorola)]"->AndRef93 [dir = none] 
+"RampUpTime_HardwarePlatform"[shape = box, style = rounded] 
+AndRef94[shape = point] 
+95[label="Connectivity", shape = polygon, sides =8]95->"RampUpTime_Connectivity"
+"RampUpTime_Connectivity[Wifi]"[shape = box, style = rounded] 
+AndRef94->95
+"RampUpTime_Connectivity[Wifi]"->AndRef94 [dir = none] 
+AndRef95[shape = point] 
+95[label="Connectivity", shape = polygon, sides =8]"RampUpTime_Connectivity[3G on Nexus I]"[shape = box, style = rounded] 
+AndRef95->95
+"RampUpTime_Connectivity[3G on Nexus I]"->AndRef95 [dir = none] 
+AndRef96[shape = point] 
+95[label="Connectivity", shape = polygon, sides =8]"RampUpTime_Connectivity[3G on Droid]"[shape = box, style = rounded] 
+AndRef96->95
+"RampUpTime_Connectivity[3G on Droid]"->AndRef96 [dir = none] 
+AndRef97[shape = point] 
+95[label="Connectivity", shape = polygon, sides =8]"RampUpTime_Connectivity[Bluetooth]"[shape = box, style = rounded] 
+AndRef97->95
+"RampUpTime_Connectivity[Bluetooth]"->AndRef97 [dir = none] 
+"RampUpTime_Connectivity"[shape = box, style = rounded] 
+AndRef98[shape = point] 
+99[label="Database", shape = polygon, sides =8]99->"RampUpTime_DataBase"
+"RampUpTime_DataBase[MySQL]"[shape = box, style = rounded] 
+AndRef98->99
+"RampUpTime_DataBase[MySQL]"->AndRef98 [dir = none] 
+AndRef99[shape = point] 
+99[label="Database", shape = polygon, sides =8]"RampUpTime_DataBase[sqLite]"[shape = box, style = rounded] 
+AndRef99->99
+"RampUpTime_DataBase[sqLite]"->AndRef99 [dir = none] 
+"RampUpTime_DataBase"[shape = box, style = rounded] 
+AndRef100[shape = point] 
+101[label="Architectural Pattern", shape = polygon, sides =8]101->"RampUpTime_ArchitecturalPattern"
+"RampUpTime_ArchitecturalPattern[Peer-to-peer]"[shape = box, style = rounded] 
+AndRef100->101
+"RampUpTime_ArchitecturalPattern[Peer-to-peer]"->AndRef100 [dir = none] 
+AndRef101[shape = point] 
+101[label="Architectural Pattern", shape = polygon, sides =8]"RampUpTime_ArchitecturalPattern[Client-Server]"[shape = box, style = rounded] 
+AndRef101->101
+"RampUpTime_ArchitecturalPattern[Client-Server]"->AndRef101 [dir = none] 
+AndRef102[shape = point] 
+101[label="Architectural Pattern", shape = polygon, sides =8]"RampUpTime_ArchitecturalPattern[Push-based]"[shape = box, style = rounded] 
+AndRef102->101
+"RampUpTime_ArchitecturalPattern[Push-based]"->AndRef102 [dir = none] 
+"RampUpTime_ArchitecturalPattern"[shape = box, style = rounded] 
+AndRef103[shape = point] 
+104[label="Data Exchange Format", shape = polygon, sides =8]104->"RampUpTime_DataExchangeFormat"
+"RampUpTime_DataExchangeFormat[XML]"[shape = box, style = rounded] 
+AndRef103->104
+"RampUpTime_DataExchangeFormat[XML]"->AndRef103 [dir = none] 
+AndRef104[shape = point] 
+104[label="Data Exchange Format", shape = polygon, sides =8]"RampUpTime_DataExchangeFormat[Compressed XML]"[shape = box, style = rounded] 
+AndRef104->104
+"RampUpTime_DataExchangeFormat[Compressed XML]"->AndRef104 [dir = none] 
+AndRef105[shape = point] 
+104[label="Data Exchange Format", shape = polygon, sides =8]"RampUpTime_DataExchangeFormat[Unformatted data]"[shape = box, style = rounded] 
+AndRef105->104
+"RampUpTime_DataExchangeFormat[Unformatted data]"->AndRef105 [dir = none] 
+"RampUpTime_DataExchangeFormat"[shape = box, style = rounded] 
+"RampUpTime"[shape = box, style = rounded] 
+AndRef106[shape = point] 
+AndRef106->"RampUpTime"
+"RampUpTime_LocationFinding"->AndRef106 [dir = none] 
+"RampUpTime_FileSharing"->AndRef106 [dir = none] 
+"RampUpTime_ReportSyncing"->AndRef106 [dir = none] 
+"RampUpTime_ChatProtocol"->AndRef106 [dir = none] 
+"RampUpTime_MapAccess"->AndRef106 [dir = none] 
+"RampUpTime_HardwarePlatform"->AndRef106 [dir = none] 
+"RampUpTime_Connectivity"->AndRef106 [dir = none] 
+"RampUpTime_DataBase"->AndRef106 [dir = none] 
+"RampUpTime_ArchitecturalPattern"->AndRef106 [dir = none] 
+"RampUpTime_DataExchangeFormat"->AndRef106 [dir = none] 
+"RampUpTime_worst"[shape = box, style = rounded] 
+"RampUpTime_best"[shape = box, style = rounded] 
+"RampUpTime_Preference"[shape = box, style = rounded] 
+AndRef107[shape = point] 
+AndRef107->"RampUpTime_Preference"
+"RampUpTime"->AndRef107 [dir = none] 
+"RampUpTime_worst"->AndRef107 [dir = none] 
+"RampUpTime_best"->AndRef107 [dir = none] 
+"Cost_weight"[shape = box, style = rounded] 
+AndRef108[shape = point] 
+109[label="Location Finding", shape = polygon, sides =8]109->"Cost_LocationFinding"
+"Cost_LocationFinding[GPS]"[shape = box, style = rounded] 
+AndRef108->109
+"Cost_LocationFinding[GPS]"->AndRef108 [dir = none] 
+AndRef109[shape = point] 
+109[label="Location Finding", shape = polygon, sides =8]"Cost_LocationFinding[radio triangulation]"[shape = box, style = rounded] 
+AndRef109->109
+"Cost_LocationFinding[radio triangulation]"->AndRef109 [dir = none] 
+"Cost_LocationFinding"[shape = box, style = rounded] 
+AndRef110[shape = point] 
+111[label="File Sharing", shape = polygon, sides =8]111->"Cost_FileSharing"
+"Cost_FileSharing[OpenIntent]"[shape = box, style = rounded] 
+AndRef110->111
+"Cost_FileSharing[OpenIntent]"->AndRef110 [dir = none] 
+AndRef111[shape = point] 
+111[label="File Sharing", shape = polygon, sides =8]"Cost_FileSharing[In house]"[shape = box, style = rounded] 
+AndRef111->111
+"Cost_FileSharing[In house]"->AndRef111 [dir = none] 
+"Cost_FileSharing"[shape = box, style = rounded] 
+AndRef112[shape = point] 
+113[label="Report Syncing", shape = polygon, sides =8]113->"Cost_ReportSyncing"
+"Cost_ReportSyncing[Explicit]"[shape = box, style = rounded] 
+AndRef112->113
+"Cost_ReportSyncing[Explicit]"->AndRef112 [dir = none] 
+AndRef113[shape = point] 
+113[label="Report Syncing", shape = polygon, sides =8]"Cost_ReportSyncing[Implicit]"[shape = box, style = rounded] 
+AndRef113->113
+"Cost_ReportSyncing[Implicit]"->AndRef113 [dir = none] 
+"Cost_ReportSyncing"[shape = box, style = rounded] 
+AndRef114[shape = point] 
+115[label="Chat Protocol", shape = polygon, sides =8]115->"Cost_ChatProtocol"
+"Cost_ChatProtocol[XMPP (Open Fire)]"[shape = box, style = rounded] 
+AndRef114->115
+"Cost_ChatProtocol[XMPP (Open Fire)]"->AndRef114 [dir = none] 
+AndRef115[shape = point] 
+115[label="Chat Protocol", shape = polygon, sides =8]"Cost_ChatProtocol[In house]"[shape = box, style = rounded] 
+AndRef115->115
+"Cost_ChatProtocol[In house]"->AndRef115 [dir = none] 
+"Cost_ChatProtocol"[shape = box, style = rounded] 
+AndRef116[shape = point] 
+117[label="Map Access", shape = polygon, sides =8]117->"Cost_MapAccess"
+"Cost_MapAccess[On Demand (Google)]"[shape = box, style = rounded] 
+AndRef116->117
+"Cost_MapAccess[On Demand (Google)]"->AndRef116 [dir = none] 
+AndRef117[shape = point] 
+117[label="Map Access", shape = polygon, sides =8]"Cost_MapAccess[Cache on server]"[shape = box, style = rounded] 
+AndRef117->117
+"Cost_MapAccess[Cache on server]"->AndRef117 [dir = none] 
+AndRef118[shape = point] 
+117[label="Map Access", shape = polygon, sides =8]"Cost_MapAccess[Preloaded (ESRI)]"[shape = box, style = rounded] 
+AndRef118->117
+"Cost_MapAccess[Preloaded (ESRI)]"->AndRef118 [dir = none] 
+"Cost_MapAccess"[shape = box, style = rounded] 
+AndRef119[shape = point] 
+120[label="Hardware Platform", shape = polygon, sides =8]120->"Cost_HardwarePlatform"
+"Cost_HardwarePlatform[Nexus I (HTC)]"[shape = box, style = rounded] 
+AndRef119->120
+"Cost_HardwarePlatform[Nexus I (HTC)]"->AndRef119 [dir = none] 
+AndRef120[shape = point] 
+120[label="Hardware Platform", shape = polygon, sides =8]"Cost_HardwarePlatform[Droid (Motorola)]"[shape = box, style = rounded] 
+AndRef120->120
+"Cost_HardwarePlatform[Droid (Motorola)]"->AndRef120 [dir = none] 
+"Cost_HardwarePlatform"[shape = box, style = rounded] 
+AndRef121[shape = point] 
+122[label="Connectivity", shape = polygon, sides =8]122->"Cost_Connectivity"
+"Cost_Connectivity[Wifi]"[shape = box, style = rounded] 
+AndRef121->122
+"Cost_Connectivity[Wifi]"->AndRef121 [dir = none] 
+AndRef122[shape = point] 
+122[label="Connectivity", shape = polygon, sides =8]"Cost_Connectivity[3G on Nexus I]"[shape = box, style = rounded] 
+AndRef122->122
+"Cost_Connectivity[3G on Nexus I]"->AndRef122 [dir = none] 
+AndRef123[shape = point] 
+122[label="Connectivity", shape = polygon, sides =8]"Cost_Connectivity[3G on Droid]"[shape = box, style = rounded] 
+AndRef123->122
+"Cost_Connectivity[3G on Droid]"->AndRef123 [dir = none] 
+AndRef124[shape = point] 
+122[label="Connectivity", shape = polygon, sides =8]"Cost_Connectivity[Bluetooth]"[shape = box, style = rounded] 
+AndRef124->122
+"Cost_Connectivity[Bluetooth]"->AndRef124 [dir = none] 
+"Cost_Connectivity"[shape = box, style = rounded] 
+AndRef125[shape = point] 
+126[label="Database", shape = polygon, sides =8]126->"Cost_DataBase"
+"Cost_DataBase[MySQL]"[shape = box, style = rounded] 
+AndRef125->126
+"Cost_DataBase[MySQL]"->AndRef125 [dir = none] 
+AndRef126[shape = point] 
+126[label="Database", shape = polygon, sides =8]"Cost_DataBase[sqLite]"[shape = box, style = rounded] 
+AndRef126->126
+"Cost_DataBase[sqLite]"->AndRef126 [dir = none] 
+"Cost_DataBase"[shape = box, style = rounded] 
+AndRef127[shape = point] 
+128[label="Architectural Pattern", shape = polygon, sides =8]128->"Cost_ArchitecturalPattern"
+"Cost_ArchitecturalPattern[Peer-to-peer]"[shape = box, style = rounded] 
+AndRef127->128
+"Cost_ArchitecturalPattern[Peer-to-peer]"->AndRef127 [dir = none] 
+AndRef128[shape = point] 
+128[label="Architectural Pattern", shape = polygon, sides =8]"Cost_ArchitecturalPattern[Client-Server]"[shape = box, style = rounded] 
+AndRef128->128
+"Cost_ArchitecturalPattern[Client-Server]"->AndRef128 [dir = none] 
+AndRef129[shape = point] 
+128[label="Architectural Pattern", shape = polygon, sides =8]"Cost_ArchitecturalPattern[Push-based]"[shape = box, style = rounded] 
+AndRef129->128
+"Cost_ArchitecturalPattern[Push-based]"->AndRef129 [dir = none] 
+"Cost_ArchitecturalPattern"[shape = box, style = rounded] 
+AndRef130[shape = point] 
+131[label="Data Exchange Format", shape = polygon, sides =8]131->"Cost_DataExchangeFormat"
+"Cost_DataExchangeFormat[XML]"[shape = box, style = rounded] 
+AndRef130->131
+"Cost_DataExchangeFormat[XML]"->AndRef130 [dir = none] 
+AndRef131[shape = point] 
+131[label="Data Exchange Format", shape = polygon, sides =8]"Cost_DataExchangeFormat[Compressed XML]"[shape = box, style = rounded] 
+AndRef131->131
+"Cost_DataExchangeFormat[Compressed XML]"->AndRef131 [dir = none] 
+AndRef132[shape = point] 
+131[label="Data Exchange Format", shape = polygon, sides =8]"Cost_DataExchangeFormat[Unformatted data]"[shape = box, style = rounded] 
+AndRef132->131
+"Cost_DataExchangeFormat[Unformatted data]"->AndRef132 [dir = none] 
+"Cost_DataExchangeFormat"[shape = box, style = rounded] 
+"Cost"[shape = box, style = rounded] 
+AndRef133[shape = point] 
+AndRef133->"Cost"
+"Cost_LocationFinding"->AndRef133 [dir = none] 
+"Cost_FileSharing"->AndRef133 [dir = none] 
+"Cost_ReportSyncing"->AndRef133 [dir = none] 
+"Cost_ChatProtocol"->AndRef133 [dir = none] 
+"Cost_MapAccess"->AndRef133 [dir = none] 
+"Cost_HardwarePlatform"->AndRef133 [dir = none] 
+"Cost_Connectivity"->AndRef133 [dir = none] 
+"Cost_DataBase"->AndRef133 [dir = none] 
+"Cost_ArchitecturalPattern"->AndRef133 [dir = none] 
+"Cost_DataExchangeFormat"->AndRef133 [dir = none] 
+"Cost_worst"[shape = box, style = rounded] 
+"Cost_best"[shape = box, style = rounded] 
+"Cost_Preference"[shape = box, style = rounded] 
+AndRef134[shape = point] 
+AndRef134->"Cost_Preference"
+"Cost"->AndRef134 [dir = none] 
+"Cost_worst"->AndRef134 [dir = none] 
+"Cost_best"->AndRef134 [dir = none] 
+"DevelopmentTime_weight"[shape = box, style = rounded] 
+AndRef135[shape = point] 
+136[label="Location Finding", shape = polygon, sides =8]136->"DevelopmentTime_LocationFinding"
+"DevelopmentTime_LocationFinding[GPS]"[shape = box, style = rounded] 
+AndRef135->136
+"DevelopmentTime_LocationFinding[GPS]"->AndRef135 [dir = none] 
+AndRef136[shape = point] 
+136[label="Location Finding", shape = polygon, sides =8]"DevelopmentTime_LocationFinding[radio triangulation]"[shape = box, style = rounded] 
+AndRef136->136
+"DevelopmentTime_LocationFinding[radio triangulation]"->AndRef136 [dir = none] 
+"DevelopmentTime_LocationFinding"[shape = box, style = rounded] 
+AndRef137[shape = point] 
+138[label="File Sharing", shape = polygon, sides =8]138->"DevelopmentTime_FileSharing"
+"DevelopmentTime_FileSharing[OpenIntent]"[shape = box, style = rounded] 
+AndRef137->138
+"DevelopmentTime_FileSharing[OpenIntent]"->AndRef137 [dir = none] 
+AndRef138[shape = point] 
+138[label="File Sharing", shape = polygon, sides =8]"DevelopmentTime_FileSharing[In house]"[shape = box, style = rounded] 
+AndRef138->138
+"DevelopmentTime_FileSharing[In house]"->AndRef138 [dir = none] 
+"DevelopmentTime_FileSharing"[shape = box, style = rounded] 
+AndRef139[shape = point] 
+140[label="Report Syncing", shape = polygon, sides =8]140->"DevelopmentTime_ReportSyncing"
+"DevelopmentTime_ReportSyncing[Explicit]"[shape = box, style = rounded] 
+AndRef139->140
+"DevelopmentTime_ReportSyncing[Explicit]"->AndRef139 [dir = none] 
+AndRef140[shape = point] 
+140[label="Report Syncing", shape = polygon, sides =8]"DevelopmentTime_ReportSyncing[Implicit]"[shape = box, style = rounded] 
+AndRef140->140
+"DevelopmentTime_ReportSyncing[Implicit]"->AndRef140 [dir = none] 
+"DevelopmentTime_ReportSyncing"[shape = box, style = rounded] 
+AndRef141[shape = point] 
+142[label="Chat Protocol", shape = polygon, sides =8]142->"DevelopmentTime_ChatProtocol"
+"DevelopmentTime_ChatProtocol[XMPP (Open Fire)]"[shape = box, style = rounded] 
+AndRef141->142
+"DevelopmentTime_ChatProtocol[XMPP (Open Fire)]"->AndRef141 [dir = none] 
+AndRef142[shape = point] 
+142[label="Chat Protocol", shape = polygon, sides =8]"DevelopmentTime_ChatProtocol[In house]"[shape = box, style = rounded] 
+AndRef142->142
+"DevelopmentTime_ChatProtocol[In house]"->AndRef142 [dir = none] 
+"DevelopmentTime_ChatProtocol"[shape = box, style = rounded] 
+AndRef143[shape = point] 
+144[label="Map Access", shape = polygon, sides =8]144->"DevelopmentTime_MapAccess"
+"DevelopmentTime_MapAccess[On Demand (Google)]"[shape = box, style = rounded] 
+AndRef143->144
+"DevelopmentTime_MapAccess[On Demand (Google)]"->AndRef143 [dir = none] 
+AndRef144[shape = point] 
+144[label="Map Access", shape = polygon, sides =8]"DevelopmentTime_MapAccess[Cache on server]"[shape = box, style = rounded] 
+AndRef144->144
+"DevelopmentTime_MapAccess[Cache on server]"->AndRef144 [dir = none] 
+AndRef145[shape = point] 
+144[label="Map Access", shape = polygon, sides =8]"DevelopmentTime_MapAccess[Preloaded (ESRI)]"[shape = box, style = rounded] 
+AndRef145->144
+"DevelopmentTime_MapAccess[Preloaded (ESRI)]"->AndRef145 [dir = none] 
+"DevelopmentTime_MapAccess"[shape = box, style = rounded] 
+AndRef146[shape = point] 
+147[label="Database", shape = polygon, sides =8]147->"DevelopmentTime_DataBase"
+"DevelopmentTime_DataBase[MySQL]"[shape = box, style = rounded] 
+AndRef146->147
+"DevelopmentTime_DataBase[MySQL]"->AndRef146 [dir = none] 
+AndRef147[shape = point] 
+147[label="Database", shape = polygon, sides =8]"DevelopmentTime_DataBase[sqLite]"[shape = box, style = rounded] 
+AndRef147->147
+"DevelopmentTime_DataBase[sqLite]"->AndRef147 [dir = none] 
+"DevelopmentTime_DataBase"[shape = box, style = rounded] 
+AndRef148[shape = point] 
+149[label="Architectural Pattern", shape = polygon, sides =8]149->"DevelopmentTime_ArchitecturalPattern"
+"DevelopmentTime_ArchitecturalPattern[Peer-to-peer]"[shape = box, style = rounded] 
+AndRef148->149
+"DevelopmentTime_ArchitecturalPattern[Peer-to-peer]"->AndRef148 [dir = none] 
+AndRef149[shape = point] 
+149[label="Architectural Pattern", shape = polygon, sides =8]"DevelopmentTime_ArchitecturalPattern[Client-Server]"[shape = box, style = rounded] 
+AndRef149->149
+"DevelopmentTime_ArchitecturalPattern[Client-Server]"->AndRef149 [dir = none] 
+AndRef150[shape = point] 
+149[label="Architectural Pattern", shape = polygon, sides =8]"DevelopmentTime_ArchitecturalPattern[Push-based]"[shape = box, style = rounded] 
+AndRef150->149
+"DevelopmentTime_ArchitecturalPattern[Push-based]"->AndRef150 [dir = none] 
+"DevelopmentTime_ArchitecturalPattern"[shape = box, style = rounded] 
+AndRef151[shape = point] 
+152[label="Data Exchange Format", shape = polygon, sides =8]152->"DevelopmentTime_DataExchangeFormat"
+"DevelopmentTime_DataExchangeFormat[XML]"[shape = box, style = rounded] 
+AndRef151->152
+"DevelopmentTime_DataExchangeFormat[XML]"->AndRef151 [dir = none] 
+AndRef152[shape = point] 
+152[label="Data Exchange Format", shape = polygon, sides =8]"DevelopmentTime_DataExchangeFormat[Compressed XML]"[shape = box, style = rounded] 
+AndRef152->152
+"DevelopmentTime_DataExchangeFormat[Compressed XML]"->AndRef152 [dir = none] 
+AndRef153[shape = point] 
+152[label="Data Exchange Format", shape = polygon, sides =8]"DevelopmentTime_DataExchangeFormat[Unformatted data]"[shape = box, style = rounded] 
+AndRef153->152
+"DevelopmentTime_DataExchangeFormat[Unformatted data]"->AndRef153 [dir = none] 
+"DevelopmentTime_DataExchangeFormat"[shape = box, style = rounded] 
+"DevelopmentTime"[shape = box, style = rounded] 
+AndRef154[shape = point] 
+AndRef154->"DevelopmentTime"
+"DevelopmentTime_LocationFinding"->AndRef154 [dir = none] 
+"DevelopmentTime_FileSharing"->AndRef154 [dir = none] 
+"DevelopmentTime_ReportSyncing"->AndRef154 [dir = none] 
+"DevelopmentTime_ChatProtocol"->AndRef154 [dir = none] 
+"DevelopmentTime_MapAccess"->AndRef154 [dir = none] 
+"DevelopmentTime_DataBase"->AndRef154 [dir = none] 
+"DevelopmentTime_ArchitecturalPattern"->AndRef154 [dir = none] 
+"DevelopmentTime_DataExchangeFormat"->AndRef154 [dir = none] 
+"DevelopmentTime_worst"[shape = box, style = rounded] 
+"DevelopmentTime_best"[shape = box, style = rounded] 
+"DevelopmentTime_Preference"[shape = box, style = rounded] 
+AndRef155[shape = point] 
+AndRef155->"DevelopmentTime_Preference"
+"DevelopmentTime"->AndRef155 [dir = none] 
+"DevelopmentTime_worst"->AndRef155 [dir = none] 
+"DevelopmentTime_best"->AndRef155 [dir = none] 
+"DeploymentTime_weight"[shape = box, style = rounded] 
+AndRef156[shape = point] 
+157[label="Location Finding", shape = polygon, sides =8]157->"DeploymentTime_LocationFinding"
+"DeploymentTime_LocationFinding[GPS]"[shape = box, style = rounded] 
+AndRef156->157
+"DeploymentTime_LocationFinding[GPS]"->AndRef156 [dir = none] 
+AndRef157[shape = point] 
+157[label="Location Finding", shape = polygon, sides =8]"DeploymentTime_LocationFinding[radio triangulation]"[shape = box, style = rounded] 
+AndRef157->157
+"DeploymentTime_LocationFinding[radio triangulation]"->AndRef157 [dir = none] 
+"DeploymentTime_LocationFinding"[shape = box, style = rounded] 
+AndRef158[shape = point] 
+159[label="File Sharing", shape = polygon, sides =8]159->"DeploymentTime_FileSharing"
+"DeploymentTime_FileSharing[OpenIntent]"[shape = box, style = rounded] 
+AndRef158->159
+"DeploymentTime_FileSharing[OpenIntent]"->AndRef158 [dir = none] 
+AndRef159[shape = point] 
+159[label="File Sharing", shape = polygon, sides =8]"DeploymentTime_FileSharing[In house]"[shape = box, style = rounded] 
+AndRef159->159
+"DeploymentTime_FileSharing[In house]"->AndRef159 [dir = none] 
+"DeploymentTime_FileSharing"[shape = box, style = rounded] 
+AndRef160[shape = point] 
+161[label="Report Syncing", shape = polygon, sides =8]161->"DeploymentTime_ReportSyncing"
+"DeploymentTime_ReportSyncing[Explicit]"[shape = box, style = rounded] 
+AndRef160->161
+"DeploymentTime_ReportSyncing[Explicit]"->AndRef160 [dir = none] 
+AndRef161[shape = point] 
+161[label="Report Syncing", shape = polygon, sides =8]"DeploymentTime_ReportSyncing[Implicit]"[shape = box, style = rounded] 
+AndRef161->161
+"DeploymentTime_ReportSyncing[Implicit]"->AndRef161 [dir = none] 
+"DeploymentTime_ReportSyncing"[shape = box, style = rounded] 
+AndRef162[shape = point] 
+163[label="Chat Protocol", shape = polygon, sides =8]163->"DeploymentTime_ChatProtocol"
+"DeploymentTime_ChatProtocol[XMPP (Open Fire)]"[shape = box, style = rounded] 
+AndRef162->163
+"DeploymentTime_ChatProtocol[XMPP (Open Fire)]"->AndRef162 [dir = none] 
+AndRef163[shape = point] 
+163[label="Chat Protocol", shape = polygon, sides =8]"DeploymentTime_ChatProtocol[In house]"[shape = box, style = rounded] 
+AndRef163->163
+"DeploymentTime_ChatProtocol[In house]"->AndRef163 [dir = none] 
+"DeploymentTime_ChatProtocol"[shape = box, style = rounded] 
+AndRef164[shape = point] 
+165[label="Map Access", shape = polygon, sides =8]165->"DeploymentTime_MapAccess"
+"DeploymentTime_MapAccess[On Demand (Google)]"[shape = box, style = rounded] 
+AndRef164->165
+"DeploymentTime_MapAccess[On Demand (Google)]"->AndRef164 [dir = none] 
+AndRef165[shape = point] 
+165[label="Map Access", shape = polygon, sides =8]"DeploymentTime_MapAccess[Cache on server]"[shape = box, style = rounded] 
+AndRef165->165
+"DeploymentTime_MapAccess[Cache on server]"->AndRef165 [dir = none] 
+AndRef166[shape = point] 
+165[label="Map Access", shape = polygon, sides =8]"DeploymentTime_MapAccess[Preloaded (ESRI)]"[shape = box, style = rounded] 
+AndRef166->165
+"DeploymentTime_MapAccess[Preloaded (ESRI)]"->AndRef166 [dir = none] 
+"DeploymentTime_MapAccess"[shape = box, style = rounded] 
+AndRef167[shape = point] 
+168[label="Connectivity", shape = polygon, sides =8]168->"DeploymentTime_Connectivity"
+"DeploymentTime_Connectivity[Wifi]"[shape = box, style = rounded] 
+AndRef167->168
+"DeploymentTime_Connectivity[Wifi]"->AndRef167 [dir = none] 
+AndRef168[shape = point] 
+168[label="Connectivity", shape = polygon, sides =8]"DeploymentTime_Connectivity[3G on Nexus I]"[shape = box, style = rounded] 
+AndRef168->168
+"DeploymentTime_Connectivity[3G on Nexus I]"->AndRef168 [dir = none] 
+AndRef169[shape = point] 
+168[label="Connectivity", shape = polygon, sides =8]"DeploymentTime_Connectivity[3G on Droid]"[shape = box, style = rounded] 
+AndRef169->168
+"DeploymentTime_Connectivity[3G on Droid]"->AndRef169 [dir = none] 
+AndRef170[shape = point] 
+168[label="Connectivity", shape = polygon, sides =8]"DeploymentTime_Connectivity[Bluetooth]"[shape = box, style = rounded] 
+AndRef170->168
+"DeploymentTime_Connectivity[Bluetooth]"->AndRef170 [dir = none] 
+"DeploymentTime_Connectivity"[shape = box, style = rounded] 
+AndRef171[shape = point] 
+172[label="Database", shape = polygon, sides =8]172->"DeploymentTime_DataBase"
+"DeploymentTime_DataBase[MySQL]"[shape = box, style = rounded] 
+AndRef171->172
+"DeploymentTime_DataBase[MySQL]"->AndRef171 [dir = none] 
+AndRef172[shape = point] 
+172[label="Database", shape = polygon, sides =8]"DeploymentTime_DataBase[sqLite]"[shape = box, style = rounded] 
+AndRef172->172
+"DeploymentTime_DataBase[sqLite]"->AndRef172 [dir = none] 
+"DeploymentTime_DataBase"[shape = box, style = rounded] 
+AndRef173[shape = point] 
+174[label="Architectural Pattern", shape = polygon, sides =8]174->"DeploymentTime_ArchitecturalPattern"
+"DeploymentTime_ArchitecturalPattern[Peer-to-peer]"[shape = box, style = rounded] 
+AndRef173->174
+"DeploymentTime_ArchitecturalPattern[Peer-to-peer]"->AndRef173 [dir = none] 
+AndRef174[shape = point] 
+174[label="Architectural Pattern", shape = polygon, sides =8]"DeploymentTime_ArchitecturalPattern[Client-Server]"[shape = box, style = rounded] 
+AndRef174->174
+"DeploymentTime_ArchitecturalPattern[Client-Server]"->AndRef174 [dir = none] 
+AndRef175[shape = point] 
+174[label="Architectural Pattern", shape = polygon, sides =8]"DeploymentTime_ArchitecturalPattern[Push-based]"[shape = box, style = rounded] 
+AndRef175->174
+"DeploymentTime_ArchitecturalPattern[Push-based]"->AndRef175 [dir = none] 
+"DeploymentTime_ArchitecturalPattern"[shape = box, style = rounded] 
+"DeploymentTime"[shape = box, style = rounded] 
+AndRef176[shape = point] 
+AndRef176->"DeploymentTime"
+"DeploymentTime_LocationFinding"->AndRef176 [dir = none] 
+"DeploymentTime_FileSharing"->AndRef176 [dir = none] 
+"DeploymentTime_ReportSyncing"->AndRef176 [dir = none] 
+"DeploymentTime_ChatProtocol"->AndRef176 [dir = none] 
+"DeploymentTime_MapAccess"->AndRef176 [dir = none] 
+"DeploymentTime_Connectivity"->AndRef176 [dir = none] 
+"DeploymentTime_DataBase"->AndRef176 [dir = none] 
+"DeploymentTime_ArchitecturalPattern"->AndRef176 [dir = none] 
+"DeploymentTime_worst"[shape = box, style = rounded] 
+"DeploymentTime_best"[shape = box, style = rounded] 
+"DeploymentTime_Preference"[shape = box, style = rounded] 
+AndRef177[shape = point] 
+AndRef177->"DeploymentTime_Preference"
+"DeploymentTime"->AndRef177 [dir = none] 
+"DeploymentTime_worst"->AndRef177 [dir = none] 
+"DeploymentTime_best"->AndRef177 [dir = none] 
+"NB"[shape = box, style = rounded] 
+AndRef178[shape = point] 
+AndRef178->"NB"
+"BatteryUsage_weight"->AndRef178 [dir = none] 
+"BatteryUsage_Preference"->AndRef178 [dir = none] 
+"ResponseTime_weight"->AndRef178 [dir = none] 
+"ResponseTime_Preference"->AndRef178 [dir = none] 
+"Reliability_weight"->AndRef178 [dir = none] 
+"Reliability_Preference"->AndRef178 [dir = none] 
+"RampUpTime_weight"->AndRef178 [dir = none] 
+"RampUpTime_Preference"->AndRef178 [dir = none] 
+"Cost_weight"->AndRef178 [dir = none] 
+"Cost_Preference"->AndRef178 [dir = none] 
+"DevelopmentTime_weight"->AndRef178 [dir = none] 
+"DevelopmentTime_Preference"->AndRef178 [dir = none] 
+"DeploymentTime_weight"->AndRef178 [dir = none] 
+"DeploymentTime_Preference"->AndRef178 [dir = none] 
+}

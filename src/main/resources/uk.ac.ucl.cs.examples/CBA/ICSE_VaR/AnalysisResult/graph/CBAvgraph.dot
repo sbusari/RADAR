@@ -1,0 +1,32 @@
+digraph G { 
+rankdir = BT 
+AndRef0[shape = point] 
+1[label="Architecture choice", shape = polygon, sides =8]1->"Benefit"
+"Benefit[As-is]"[shape = box, style = rounded] 
+AndRef0->1
+"Benefit[As-is]"->AndRef0 [dir = none] 
+AndRef1[shape = point] 
+1[label="Architecture choice", shape = polygon, sides =8]"Benefit[Refactoring]"[shape = box, style = rounded] 
+AndRef1->1
+"Benefit[Refactoring]"->AndRef1 [dir = none] 
+"Benefit"[shape = box, style = rounded] 
+AndRef2[shape = point] 
+3[label="Architecture choice", shape = polygon, sides =8]3->"Cost"
+"Cost[As-is]"[shape = box, style = rounded] 
+AndRef2->3
+"Cost[As-is]"->AndRef2 [dir = none] 
+AndRef3[shape = point] 
+3[label="Architecture choice", shape = polygon, sides =8]"Cost[Refactoring]"[shape = box, style = rounded] 
+AndRef3->3
+"Cost[Refactoring]"->AndRef3 [dir = none] 
+"Cost"[shape = box, style = rounded] 
+"NB"[shape = box, style = rounded] 
+AndRef4[shape = point] 
+AndRef4->"NB"
+"Benefit"->AndRef4 [dir = none] 
+"Cost"->AndRef4 [dir = none] 
+ENB [shape = box] 
+NB->"ENB"
+VaR [shape = box] 
+NB->"VaR"
+}

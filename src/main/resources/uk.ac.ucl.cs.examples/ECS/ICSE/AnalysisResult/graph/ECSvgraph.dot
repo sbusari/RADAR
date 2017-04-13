@@ -1,0 +1,94 @@
+digraph G { 
+rankdir = BT 
+AndRef0[shape = point] 
+1[label="Order Reassignment", shape = polygon, sides =8]1->"Cost_OrderReassignment"
+"Cost_OrderReassignment[Current: not possible to reassign order]"[shape = box, style = rounded] 
+AndRef0->1
+"Cost_OrderReassignment[Current: not possible to reassign order]"->AndRef0 [dir = none] 
+AndRef1[shape = point] 
+1[label="Order Reassignment", shape = polygon, sides =8]"Cost_OrderReassignment[Allow Order Reassignment]"[shape = box, style = rounded] 
+AndRef1->1
+"Cost_OrderReassignment[Allow Order Reassignment]"->AndRef1 [dir = none] 
+"Cost_OrderReassignment"[shape = box, style = rounded] 
+AndRef2[shape = point] 
+3[label="Forced Order Completion", shape = polygon, sides =8]3->"Cost_ForcedOrderCompletion"
+"Cost_ForcedOrderCompletion[Current: not possible to force order completion]"[shape = box, style = rounded] 
+AndRef2->3
+"Cost_ForcedOrderCompletion[Current: not possible to force order completion]"->AndRef2 [dir = none] 
+AndRef3[shape = point] 
+3[label="Forced Order Completion", shape = polygon, sides =8]"Cost_ForcedOrderCompletion[Allow Forced Order Completion]"[shape = box, style = rounded] 
+AndRef3->3
+"Cost_ForcedOrderCompletion[Allow Forced Order Completion]"->AndRef3 [dir = none] 
+"Cost_ForcedOrderCompletion"[shape = box, style = rounded] 
+AndRef4[shape = point] 
+5[label="Order Persistence Strategy", shape = polygon, sides =8]5->"Cost_OrderPersistenceStrategy"
+"Cost_OrderPersistenceStrategy[Current: store when processed]"[shape = box, style = rounded] 
+AndRef4->5
+"Cost_OrderPersistenceStrategy[Current: store when processed]"->AndRef4 [dir = none] 
+AndRef5[shape = point] 
+5[label="Order Persistence Strategy", shape = polygon, sides =8]"Cost_OrderPersistenceStrategy[Store as soon as received]"[shape = box, style = rounded] 
+AndRef5->5
+"Cost_OrderPersistenceStrategy[Store as soon as received]"->AndRef5 [dir = none] 
+"Cost_OrderPersistenceStrategy"[shape = box, style = rounded] 
+AndRef6[shape = point] 
+7[label="Order Segmentation", shape = polygon, sides =8]7->"Cost_OrderSegmentation"
+"Cost_OrderSegmentation[Current: no order segmentation]"[shape = box, style = rounded] 
+AndRef6->7
+"Cost_OrderSegmentation[Current: no order segmentation]"->AndRef6 [dir = none] 
+AndRef7[shape = point] 
+7[label="Order Segmentation", shape = polygon, sides =8]"Cost_OrderSegmentation[Orders are segmented]"[shape = box, style = rounded] 
+AndRef7->7
+"Cost_OrderSegmentation[Orders are segmented]"->AndRef7 [dir = none] 
+"Cost_OrderSegmentation"[shape = box, style = rounded] 
+AndRef8[shape = point] 
+9[label="Hung Order Recovery", shape = polygon, sides =8]9->"Cost_HungOrderRecovery"
+"Cost_HungOrderRecovery[Current: no order retry]"[shape = box, style = rounded] 
+AndRef8->9
+"Cost_HungOrderRecovery[Current: no order retry]"->AndRef8 [dir = none] 
+AndRef9[shape = point] 
+9[label="Hung Order Recovery", shape = polygon, sides =8]"Cost_HungOrderRecovery[Allow Order Retry]"[shape = box, style = rounded] 
+AndRef9->9
+"Cost_HungOrderRecovery[Allow Order Retry]"->AndRef9 [dir = none] 
+"Cost_HungOrderRecovery"[shape = box, style = rounded] 
+AndRef10[shape = point] 
+11[label="Failed Order Notification", shape = polygon, sides =8]11->"Cost_FailedOrderNotification"
+"Cost_FailedOrderNotification[Current: no notification]"[shape = box, style = rounded] 
+AndRef10->11
+"Cost_FailedOrderNotification[Current: no notification]"->AndRef10 [dir = none] 
+AndRef11[shape = point] 
+11[label="Failed Order Notification", shape = polygon, sides =8]"Cost_FailedOrderNotification[User notified of failed order]"[shape = box, style = rounded] 
+AndRef11->11
+"Cost_FailedOrderNotification[User notified of failed order]"->AndRef11 [dir = none] 
+"Cost_FailedOrderNotification"[shape = box, style = rounded] 
+AndRef12[shape = point] 
+13[label="Order Tracking", shape = polygon, sides =8]13->"Cost_OrderTracking"
+"Cost_OrderTracking[Current: order level]"[shape = box, style = rounded] 
+AndRef12->13
+"Cost_OrderTracking[Current: order level]"->AndRef12 [dir = none] 
+AndRef13[shape = point] 
+13[label="Order Tracking", shape = polygon, sides =8]"Cost_OrderTracking[Granule-level order tracking]"[shape = box, style = rounded] 
+AndRef13->13
+"Cost_OrderTracking[Granule-level order tracking]"->AndRef13 [dir = none] 
+"Cost_OrderTracking"[shape = box, style = rounded] 
+AndRef14[shape = point] 
+15[label="Available User Information", shape = polygon, sides =8]15->"Cost_AvailableUserInformation"
+"Cost_AvailableUserInformation[Current: no link to user info]"[shape = box, style = rounded] 
+AndRef14->15
+"Cost_AvailableUserInformation[Current: no link to user info]"->AndRef14 [dir = none] 
+AndRef15[shape = point] 
+15[label="Available User Information", shape = polygon, sides =8]"Cost_AvailableUserInformation[Link to user information]"[shape = box, style = rounded] 
+AndRef15->15
+"Cost_AvailableUserInformation[Link to user information]"->AndRef15 [dir = none] 
+"Cost_AvailableUserInformation"[shape = box, style = rounded] 
+"Cost"[shape = box, style = rounded] 
+AndRef16[shape = point] 
+AndRef16->"Cost"
+"Cost_OrderReassignment"->AndRef16 [dir = none] 
+"Cost_ForcedOrderCompletion"->AndRef16 [dir = none] 
+"Cost_OrderPersistenceStrategy"->AndRef16 [dir = none] 
+"Cost_OrderSegmentation"->AndRef16 [dir = none] 
+"Cost_HungOrderRecovery"->AndRef16 [dir = none] 
+"Cost_FailedOrderNotification"->AndRef16 [dir = none] 
+"Cost_OrderTracking"->AndRef16 [dir = none] 
+"Cost_AvailableUserInformation"->AndRef16 [dir = none] 
+}

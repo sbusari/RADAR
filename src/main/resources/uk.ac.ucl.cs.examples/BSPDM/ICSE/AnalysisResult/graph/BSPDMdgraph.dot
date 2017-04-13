@@ -1,0 +1,7 @@
+digraph G { 
+"0"[label="Building entry security", shape = polygon, sides =8 ]"1"[label="not guarded"]"0" -> "1"
+"2"[label="guarded"]"0" -> "2"
+"3"[label="Document Sharing Policy", shape = polygon, sides =8 ]"4"[label="Neutral"]"3" -> "4"
+"5"[label="Recommend Email"]"3" -> "5"
+"6"[label="Recommend External Media"]"3" -> "6"
+}
