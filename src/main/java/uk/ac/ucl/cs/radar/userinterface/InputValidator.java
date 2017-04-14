@@ -66,6 +66,7 @@ public class InputValidator {
     		errorMessage += InputValidator.verifyFieldDataType(algorithmParameter.get(2).trim(), "mutation rate", "Double");
     		errorMessage += InputValidator.verifyFieldDataType(algorithmParameter.get(3).trim(), "maximum evaluation", "Integer");
     		errorMessage += InputValidator.verifyFieldDataType(algorithmParameter.get(4).trim(), "runs", "Integer");
+    		
     		if (errorMessage.isEmpty()){
     			errorMessage += InputValidator.verifyFieldNonNegativeValue(algorithmParameter.get(0).trim(), "population size", "Integer");
         		errorMessage += InputValidator.verifyFieldNonNegativeValue(algorithmParameter.get(1).trim(), "crossover rate", "Double");

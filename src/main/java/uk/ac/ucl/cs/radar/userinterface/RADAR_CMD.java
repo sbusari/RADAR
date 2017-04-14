@@ -1,7 +1,6 @@
 package uk.ac.ucl.cs.radar.userinterface;
 
 import uk.ac.ucl.cs.radar.model.AnalysisResult;
-import uk.ac.ucl.cs.radar.model.AnalysisData;
 import uk.ac.ucl.cs.radar.model.Model;
 import uk.ac.ucl.cs.radar.model.ModelSolver;
 import uk.ac.ucl.cs.radar.model.Parser;
@@ -69,19 +68,6 @@ public class RADAR_CMD {
         }
         cmd.run(cmd);
     }
-
-	AnalysisData populateExperimentData () throws Exception{
-		AnalysisData result = new AnalysisData();
-		InputValidator.validateModelPath(model);
-		InputValidator.validateOutputPath(output);
-		// populate data
-		result.setSimulationNumber(nbr_Simulation);
-		if (output.trim().charAt(output.length()-1) != '/'){
-			result.setOutputDirectory(output.trim() +"/");
-		}
-		return result;
-		
-	}
 	Model loadModel () throws Exception{
 		//4. when parse is specified quickly parse and write a message that the model is parsed.
 		Model semanticModel =null;
@@ -108,35 +94,36 @@ public class RADAR_CMD {
 	void analyseRadarModel (int nbr_simulation){
 		try {
     		// populate model and algorithm data
-    		AnalysisData dataInput = populateExperimentData();
+			
     		// get sematic model from model file
     		Model semanticModel = loadModel ();
     		
     		semanticModel.setNbr_Simulation(nbr_simulation);
     		
     		// update experiemnt data with semantic model and information value objective.
-    		dataInput.setProblemName(semanticModel.getModelName());
+    		//dataInput.setProblemName(semanticModel.getModelName());
+    		
     		InputValidator.objectiveExist(semanticModel, infoValueObjective);
     		InputValidator.objectiveExist(semanticModel, subGraphObjective);
     		
-    		String modelResultPath = dataInput.getOutputDirectory() + dataInput.getProblemName() + "/ICSE/AnalysisResult/" + nbr_simulation +"/";
+    		String modelResultPath = output + semanticModel.getModelName() + "/AnalysisResult/" + nbr_simulation +"/";
     		// analyse model
     		AnalysisResult result = ModelSolver.solve(semanticModel);
     		
 			String analysisResult = result.analysisToString();
 			String analysisResultToCSV = result.analysisResultToCSV();
-			Helper.printResults (modelResultPath , analysisResult, dataInput.getProblemName() +".out", false);
+			Helper.printResults (modelResultPath , analysisResult, semanticModel.getModelName() +".out", false);
 			Helper.printResults (modelResultPath , analysisResultToCSV, semanticModel.getModelName() +".csv", false);
 			
 			// generate graphs
 			if (decision == true){
 				String decisionGraph = semanticModel.generateDecisionDiagram(result.getAllSolutions());
-				Helper.printResults (modelResultPath + "graph/", decisionGraph, dataInput.getProblemName() + "dgraph.dot", false);
+				Helper.printResults (modelResultPath + "graph/", decisionGraph, semanticModel.getModelName() + "dgraph.dot", false);
 			}
 			
 			if (variable == true){
 				String variableGraph = semanticModel.generateDOTRefinementGraph(semanticModel, result.getSubGraphObjective());
-				Helper.printResults (modelResultPath + "graph/", variableGraph,  dataInput.getProblemName() + "vgraph.dot", false);
+				Helper.printResults (modelResultPath + "graph/", variableGraph,  semanticModel.getModelName() + "vgraph.dot", false);
 			}
 			
     		if (pareto == true){

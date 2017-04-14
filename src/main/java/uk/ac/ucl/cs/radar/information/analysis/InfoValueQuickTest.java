@@ -13,6 +13,7 @@ public class InfoValueQuickTest {
 		newThing[2]= 4.05;
 		newThing[3]= 6.13;
 		newThing[4]= -1.39;
+		
 		double [] oldThing= new double [5]; 
 		oldThing[0]= 1.03;
 		newThing[1]= 0.96;

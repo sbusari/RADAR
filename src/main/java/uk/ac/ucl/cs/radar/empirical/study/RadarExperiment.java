@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
-import uk.ac.ucl.cs.radar.model.AnalysisData;
 import uk.ac.ucl.cs.radar.model.AnalysisResult;
 import uk.ac.ucl.cs.radar.model.Model;
 import uk.ac.ucl.cs.radar.model.ModelSolver;
@@ -59,6 +57,7 @@ public class RadarExperiment extends Thread {
 		Integer option = param.get("Option");
 		Integer variable = param.get("Variable");
 		Integer objective = param.get("Objective");
+
 		
 		try {
 			String experimentParam ="";
@@ -70,7 +69,7 @@ public class RadarExperiment extends Thread {
 				nbr_objectives = objective;
 				nbr_Simulation = simulation;
 				experimentParam = "Param: " + "Obj(" + nbr_objectives + ")-O(" + min_nbr_options + ")-D(" + nbr_decisions + ")-S(" + nbr_Simulation +")";
-				String analysis_runtimes = generateAndAnalyseRadarModel(nbr_Simulation, experimentParam );
+				String analysis_runtimes = generateAndAnalyseRadarModel(nbr_Simulation, experimentParam, modelName);
 				System.out.println("Param: "+ experimentParam + ", "+ analysis_runtimes);
 				Helper.printResults (outputPath, experimentParam + "," + analysis_result.getSolutionSpace() + ","+ analysis_result.getAllSolutions().size()+ "," +analysis_runtimes , testResultName +".csv", true);
 			}else{
@@ -81,18 +80,6 @@ public class RadarExperiment extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
-		
-	}
-
-	AnalysisData populateExperimentData () throws Exception{
-		AnalysisData result = new AnalysisData();
-		InputValidator.validateOutputPath(output);
-		// populate data
-		result.setSimulationNumber(nbr_Simulation);
-		if (output.trim().charAt(output.length()-1) != '/'){
-			result.setOutputDirectory(output.trim() +"/");
-		}
-		return result;
 		
 	}
 	Integer [] getArrayElements (Integer [] arrayRange){
@@ -123,18 +110,18 @@ public class RadarExperiment extends Thread {
 		}
 		return semanticModel;
 	}
-	String generateAndAnalyseRadarModel (int simulation, String expID){
+	String generateAndAnalyseRadarModel (int simulation, String expID, String problemName){
 		String runtime = "";
 		try {
     		// populate model and algorithm data
-    		AnalysisData dataInput = populateExperimentData();
     		
     		// get sematic model from model file
-    		Model semanticModel = loadModel (modelResultPath + expID + "/", dataInput.getProblemName());
+    		Model semanticModel = loadModel (modelResultPath + expID + "/", problemName);
     		semanticModel.setNbr_Simulation(simulation);
     		
     		// update experiemnt data with semantic model and information value objective.
-    		dataInput.setProblemName(semanticModel.getModelName());
+    		
+    		
     		InputValidator.objectiveExist(semanticModel, infoValueObjective);
     		InputValidator.objectiveExist(semanticModel, subGraphObjective);
     		
@@ -152,11 +139,11 @@ public class RadarExperiment extends Thread {
 			boolean generatePlots = false;
 			if (generatePlots){
 				String decisionGraph = semanticModel.generateDecisionDiagram(analysis_result.getAllSolutions());
-				Helper.printResults (modelResultPath + "graph/", decisionGraph, dataInput.getProblemName() + "dgraph.dot", false);
+				Helper.printResults (modelResultPath + "graph/", decisionGraph, semanticModel.getModelName() + "dgraph.dot", false);
 			}
 			if (generatePlots){
 				String variableGraph = semanticModel.generateDOTRefinementGraph(semanticModel, analysis_result.getSubGraphObjective());
-				Helper.printResults (modelResultPath + "graph/", variableGraph,  dataInput.getProblemName() + "vgraph.dot", false);
+				Helper.printResults (modelResultPath + "graph/", variableGraph,  semanticModel.getModelName() + "vgraph.dot", false);
 			}
     		if (generatePlots){
     			if (analysis_result.getShortListObjectives().get(0).length == 2){

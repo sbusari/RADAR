@@ -1,13 +1,10 @@
 package uk.ac.ucl.cs.radar.model;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
-import javax.swing.JOptionPane;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -181,8 +178,6 @@ public class SyntheticModelGenerator {
 			// e.g.  A new X3 overriding an existing X3 that may be AND, OR or Param Estimation.
 			if (!modelVariables_.containsKey(left_expr)){
 				String right_expr = getExpression(loopCounter, var_symbol, left_expr );
-				//modelVariables_.put(left_expr, right_expr);
-				//System.out.println("" + left_expr + " = " + right_expr + ";");
 				variableDefinition_.put(left_expr, "and_def");
 			}
 			loopCounter++;

@@ -46,7 +46,7 @@ public class InformationAnalysis {
 
         // Check if param has at least 100 samples
         if (param.length < 100) {
-            throw new StatsException("Too few samples.");
+            throw new StatsException("Too few samples for conducting the simulation.");
         }
 
         // Ensure parameter is stochastic.

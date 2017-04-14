@@ -88,7 +88,7 @@
       <manifest>
        <addClasspath>true</addClasspath>
        <classpathPrefix>${project.basedir}/src/main/resources/uk.ac.ucl.cs.lib/</classpathPrefix>
-       <mainClass>uk.ac.ucl.cs.radar.userinterface.RADAR_GUI2</mainClass>
+       <mainClass>uk.ac.ucl.cs.radar.userinterface.RADAR_GUI</mainClass>
       </manifest>
      </archive>
     </configuration>
