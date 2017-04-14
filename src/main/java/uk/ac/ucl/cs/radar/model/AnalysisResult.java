@@ -377,7 +377,7 @@ public class AnalysisResult {
 	 * Returns optimisation analysis result needed for out put display.
 	 * @return optimisation analysis result in string form.
 	 */
-	String getOptimisationAnalysisResult (){
+	public String getOptimisationAnalysisResult (){
 		totalRuntime = designSpaceRuntime+simulationRuntime+ optimisationRuntime+informationValueRuntime;
 		TableBuilder tableBuilder = new TableBuilder ();
 		tableBuilder.addRow (new String []{"Optimisation", "Analysis"});

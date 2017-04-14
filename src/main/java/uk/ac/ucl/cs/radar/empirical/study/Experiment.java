@@ -1,4 +1,4 @@
-package uk.ac.ucl.cs.radar.scale.test;
+package uk.ac.ucl.cs.radar.empirical.study;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,6 +20,7 @@ public abstract class Experiment  {
 	  String outputPath;
 	  String testResultName;
 	  long maxRunTimeMilliSeconds;
+	  
 	  static Integer [] getArrayElements (Integer [] arrayRange){
 			List<Integer> result = new ArrayList<Integer>();
 			for (int i = arrayRange[0]; i <= arrayRange[1]; i++){
@@ -71,10 +72,7 @@ public abstract class Experiment  {
 								    
 								    for (int i = 0; i < numberOfThreads; i++) {
 								    	 while (p[i].isAlive()) {
-									    	  ///System.out.println("Still waiting...");
-									            // Wait maximum of 1 second
-									            // for MessageLoop thread
-									            // to finish.
+									            // Wait maximum of 1 second for MessageLoop thread to finish.
 									    	  p[i].join(1000L);
 									            if (((System.currentTimeMillis() - startTime) > maxRunTimeMilliSeconds)
 									                  && p[i].isAlive()) {

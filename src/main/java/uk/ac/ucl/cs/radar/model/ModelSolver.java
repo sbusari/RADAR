@@ -105,7 +105,7 @@ public class ModelSolver {
 				throw new RuntimeException (e.getMessage());
 			}
 			long cyclicCheckEndTime = System.currentTimeMillis() -cyclicCheckStartTime;
-			result.setConsoleMessage(message + " (time: "+cyclicCheckEndTime + " milliseconds).\n" );
+			result.setConsoleMessage(message + "......   runtime["+cyclicCheckEndTime + " ms].\n\n" );
 		}else{
 			result = intermediateResult;
 		}
@@ -119,7 +119,7 @@ public class ModelSolver {
 			result.addSubGraphObejctive(m.getSubGraphObjective());
 			long designSpaceEndTime = System.currentTimeMillis()-designSpaceStartTime ;
 			result.addDesignSpaceRunTime(designSpaceEndTime/1000);
-			message += "(time: "+ designSpaceEndTime + " milliseconds).\n";
+			message += "......   runtime["+ designSpaceEndTime + " ms].\n\n";
 			result.setConsoleMessage(message);
 		}
 		// simulation
@@ -131,7 +131,7 @@ public class ModelSolver {
 			}
 			long simulationEndTime = System.currentTimeMillis()-simulationStartTime ;
 			result.addSimulationRuntime(simulationEndTime/1000);
-			message += "(time: "+ simulationEndTime +" milliseconds).\n";
+			message += "......   runtime[" + simulationEndTime +" ms].\n\n";
 			result.setConsoleMessage(message);
 		}
 		// optimisation
@@ -144,7 +144,7 @@ public class ModelSolver {
 			result.addNumberOfDecisions(m.getDecisions().size());
 			long optimisationEndTime = System.currentTimeMillis()-optimisationStartTime ;
 			result.addOptimisationRuntime(optimisationEndTime/1000);
-			message += "(time: "+ optimisationEndTime +" milliseconds).\n";
+			message += "......   runtime["+ optimisationEndTime +" ms].\n\n";
 			result.setConsoleMessage(message);
 		}
 		//information value Analysis
@@ -163,7 +163,7 @@ public class ModelSolver {
 			result.addNumberOfParameters(nbrParam);
 			result.addSubGraphObejctive(m.getSubGraphObjective());
 			result.addEviObjective(infoValueObjective);
-			message+= "(time:  "+ InformationValueAnalysisEndTime + " milliseconds).\n";
+			message+= "......   runtime["+ InformationValueAnalysisEndTime + " ms].\n\n";
 			result.setConsoleMessage(message);
 		}
 		return result;

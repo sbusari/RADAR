@@ -94,7 +94,7 @@ public class ModelView extends PlainView {
         patternColors.put(Pattern.compile(RADAR_DECISION), Color.BLUE); //Color.BLUE, 30,144,255,  255,99,71
         //patternColors.put(Pattern.compile(RADAR_OPTION), new Color(99,184,255)); //72,118,255, 255,99,71
        
-        patternColors.put(Pattern.compile(RADAR_COMMENT), new Color(124,252,0));//0,201,87
+        patternColors.put(Pattern.compile(RADAR_COMMENT), new Color(34,139,34)); //124,252,0));//0,201,87
         patternColors.put(Pattern.compile(RADAR_DISTRIBUTION), Color.BLUE); //255,99,71, 99,184,255
         //patternColors.put(Pattern.compile(RADAR_OPERATORS), Color.RED); //99,184,255
         //

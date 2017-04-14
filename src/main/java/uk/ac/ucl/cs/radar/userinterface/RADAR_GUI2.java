@@ -347,6 +347,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 				}
 			}
 		}
+		clearConsole();
 		openModelExamples();
 		initialiseAnalysisSettings();
 		tabbedPane.addTab(ConfigSetting.EDITORTAB,editModel);
@@ -519,6 +520,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 			chckbxmntmModelDecisions.setSelected(true);
 		}else{
 			JOptionPane.showMessageDialog(null, "No model decision to disolay. Write a new model." , "", JOptionPane.WARNING_MESSAGE);
+			chckbxmntmModelDecisions.setSelected(false);
 			return;
 		}
 		
@@ -558,7 +560,8 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 			decisionDependencyGraphIcon  = viewDotGraph(decisionGraph,"png", graphType, decisionDependencyGraphPanel,decisionDependencyGraphImageLabel);
 			chckbxmntmDecisionDependencyGraph.setSelected(true);
 		}else{
-			JOptionPane.showMessageDialog(null, "You need to write a new model." , "", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Decision graph can only be generated for analysed model." , "", JOptionPane.WARNING_MESSAGE);
+			chckbxmntmDecisionDependencyGraph.setSelected(false);
 			return;
 		}
 		
@@ -597,7 +600,8 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 			variableGraphIcon = viewDotGraph(variableGraph,"png", graphType, variableGraphPanel,variableGraphImageLabel);
 			chckbxmntmVariableAndorGraph.setSelected(true);
 		}else{
-			JOptionPane.showMessageDialog(null, "You need to write a new model." , "", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Goal graph can only be generated for analysed  model." , "", JOptionPane.WARNING_MESSAGE);
+			chckbxmntmVariableAndorGraph.setSelected(false);
 			return;
 		}
 		
@@ -628,7 +632,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 	}
 	void displayParetoFront(){
 		if (result != null){
-			String modelResultPath = outPutDirectory + semanticModel.getModelName() + "/ICSE/AnalysisResult/" ;
+			String modelResultPath = outPutDirectory + semanticModel.getModelName() + "/AnalysisResult/" ;
 			String imageOutput = modelResultPath + "/";
 			String title = ConfigSetting.TABPARETO;
 			if (result.getShortListObjectives().get(0).length == 2){
@@ -653,6 +657,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 			chckbxmntmParetoFront.setSelected(true);
 		}else{
 			JOptionPane.showMessageDialog(null, "No analysis result to disolay." , "", JOptionPane.WARNING_MESSAGE);
+			chckbxmntmParetoFront.setSelected(false);
 			return;
 		}
 	}
@@ -763,6 +768,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 
 		}else{
 			JOptionPane.showMessageDialog(null, "No analysis result to disolay." , "", JOptionPane.WARNING_MESSAGE);
+			chckbxmntmInformationValueAnalysis.setSelected(false);
 			return;
 		}
 	}
@@ -907,9 +913,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
             progress = 0;
             setProgress(0);
             try {
-                //Thread.sleep(1000);
                 int analysisIndex = -1;
-                //progress += 20;
                 setProgress(Math.min(progress, 100));
                 // perform analysis
                 while (progress < 100 && !isCancelled()) {
@@ -955,12 +959,10 @@ public class RADAR_GUI2 implements PropertyChangeListener {
     		btnSolve.setEnabled(true);
     		itemParseModel.setEnabled(true);
     		itemSolveModel.setEnabled(true);
-            //progressMonitor.setProgress(0);
-    		consoleTextArea.append("\n" + result.analysisToString());
+    		consoleTextArea.append("\n" + result.getOptimisationAnalysisResult());
             // add these here to avoid the exception thrown when in inside the do in background method.
             loadResultInFrame();
 			generateAnalysisGraphs();
-			//chckbxmntmInformationValueAnalysis.setSelected(true);
 			modelSolved = true;
             
         }
@@ -971,23 +973,10 @@ public class RADAR_GUI2 implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         if ("progress" == evt.getPropertyName() ) {
             int progress = (Integer) evt.getNewValue();
-            //progressMonitor.setProgress(progress);
             String message =String.format("Completed %d%% of analysis\n", progress);
-            //progressMonitor.setNote(progressMessage);
-            //progressMonitor.setNote(message);
-            //consoleTextArea.append(message);
-            //if (progressMonitor.isCanceled() || task.isDone()) {
             if (task.isDone()) {
                 Toolkit.getDefaultToolkit().beep();
-                /*if (progressMonitor.isCanceled()) {
-                    task.cancel(true);
-                    progressBarCancelled = true;
-                    Thread.currentThread().stop();
-                    consoleTextArea.append("Analysis canceled.\n");
-                } else {
-                	consoleTextArea.append("Analysis completed.\n");
-                }*/
-                consoleTextArea.append("Analysis Summary.\n");
+                consoleTextArea.append("Result Summary.\n");
                 consoleTextArea.setEnabled(true);
             }
         }
@@ -1056,7 +1045,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
     	try {
 	    	String analysisResult = result.analysisToString();
 			String analysisResultToCSV = result.analysisResultToCSV();
-			String modelResultPath = outPutDirectory + semanticModel.getModelName() + "/ICSE/AnalysisResult/" ;
+			String modelResultPath = outPutDirectory + semanticModel.getModelName() + "/AnalysisResult/" ;
 			
 			Helper.printResults (modelResultPath , analysisResult, semanticModel.getModelName() +".out", false);
 			Helper.printResults (modelResultPath , analysisResultToCSV, semanticModel.getModelName() +".csv", false);
@@ -1080,11 +1069,6 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		}
     }
 	void asynchronousSolve (){
-		
-		/*progressMonitor = new ProgressMonitor(frame,
-                "Analysing the  " + semanticModel.getModelName().toUpperCase() + " model.",
-                "", 0, 100);
-		progressMonitor.setProgress(0);*/
 		task = new Task();
 		task.addPropertyChangeListener(RADAR_GUI2.this);
 		task.execute();
@@ -1601,7 +1585,6 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 			parse();
 		}
 		if (semanticModel != null && modelParsed == true) {
-			//solve();
 			asynchronousSolve();
 		}else{
 			String analysisMsg = allAnalysisSettingValid();
@@ -1611,7 +1594,6 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 			}
 			parseModel();
 			if (modelParsed == true){
-				//solve();
 				asynchronousSolve();
 			}
 			
@@ -1668,8 +1650,6 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		if (!message.isEmpty()){
 			message += "Check the 'analysis settings' page to make corrections.\n";
 		}
-		
-		//message += validateOutputDirectoryPath();
 		return message;
 	}
 	private String validateOutputDirectoryPath (){
@@ -1831,8 +1811,8 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		
 		JTable solutionTable = tableOptimisationSolutions;
 		populateTable(solutionTable, "solution");
-		JTable optimisationTable = tableOptimisationDetails;
-		populateTable(optimisationTable, "optimisation");
+		//JTable optimisationTable = tableOptimisationDetails;
+		//populateTable(optimisationTable, "optimisation");
 		JTable infoValueTable = tableInfoValueAnalysis;
 		populateTable(infoValueTable, "infoValue");
 		
@@ -1863,7 +1843,6 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		
 	}
 	void resizeGraphOnPanel(String graphType, ImageIcon imageIcon, ImageLabel imageLabel, String resizeType){
-		//imageLabel.setHorizontalAlignment(JLabel.NORTH); already set
 		imageLabel.setIcon(imageIcon);
 		if(resizeType.equals("increase")){
 			imageLabel.increaseScale(0.1);
@@ -1978,7 +1957,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 			result = ModelSolver.solve(semanticModel);
 			String analysisResult = result.analysisToString();
 			String analysisResultToCSV = result.analysisResultToCSV();
-			String modelResultPath = outPutDirectory + semanticModel.getModelName() + "/ICSE/AnalysisResult/" ;
+			String modelResultPath = outPutDirectory + semanticModel.getModelName() + "/AnalysisResult/" ;
 			
 			Helper.printResults (modelResultPath , analysisResult, semanticModel.getModelName() +".out", false);
 			Helper.printResults (modelResultPath , analysisResultToCSV, semanticModel.getModelName() +".csv", false);
@@ -2659,7 +2638,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		
 		tabbedPane.addTab(ConfigSetting.TABANALYSISRESULT,analysisResult);
 		
-		scrollPaneOptimisationDetails = new JScrollPane();
+		/*scrollPaneOptimisationDetails = new JScrollPane();
 		scrollPaneOptimisationDetails.setPreferredSize(new Dimension(850, 100));
 		analysisResult.add(scrollPaneOptimisationDetails);
 		
@@ -2669,10 +2648,10 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 	                return false;               
 	        };
 		};
-		scrollPaneOptimisationDetails.setViewportView(tableOptimisationDetails);
+		scrollPaneOptimisationDetails.setViewportView(tableOptimisationDetails);*/
 		
 		scrollPaneOptimisationSolutions = new JScrollPane();
-		scrollPaneOptimisationSolutions.setPreferredSize(new Dimension(850, 200));
+		scrollPaneOptimisationSolutions.setPreferredSize(new Dimension(850, 250));
 		analysisResult.add(scrollPaneOptimisationSolutions);
 		
 		tableOptimisationSolutions = new JTable(){
@@ -2684,7 +2663,7 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 		scrollPaneOptimisationSolutions.setViewportView(tableOptimisationSolutions);
 		
 		scrollPaneInfoValueAnalysis = new JScrollPane();
-		scrollPaneInfoValueAnalysis.setPreferredSize(new Dimension(850, 140));
+		scrollPaneInfoValueAnalysis.setPreferredSize(new Dimension(850, 190));
 		analysisResult.add(scrollPaneInfoValueAnalysis);
 		
 		tableInfoValueAnalysis = new JTable(){
@@ -2818,8 +2797,11 @@ public class RADAR_GUI2 implements PropertyChangeListener {
 			toolBar_2.add(btnSolve);
 			
 			comboBox = new JComboBox();
-			comboBox.setModel(new DefaultComboBoxModel(new String[] {"DEFAULT-Exhaustive Search", "NSGA-II", "SPEA-II", "MOGA", "IBEA"}));
+			//comboBox.setModel(new DefaultComboBoxModel(new String[] {"DEFAULT-Exhaustive Search", "NSGA-II", "SPEA-II", "MOGA", "IBEA"}));
+			comboBox.setModel(new DefaultComboBoxModel(new String[] {"DEFAULT-Exhaustive Search"}));
 
+			
+			
 			toolBar_2.add(comboBox);
 			
 			JToolBar toolBar_3 = new JToolBar();
