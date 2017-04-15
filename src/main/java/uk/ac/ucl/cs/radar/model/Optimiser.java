@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Computes the pareto optimal solutions. A solution is said to be Pareto-optimal if there is no other solution that is better on all objectives simultaneously.
  */
-class Optimiser {
+public class Optimiser {
 	 /**
 	 * @param s1 objective values for the first solution.
 	 * @param s2 objective values for the second solution.

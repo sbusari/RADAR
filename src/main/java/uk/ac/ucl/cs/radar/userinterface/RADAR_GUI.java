@@ -1925,6 +1925,7 @@ public class RADAR_GUI implements PropertyChangeListener {
 	private JMenuItem mntmMinimise;
 	private JButton buttonMaximise;
 	private JButton buttonMinimise;
+	private JLabel cursorLabel;
 	
 	ImageIcon viewDotGraph(String dotGraph, String imageType, String graphType, JPanel graphPanel, JLabel imageLabel){
 		
@@ -2107,15 +2108,11 @@ public class RADAR_GUI implements PropertyChangeListener {
 	private void initialize() {
 	
 		frame = new JFrame();
-		frame.setResizable(false);
 		frame.setPreferredSize(new Dimension(900, 600));
-		frame.setBounds(100, 100, 900, 600);
+		frame.setBounds(100, 100, 897, 630);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("RADAR- Requirements engineering And Architecture Decisions Analyser");
-		//frame.pack();
-
-		
 		
 		outPutDirectory = RADAR_GUI.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		processJarLocationPath();
@@ -2406,6 +2403,10 @@ public class RADAR_GUI implements PropertyChangeListener {
 									// canceled
 			}
 		};
+		//JTextField LineNumer = new JTextField("Line no");
+		//tabbedPane.add(LineNumer, BorderLayout.SOUTH);
+		
+		
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabbedPane.setTabPlacement(JTabbedPane.TOP);
 		
@@ -2611,7 +2612,9 @@ public class RADAR_GUI implements PropertyChangeListener {
 		tabbedPane.addTab(ConfigSetting.EDITORTAB,editModel);
 		//tabbedPane.setBackgroundAt(1, Color.GRAY);
 		
-		modelTextPane = new ModelTextPane();
+		cursorLabel = new JLabel("");
+		cursorLabel.setForeground(Color.BLUE);
+		modelTextPane = new ModelTextPane(cursorLabel);
 		
 		scrollPaneEditModel = new JScrollPane(modelTextPane);
 		scrollPaneEditModel.setPreferredSize(new Dimension(850, 450));
@@ -2838,16 +2841,23 @@ public class RADAR_GUI implements PropertyChangeListener {
 		
 		JSeparator separator_22 = new JSeparator();
 		toolFile.add(separator_22);
+		
+		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(toolBar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(tabbedPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(toolFile, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 875, Short.MAX_VALUE)
+								.addComponent(toolBar, GroupLayout.DEFAULT_SIZE, 875, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(toolFile, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(cursorLabel)))
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -2856,7 +2866,10 @@ public class RADAR_GUI implements PropertyChangeListener {
 					.addGap(5)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(toolFile, GroupLayout.PREFERRED_SIZE, 5, GroupLayout.PREFERRED_SIZE)
-						.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 504, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 515, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(cursorLabel)
+					.addContainerGap(11, Short.MAX_VALUE))
 		);
 		initialiseAnalysisSettings();
 		frame.getContentPane().setLayout(groupLayout);

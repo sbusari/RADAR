@@ -223,7 +223,7 @@ public class Model implements ModelVisitorElement {
 	 * @param solutions list of optimal solutions
 	 * @param params list of model parameters.
 	 */
-	void computeInformationValue(AnalysisResult result, Objective objective, List<Solution> solutions, List<Parameter> params){
+	public void computeInformationValue(AnalysisResult result, Objective objective, List<Solution> solutions, List<Parameter> params){
 		result.addEviObjective (objective);
 		double[][] objSim = objective.getQualityVariable().simulate(solutions);
 		// compute evtpi

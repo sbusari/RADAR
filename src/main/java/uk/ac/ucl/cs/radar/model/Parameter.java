@@ -2,7 +2,7 @@ package uk.ac.ucl.cs.radar.model;
 /**
  * @author Saheed A. Busari and Emmanuel Letier
  */
- class Parameter extends QualityVariable {
+ public class Parameter extends QualityVariable {
 	 
     private Distribution distribution;
     private double[] simData;

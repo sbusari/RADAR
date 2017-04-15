@@ -4,13 +4,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-final class Solution {
+public final class Solution {
 
 	private final Map<Decision, String> selection;
 	private  Map<Decision, List<String>> nonMutualSelection;
 	private Model sematicModel;
 	
-	Solution(){
+	public Solution(){
 		selection = new LinkedHashMap<Decision, String>();
 		nonMutualSelection = new LinkedHashMap<Decision, List<String>>();
 	}
@@ -18,7 +18,7 @@ final class Solution {
 	 * Constructs a solution with a mapping of decisions and selected options.
 	 * @param mapping a mapping between decision and selected option.
 	 */
-	Solution(Map<Decision, String> mapping){
+	public Solution(Map<Decision, String> mapping){
 		selection = mapping;
 	}
 	/**

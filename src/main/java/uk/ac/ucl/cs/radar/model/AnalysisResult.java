@@ -115,7 +115,7 @@ public class AnalysisResult {
 	 * @param objs model objectives.
 	 * @param ds model decisons.
 	 */
-	AnalysisResult(List<Objective> objs,  List<Decision> ds){
+	public AnalysisResult(List<Objective> objs,  List<Decision> ds){
 		objectives = objs;
 		decisions = ds;
 		value = new LinkedHashMap<Solution, double[]>();

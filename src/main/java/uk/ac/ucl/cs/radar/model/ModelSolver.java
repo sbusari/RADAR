@@ -86,6 +86,7 @@ public class ModelSolver {
 		System.out.println("Information value computed");
 		return result;
 	}
+	
 	/**
 	 * Solves the model and saves the analysis results. Used bu the Progress Bar to determine the status of the RADAR analysis. 
 	 * @param m semantic model obtained during parsing.
@@ -94,78 +95,123 @@ public class ModelSolver {
 	public static AnalysisResult solve(Model m, AnalysisResult intermediateResult, int analysisIndex ){
 		AnalysisResult result = null;
 		if (intermediateResult == null){
-			String message = "";
-			List<Objective> objectives = m.getObjectives();
-			List<Decision> decisions = m.getDecisions();
-			result = new AnalysisResult(objectives,decisions);
-			long cyclicCheckStartTime = System.currentTimeMillis();
-			try{
-				m.getCyclicDependentVariables();
-			}catch (Exception e){
-				throw new RuntimeException (e.getMessage());
-			}
-			long cyclicCheckEndTime = System.currentTimeMillis() -cyclicCheckStartTime;
-			result.setConsoleMessage(message + "   runtime["+cyclicCheckEndTime + " ms].\n\n" );
+			result = checkCyclicDependency(m, result);
 		}else{
 			result = intermediateResult;
 		}
 		//design space generation
 		if (analysisIndex == 0){
-			String message = "";
-			long designSpaceStartTime = System.currentTimeMillis();
-			List<Solution> allSolutions = m.getAllSolutions().list();
-			result.addAllSolutions(allSolutions);
-			result.addSolutionSpace(m.getSolutionSpace());
-			result.addSubGraphObejctive(m.getSubGraphObjective());
-			long designSpaceEndTime = System.currentTimeMillis()-designSpaceStartTime ;
-			result.addDesignSpaceRunTime(designSpaceEndTime/1000);
-			message += "   runtime["+ designSpaceEndTime + " ms].\n\n";
-			result.setConsoleMessage(message);
+			result =generateDesignSpace(m,result);
 		}
 		// simulation
 		if (analysisIndex == 1){
-			String message = "";
-			long simulationStartTime = System.currentTimeMillis();
-			for (Solution s: result.getAllSolutions()){	
-				result.addEvaluation(s, new Simulator().evaluate(result.getObjectives(), s,m));	
-			}
-			long simulationEndTime = System.currentTimeMillis()-simulationStartTime ;
-			result.addSimulationRuntime(simulationEndTime/1000);
-			message += "   runtime[" + simulationEndTime +" ms].\n\n";
-			result.setConsoleMessage(message);
+			result =simulateModel(m,result);
 		}
 		// optimisation
 		if (analysisIndex == 2){
-			String message = "";
-			long optimisationStartTime = System.currentTimeMillis();
-			Map<Solution, double[]> evaluatedSolutions = m.addMaximisationSign(result.getEvaluatedSolutions());
-			result.addShortlist(new Optimiser().getParetoSet(evaluatedSolutions, result.getObjectives()));
-			result.addNumberOfVariables(m.getQualityVariables().size());
-			result.addNumberOfDecisions(m.getDecisions().size());
-			long optimisationEndTime = System.currentTimeMillis()-optimisationStartTime ;
-			result.addOptimisationRuntime(optimisationEndTime/1000);
-			message += "   runtime["+ optimisationEndTime +" ms].\n\n";
-			result.setConsoleMessage(message);
+			result =optimise(m,result);
 		}
 		//information value Analysis
 		if (analysisIndex == 3){
-			String message = "";
-			long InformationValueAnalysisStartTime = System.currentTimeMillis();
-			Objective infoValueObjective = m.getInfoValueObjective();
-			List<String> paramNames = m.getParameters();
-			List<Parameter> parameters = Model.getParameterList(paramNames, m);
-			int nbrParam = parameters.size();
-			if (infoValueObjective != null ){
-				InformationValueAnalyser.computeInformationValue(result,infoValueObjective, result.getShortListSolutions(), parameters);;
-			}
-			long InformationValueAnalysisEndTime = System.currentTimeMillis()-InformationValueAnalysisStartTime;
-			result.addInformationValueRuntime(InformationValueAnalysisEndTime/1000);
-			result.addNumberOfParameters(nbrParam);
-			result.addSubGraphObejctive(m.getSubGraphObjective());
-			result.addEviObjective(infoValueObjective);
-			message+= "   runtime["+ InformationValueAnalysisEndTime + " ms].\n\n";
-			result.setConsoleMessage(message);
+			result =computeInformationValue(m,result);
 		}
+		return result;
+	}
+	/**
+	 * Checks for cylic dependency in a model. Used by the radar gui
+	 * @param m semantic model
+	 * @param result intermediate analysis result
+	 */
+	static AnalysisResult checkCyclicDependency(Model m, AnalysisResult result){
+		String message = "";
+		List<Objective> objectives = m.getObjectives();
+		List<Decision> decisions = m.getDecisions();
+		result = new AnalysisResult(objectives,decisions);
+		long cyclicCheckStartTime = System.currentTimeMillis();
+		try{
+			m.getCyclicDependentVariables();
+		}catch (Exception e){
+			throw new RuntimeException (e.getMessage());
+		}
+		long cyclicCheckEndTime = System.currentTimeMillis() -cyclicCheckStartTime;
+		result.setConsoleMessage(message + "   runtime["+cyclicCheckEndTime + " ms].\n\n" );
+		return result;
+	}
+	/**
+	 * Generates the design space a model. Used by the radar gui
+	 * @param m semantic model
+	 * @param result intermediate analysis result
+	 */
+	static AnalysisResult generateDesignSpace (Model m, AnalysisResult result){
+		String message = "";
+		long designSpaceStartTime = System.currentTimeMillis();
+		List<Solution> allSolutions = m.getAllSolutions().list();
+		result.addAllSolutions(allSolutions);
+		result.addSolutionSpace(m.getSolutionSpace());
+		result.addSubGraphObejctive(m.getSubGraphObjective());
+		long designSpaceEndTime = System.currentTimeMillis()-designSpaceStartTime ;
+		result.addDesignSpaceRunTime(designSpaceEndTime/1000);
+		message += "   runtime["+ designSpaceEndTime + " ms].\n\n";
+		result.setConsoleMessage(message);
+		return result;
+	}
+	/**
+	 * Simulates the design space of a model. Used by the radar gui
+	 * @param m semantic model
+	 * @param result intermediate analysis result
+	 */
+	static AnalysisResult simulateModel (Model m, AnalysisResult result){
+		String message = "";
+		long simulationStartTime = System.currentTimeMillis();
+		for (Solution s: result.getAllSolutions()){	
+			result.addEvaluation(s, new Simulator().evaluate(result.getObjectives(), s,m));	
+		}
+		long simulationEndTime = System.currentTimeMillis()-simulationStartTime ;
+		result.addSimulationRuntime(simulationEndTime/1000);
+		message += "   runtime[" + simulationEndTime +" ms].\n\n";
+		result.setConsoleMessage(message);
+		return result;
+	}
+	/**
+	 * Perform optimiation on a model. Used by the radar gui
+	 * @param m semantic model
+	 * @param result intermediate analysis result
+	 */
+	static AnalysisResult optimise (Model m, AnalysisResult result){
+		String message = "";
+		long optimisationStartTime = System.currentTimeMillis();
+		Map<Solution, double[]> evaluatedSolutions = m.addMaximisationSign(result.getEvaluatedSolutions());
+		result.addShortlist(new Optimiser().getParetoSet(evaluatedSolutions, result.getObjectives()));
+		result.addNumberOfVariables(m.getQualityVariables().size());
+		result.addNumberOfDecisions(m.getDecisions().size());
+		long optimisationEndTime = System.currentTimeMillis()-optimisationStartTime ;
+		result.addOptimisationRuntime(optimisationEndTime/1000);
+		message += "   runtime["+ optimisationEndTime +" ms].\n\n";
+		result.setConsoleMessage(message);
+		return result;
+	}
+	/**
+	 * Computes the evtpi and evppi in a decision model. Used by the radar gui
+	 * @param m sematic model
+	 * @param result intermediate analysis result
+	 */
+	static AnalysisResult computeInformationValue(Model m, AnalysisResult result){
+		String message = "";
+		long InformationValueAnalysisStartTime = System.currentTimeMillis();
+		Objective infoValueObjective = m.getInfoValueObjective();
+		List<String> paramNames = m.getParameters();
+		List<Parameter> parameters = Model.getParameterList(paramNames, m);
+		int nbrParam = parameters.size();
+		if (infoValueObjective != null ){
+			InformationValueAnalyser.computeInformationValue(result,infoValueObjective, result.getShortListSolutions(), parameters);;
+		}
+		long InformationValueAnalysisEndTime = System.currentTimeMillis()-InformationValueAnalysisStartTime;
+		result.addInformationValueRuntime(InformationValueAnalysisEndTime/1000);
+		result.addNumberOfParameters(nbrParam);
+		result.addSubGraphObejctive(m.getSubGraphObjective());
+		result.addEviObjective(infoValueObjective);
+		message+= "   runtime["+ InformationValueAnalysisEndTime + " ms].\n\n";
+		result.setConsoleMessage(message);
 		return result;
 	}
 }

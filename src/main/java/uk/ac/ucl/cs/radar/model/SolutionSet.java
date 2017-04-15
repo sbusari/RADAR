@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 
-class SolutionSet {
+public class SolutionSet {
 
 	private Set<Solution> solutions;
 
-	SolutionSet(){
+	public SolutionSet(){
 		solutions = new HashSet<Solution>();
 	}
 
@@ -52,7 +52,7 @@ class SolutionSet {
 	 * Adds solution s to the set of solutions
 	 * @param s solution to be added.
 	 */
-	void add(Solution s){
+	public void add(Solution s){
 		solutions.add(s);
 	}
 	/**
