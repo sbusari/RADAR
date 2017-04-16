@@ -38,15 +38,10 @@ import javax.swing.text.html.StyleSheet;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.github.jabbalaci.graphviz.GraphViz;
-
-import uk.ac.ucl.cs.radar.model.AnalysisResult;
-import uk.ac.ucl.cs.radar.model.Decision;
-import uk.ac.ucl.cs.radar.model.Model;
-import uk.ac.ucl.cs.radar.model.ScatterPlotPanel3D;
-import uk.ac.ucl.cs.radar.model.TwoDPanelPlotter;
+import uk.ac.ucl.cs.radar.model.*;
 import uk.ac.ucl.cs.radar.utilities.ConfigSetting;
 import uk.ac.ucl.cs.radar.utilities.Helper;
+
 
 public class UserInterfaceUtility {
 
@@ -323,6 +318,7 @@ public class UserInterfaceUtility {
 		        jEditorPane.setEditable(false);
 		        // create a scrollpane; modify its attributes as desired
 		        JScrollPane scrollPane = new JScrollPane(jEditorPane);
+		        scrollPane.setPreferredSize(new Dimension(860, 450));
 		        // add an html editor kit
 		        HTMLEditorKit kit = new HTMLEditorKit();
 		        jEditorPane.setEditorKit(kit);
@@ -350,6 +346,7 @@ public class UserInterfaceUtility {
 		        Document doc = kit.createDefaultDocument();
 		        jEditorPane.setDocument(doc);
 		        jEditorPane.setText(htmlString);
+		        jEditorPane.setBounds(100, 100, 30, 20);
 		        tabbedPane.addTab("About RADAR", scrollPane);
 		        tabbedPane.setSelectedComponent(scrollPane);
 	}
@@ -359,7 +356,8 @@ public class UserInterfaceUtility {
         // make it read-only
         jEditorPane.setEditable(false);       
         // create a scrollpane; modify its attributes as desired
-        JScrollPane scrollPane = new JScrollPane(jEditorPane);       
+        JScrollPane scrollPane = new JScrollPane(jEditorPane); 
+        scrollPane.setPreferredSize(new Dimension(860, 450));
         // add an html editor kit
         HTMLEditorKit kit = new HTMLEditorKit();
         jEditorPane.setEditorKit(kit);
@@ -368,7 +366,7 @@ public class UserInterfaceUtility {
         StyleSheet styleSheet = kit.getStyleSheet();
         styleSheet.addRule("body {color:#000; font-family:times; margin: 4px; }");
         styleSheet.addRule("h1 {color: blue;}");
-        styleSheet.addRule("h2 {color: #ff0000;}");
+        styleSheet.addRule("h2 {color: blue;}");
         styleSheet.addRule("pre {font : 10px monaco; color : black; background-color : #fafafa; }");
 
         // create some simple html as a string
@@ -376,22 +374,86 @@ public class UserInterfaceUtility {
                 + "<body>\n"
         		+ "<h1>RADAR</h1>"
                 + "<p>RADAR is a lightweight modelling language and automated decision analysis tool to support multi-objective decision under uncertainty in requirements engineering and software architecture.</p>"
-                +"<h1> How to Use RADAR </h1>"
-                +"<p>RADAR has four main panels:"
+                + "<h2> How to Use RADAR </h2>"
+
+          		+"<p>RADAR is a self-contained jar file. Simply download the file to your computer and double click to launch the application (needs <a  href =\"http://www.oracle.com/technetwork/java/javase/downloads/index.html\"> JRE 1.7</a> or later versions). Once the application is launched successfully, a window appears with three panels as shown in figure 1:"
+
+                +"<p>RADAR has three main tabs that displays by default when it is launched:</p>"
                 +"<ul align =\"justify\">"
-                +"<li><strong>Editor</strong> where modellers can write their decision models and also load existing models for editing.</li>"	
+                +"<li><strong>Editor </strong> where modellers can write their own models and also load existing models for review and analysis.</li>"
                 +"<li><strong>Analysis Result</strong> where the results of the optimisation and information value analysis are displayed.</li>"
-                +"<li><strong>Analysis Settings</strong> for specifying parameters for model analysis and the path where Graphviz is installed to enable visualisation of the variable AND/OR graph and decision dependency graph. Examples of these parameters needed to be specified for analysis includes: the number of simulation (mandatory), output directory where model analysis results are stored (optional), information value objective for computing the expected value of total and partial perfect information (evtpi and evppi), sub-graph objective for restricting the AND/OR graph to a single specified objective, and some checkboxes used to indicate users' preferences on whether the tool should generate AND/OR dependency graph, decision dependency graph and the Pareto front.  </li>"
-                +"<li><strong>Model Decisions</strong> which displays all specified model decisions and their corresponding options, once the model has been parsed successfully.</li>"
+                +"<li><strong>Console</strong> where the RADAR analysis status are written.</li>"
                 +"</ul>"
-                +"<p>To analyse an existing model, the following steps can be followed:</p>"
-                +"<ol align =\"justify\">"
-                //+"<li>Enable the model board by either clicking <strong>enable model board </strong> under the Radar menu or clicking the <strong>write model</strong> under the Action menu.</li>"
-                +"<li>Open the RADAR file (we recommend starting with the first example below i.e. refactoring cost-benefit analysis) by simply clicking on the file menu and then click  <strong>open</strong> to load the existing model on the editor. if successful, you will see the model displayed in the editor. At this point, users can edit the model and save changes by clicking on <strong>save</strong> under the file menu. </li>"
-                +"<li>Go to the Action menu and  click  <strong>parse model </strong> to check that the specified model conforms to RADAR syntaxes defined in the paper. If not, an error message is displayed. If successful, you will be prompted to either continue with analysing the model or you could decide to further review the model and later analyse the model by clicking <strong>solve model</strong> under the Action menu. </li>"
-                +"<li> If you click continue with model analysis, RADAR analyses the model as described in the icse 2017 paper, and the analysis results, such as the optimisation analysis and information value analysis (if the information value objective is specified), are displayed in a tabular format within another tab. In addition, the model analysis result (in .csv and .out extensions), AND/OR variable dependency graph (DOT format), decision dependency graph (in DOT format) and the Pareto front (in .PNG) are saved in the specified output directory.  </li>"
+
+				+"<p>The <strong>Analysis Settings </strong> is used to specify parameters for model analysis and the path where Graphviz is installed to enable visualisation of the goal graph and decision graph. Examples of these parameters includes:</p>"
+				+"<ol>"
+				+"<li>The number of Monte-Carlo simulation run. </li>"
+				+"<li>Information value objective to be used for computing the expected value of total and partial perfect information (evtpi and evppi) </li>"
+				+"<li>The model variable from which a AND/OR graph is generated. </li>"
+				+"</ol>"
+
+				+"<p>Other tabs that cab be viewed from the Window menu after a successful RADAR analysis are the model decisions, goal graph, decision graph anf the  Pareto-front. </p>"
+
+				+"<p><strong>To analyse an existing model</strong>, the following steps can be followed:</p>"
+				+"<ol align =\"justify\">"
+				+"<li>Open the RADAR file (we recommend starting with the first example i.e. refactoring cost-benefit analysis) by simply clicking on the <strong>File menu</strong> and then click  <strong>Examples</strong> to load the existing model examples on the editor. if successful, you will see the model displayed in the editor. At this point, users can edit the model and save changes by clicking on <strong>Save</strong> under the file menu. </li>"
+				+"<li>Go to the <strong>Action menu</strong> and  click  <strong>Parse model </strong> to check that the specified model conforms to RADAR's syntax. If not, an error message is displayed. If successful, you will be prompted to either continue with analysing the model or you could decide to review the model and later analyse the model by clicking <strong>Solve model</strong> under the Action menu. Note that before parsing the model, you can specify an output directory, which stores model analysis results. </li>"
+                +"<li>If you click continue with model analysis, RADAR analyses the model, and the analysis results, such as the optimisation analysis, Pareto front and information value analysis (if the information value objective is specified), are displayed in another tab. </li>"
                 +"</ol>"
-                +"<p align =\"justify\">To analyse your own model, simply follow the same steps after having edited your model in the tool or using an external text editor.</p>"
+                
+				+"<p align =\"justify\"><strong>To analyse your own model</strong>, simply follow the same steps after having edited your model in the tool or using an external text editor.</p>"
+
+				+"For any question, email: <a href=\"mailto:{saheed.busari.13, e.letier}@ucl.ac.uk\">{saheed.busari.13, e.letier}@ucl.ac.uk</a>"
+
+				+"<h2>Examples</h2>"
+
+				+"<p align =\"justify\">We have applied the tool to the following examples.</p>"
+
+				+"<table>"
+				+"<thead>"
+				+"<tr>"
+				+"<th> Example </th>"
+				+"<td> </td>"
+				+"<th> Brief Description </th>"
+				+"<td> </td>"
+				+"</tr>"
+				+"</thead>"
+				+"<tbody>"
+				+"<tr>"
+				+"<td> Refactoring cost-benefit analysis </td>"
+				+"<td> </td>"
+				+"<td align =\"justify\"> The small example used in the paper to introduce the language and decision analysis method. </td>"
+				+"<td> </td>"
+				+"</tr>"
+				+"<tr>"
+				+"<td> Plastic card fraud detection system </td>"
+				+"<td> </td>"
+				+"<td align =\"justify\"> The running example used in the paper to illustrate the language and analysis functions. The problem consists in selecting among alternative design for a fraud detection system so as to minimise financial loss due to fraud and minimise the number of fraud alerts to be investigated manually </td>"
+				+"<td> </td>"
+				+"</tr>"
+				+"<tr>"
+				+"<td> Document sharing security policy </td>"
+				+"<td> </td>"
+				+"<td align =\"justify\">  This example analyses security policy decisions for an organisation concerned with leaks of confidential information. The analysis extends previous models developed by Tristan Caulfield and David Pym for a real organistion."
+				+"<td> </td>"
+				+"</td>"
+				+"</tr>"
+				+"<tr>"
+				+"<td> Emergency Response System </td>"
+				+"<td> </td>"
+				+"<td align =\"justify\">  This example illustrates the use of RADAR on an architecture decision problem used in previous publications (see the paper for details). The design space for this model includes 6912 solutions and takes around 2 minutes to analyse."
+				+"<td> </td>"
+				+"</td>"
+				+"</tr>"
+				+"<tr>"
+				+"<td> Satellite Image Processing</td>"
+				+"<td> </td>"
+				+"<td align =\"justify\">  This example was first introduce to illustrate the CBAM architecture decision method (see paper for full references). We show here how to analyse this problem in RADAR and compare RADAR's approach to CBAM."
+				+"<td> </td>"
+				+"</td>"
+				+"</tr>"
+				+"</tbody>"
+				+"</table>"
                 +"</body>\n";
         // create a document, set it on the jeditorpane, then add the html
         Document doc = kit.createDefaultDocument();

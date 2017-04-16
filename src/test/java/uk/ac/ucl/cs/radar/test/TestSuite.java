@@ -2,7 +2,9 @@ package uk.ac.ucl.cs.radar.test;
 
 
 import static org.junit.Assert.*;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +32,8 @@ public class TestSuite {
 	ParseTree tree = null;
 	ModelParser parser = null;
 	Model semantic_model =null;
+	Map<String,String> inputFiles;
+	Map<String,String> modelStrings;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -40,18 +44,25 @@ public class TestSuite {
 	}
 	@Before
 	public void setUp() throws Exception {
-		String inputFile = "./src/main/resources/uk.ac.ucl.cs.examples/CBA/CBA.rdr"; 
-		//String inputFile = "./src/main/resources/uk.ac.ucl.cs.examples/FDM/FDM.rdr"; 
-		//String inputFile = "./src/main/resources/uk.ac.ucl.cs.examples/SAS/SAS.rdr"; 
-		//String inputFile = "./src/main/resources/uk.ac.ucl.cs.examples/ECS/ECS.rdr"; 
-		//String inputFile = "./src/main/resources/uk.ac.ucl.cs.examples/BSPDM/BSPDM.rdr";  
-        modelString = Helper.readFile(inputFile);
-        input = new ANTLRInputStream(modelString);
-        lexer = new ModelLexer(input);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        parser = new ModelParser(tokens);
-        parser.removeErrorListeners();
-        parser.addErrorListener(new UnderlineModelExceptionListener()); 
+		inputFiles = new HashMap<String,String>();
+		inputFiles.put("ENB","./src/main/resources/uk.ac.ucl.cs.examples/CBA/CBA.rdr");
+		//inputFiles.put("FraudDetectionBenefit", "./src/main/resources/uk.ac.ucl.cs.examples/FDM/FDM.rdr"); 
+		//inputFiles.put("ENB","./src/main/resources/uk.ac.ucl.cs.examples/SAS/SAS.rdr"); 
+		//inputFiles.put("ExpectedUtility","./src/main/resources/uk.ac.ucl.cs.examples/ECS/ECS.rdr"); 
+		inputFiles.put("ExpectedCostOfDisclosures", "./src/main/resources/uk.ac.ucl.cs.examples/BSPDM/BSPDM.rdr");  
+		
+		modelStrings = new HashMap<String,String>();
+		for (Map.Entry<String, String> entry: inputFiles.entrySet()){
+			modelString = Helper.readFile(entry.getValue());
+	        input = new ANTLRInputStream(modelString);
+	        lexer = new ModelLexer(input);
+	        CommonTokenStream tokens = new CommonTokenStream(lexer);
+	        parser = new ModelParser(tokens);
+	        parser.removeErrorListeners();
+	        parser.addErrorListener(new UnderlineModelExceptionListener()); 
+			modelStrings.put(entry.getKey(),modelString);
+		}
+        
 	}
 
 	@After
@@ -60,119 +71,143 @@ public class TestSuite {
 	}
 	@Test
 	public void semanticModelNotNull() {
-		Parser parser = new Parser (modelString,10000, "",""); 
-		Model semantic_model = parser.getSemanticModel();
-		assertNotNull(semantic_model);
-
+		
+		for (Map.Entry<String, String> entry: modelStrings.entrySet()){
+			Parser parser = new Parser (entry.getValue(),10000, "",""); 
+			Model semantic_model = parser.getSemanticModel();
+			assertNotNull(semantic_model);
+		}
+		
 	}
 	@Test
 	public void solutionSpace() {
-		Parser parser = new Parser (modelString,10000, "",""); 
-		Model semantic_model = parser.getSemanticModel();
-		long solutionSpace = semantic_model.getSolutionSpace();
-		assertTrue(solutionSpace > 0);
-
+		for (Map.Entry<String, String> entry: modelStrings.entrySet()){
+			Parser parser = new Parser (entry.getValue(),10000, "",""); 
+			Model semantic_model = parser.getSemanticModel();
+			long solutionSpace = semantic_model.getSolutionSpace();
+			assertTrue(solutionSpace > 0);
+		}
 	}
 	@Test
 	public void evaluateSolutions() {
-		Parser parser = new Parser (modelString,10000, "",""); 
-		Model semantic_model = parser.getSemanticModel();
-		List<Solution> solutions = semantic_model.getAllSolutions().list();
-		Map<Solution, double[]> evaluatedSolutions = new LinkedHashMap<Solution, double[]>();
-		for (Solution s: solutions){
-			evaluatedSolutions.put(s, semantic_model.evaluate(semantic_model.getObjectives(), s));	
+		for (Map.Entry<String, String> entry: modelStrings.entrySet()){
+			Parser parser = new Parser (entry.getValue(),10000, "",""); 
+			Model semantic_model = parser.getSemanticModel();
+			List<Solution> solutions = semantic_model.getAllSolutions().list();
+			Map<Solution, double[]> evaluatedSolutions = new LinkedHashMap<Solution, double[]>();
+			for (Solution s: solutions){
+				evaluatedSolutions.put(s, semantic_model.evaluate(semantic_model.getObjectives(), s));	
+			}
+			assertTrue(evaluatedSolutions.size() > 0);
 		}
-		assertTrue(evaluatedSolutions.size() > 0);
-
 	}
 	@Test
 	public void paretoOptimal() {
-		Parser parser = new Parser (modelString,10000, "",""); 
-		Model semantic_model = parser.getSemanticModel();
-		List<Solution> solutions = semantic_model.getAllSolutions().list();
-		Map<Solution, double[]> evaluatedSolutions = new LinkedHashMap<Solution, double[]>();
-		for (Solution s: solutions){
-			evaluatedSolutions.put(s, semantic_model.evaluate(semantic_model.getObjectives(), s));	
+		for (Map.Entry<String, String> entry: modelStrings.entrySet()){
+			Parser parser = new Parser (entry.getValue(),10000, "",""); 
+			Model semantic_model = parser.getSemanticModel();
+			List<Solution> solutions = semantic_model.getAllSolutions().list();
+			Map<Solution, double[]> evaluatedSolutions = new LinkedHashMap<Solution, double[]>();
+			for (Solution s: solutions){
+				evaluatedSolutions.put(s, semantic_model.evaluate(semantic_model.getObjectives(), s));	
+			}
+			Map<Solution, double[]> optimalSolutions = new Optimiser().getParetoSet(evaluatedSolutions, semantic_model.getObjectives());
+			assertTrue(optimalSolutions.size() > 0);
 		}
-		Map<Solution, double[]> optimalSolutions = new Optimiser().getParetoSet(evaluatedSolutions, semantic_model.getObjectives());
-		assertTrue(optimalSolutions.size() > 0);
-
+		
 	}
 	@Test
 	public void informationValueObjectiveNotNull() {
-		Parser parser = new Parser (modelString,10000, "",""); 
-		Model semantic_model = parser.getSemanticModel();
-		Objective infoValueObjective = semantic_model.getInfoValueObjective();
-		assertNull(infoValueObjective);
+		for (Map.Entry<String, String> entry: modelStrings.entrySet()){
+			Parser parser = new Parser (entry.getValue(),10000, "",""); 
+			Model semantic_model = parser.getSemanticModel();
+			Objective infoValueObjective = semantic_model.getInfoValueObjective();
+			assertNull(infoValueObjective);
+		}
 	}
 	@Test
 	public void confirmInformationValueObjective() {
-		Parser parser = new Parser (modelString,10000, "ENB","ENB"); 
-		Model semantic_model = parser.getSemanticModel();
-		Objective infoValueObjective = semantic_model.getInfoValueObjective();
-		assertEquals("ENB",infoValueObjective.getLabel());
+		for (Map.Entry<String, String> entry: modelStrings.entrySet()){
+			Parser parser = new Parser (entry.getValue(),10000, entry.getKey(),entry.getKey()); 
+			Model semantic_model = parser.getSemanticModel();
+			Objective infoValueObjective = semantic_model.getInfoValueObjective();
+			assertEquals(entry.getKey(),infoValueObjective.getLabel());
+		}
+
 	}
 	@Test
 	public void computeInformationValue() {
-		Parser parser = new Parser (modelString,10000, "ENB","ENB"); 
-		Model semantic_model = parser.getSemanticModel();
-		AnalysisResult result = new AnalysisResult(semantic_model.getObjectives(),semantic_model.getDecisions());
-		List<Solution> solutions = semantic_model.getAllSolutions().list();
-		for (Solution s: solutions){
-			result.addEvaluation(s, semantic_model.evaluate(semantic_model.getObjectives(), s));	
+		for (Map.Entry<String, String> entry: modelStrings.entrySet()){
+			Parser parser = new Parser (entry.getValue(),10000,  entry.getKey(),entry.getKey()); 
+			Model semantic_model = parser.getSemanticModel();
+			AnalysisResult result = new AnalysisResult(semantic_model.getObjectives(),semantic_model.getDecisions());
+			List<Solution> solutions = semantic_model.getAllSolutions().list();
+			for (Solution s: solutions){
+				result.addEvaluation(s, semantic_model.evaluate(semantic_model.getObjectives(), s));	
+			}
+			result.addShortlist(new Optimiser().getParetoSet(result.getEvaluatedSolutions(),semantic_model.getObjectives()));
+			Objective infoValueObjective = semantic_model.getInfoValueObjective();
+			List<String> paramNames = null;
+			List<Parameter> parameters = null;
+			if (infoValueObjective != null ){
+				paramNames = semantic_model.getParameters();
+				parameters = Model.getParameterList(paramNames, semantic_model);
+				semantic_model.computeInformationValue(result,infoValueObjective, result.getShortListSolutions(), parameters);
+			}
+			assertNotNull(paramNames);
+			assertNotNull(parameters);
+			assertNotNull(result.informationValueResultToString());
 		}
-		result.addShortlist(new Optimiser().getParetoSet(result.getEvaluatedSolutions(),semantic_model.getObjectives()));
-		Objective infoValueObjective = semantic_model.getInfoValueObjective();
-		List<String> paramNames = null;
-		List<Parameter> parameters = null;
-		if (infoValueObjective != null ){
-			paramNames = semantic_model.getParameters();
-			parameters = Model.getParameterList(paramNames, semantic_model);
-			semantic_model.computeInformationValue(result,infoValueObjective, result.getShortListSolutions(), parameters);
-		}
-		assertNotNull(paramNames);
-		assertNotNull(parameters);
 
 	}
 	@Test
 	public void solveModel() {
-		Parser parser = new Parser (modelString,10000, "",""); 
-		Model semantic_model = parser.getSemanticModel();
-		AnalysisResult result = ModelSolver.solve(semantic_model);
-		assertNotNull(result);
+		for (Map.Entry<String, String> entry: modelStrings.entrySet()){
+			Parser parser = new Parser (entry.getValue(),10000, "",""); 
+			Model semantic_model = parser.getSemanticModel();
+			AnalysisResult result = ModelSolver.solve(semantic_model);
+			assertNotNull(result);
+		}
+		
 
 	}
 	@Test
 	public void allSolutions() {
-		Parser parser = new Parser (modelString,10000, "",""); 
-		Model semantic_model = parser.getSemanticModel();
-		List<Solution> solutions = semantic_model.getAllSolutions().list();
-		assertTrue(solutions.size() > 0);
-
+		for (Map.Entry<String, String> entry: modelStrings.entrySet()){
+			Parser parser = new Parser (entry.getValue(),10000, "",""); 
+			Model semantic_model = parser.getSemanticModel();
+			List<Solution> solutions = semantic_model.getAllSolutions().list();
+			assertTrue(solutions.size() > 0);
+		}
 	}
 	@Test
 	public void nonEmptyModelDecision() {
-		Parser parser = new Parser (modelString,10000, "",""); 
-		Model semantic_model = parser.getSemanticModel();
-		List<Decision> decisions = semantic_model.getDecisions();
-		assertTrue( decisions.size() > 0);
+		for (Map.Entry<String, String> entry: modelStrings.entrySet()){
+			Parser parser = new Parser (entry.getValue(),10000, "",""); 
+			Model semantic_model = parser.getSemanticModel();
+			List<Decision> decisions = semantic_model.getDecisions();
+			assertTrue( decisions.size() > 0);
+		}
 
 	}
 	@Test
 	public void nonEmptyModelObjectives() {
-		Parser parser = new Parser (modelString,10000, "",""); 
-		Model semantic_model = parser.getSemanticModel();
-		List<Objective> objectives = semantic_model.getObjectives();
-		assertTrue(objectives.size() > 0);
+		for (Map.Entry<String, String> entry: modelStrings.entrySet()){
+			Parser parser = new Parser (entry.getValue(),10000, "",""); 
+			Model semantic_model = parser.getSemanticModel();
+			List<Objective> objectives = semantic_model.getObjectives();
+			assertTrue(objectives.size() > 0);
+		}
 
 	}
 	@Test
 	public void nonEmptyModelQualityVariables() {
-		Parser parser = new Parser (modelString,10000, "",""); 
-		Model semantic_model = parser.getSemanticModel();
-		List<QualityVariable> qualityVariables = new ArrayList<QualityVariable>(semantic_model.getQualityVariables().values());
-		assertTrue(qualityVariables.size() > 0);
-
+		for (Map.Entry<String, String> entry: modelStrings.entrySet()){
+			Parser parser = new Parser (entry.getValue(),10000, "",""); 
+			Model semantic_model = parser.getSemanticModel();
+			List<QualityVariable> qualityVariables = new ArrayList<QualityVariable>(semantic_model.getQualityVariables().values());
+			assertTrue(qualityVariables.size() > 0);
+		}
 	}
 	@Test
 	public void equalEmptySolutions() {
