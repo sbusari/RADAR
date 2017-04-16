@@ -14,7 +14,7 @@ public class ConfigSetting {
 	public static String CONSOLETAB = "Console";
 	public static String TABANALYSISRESULT = "Analysis Result";
 	public static String TABANALYSISSETTINGS= "Analysis Settings";
-	public static String TABDECISIONS= "Analysis Settings";
+	public static String TABDECISIONS= "Decisions";
 	public static String TABDECISIONGRAPH= "Decision Graph";
 	public static String TABGOALGRAPH= "Goal Graph";
 	public static String TABPARETO= "Pareto Front";

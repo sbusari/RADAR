@@ -5,12 +5,8 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.Toolkit;
 
-import javax.imageio.ImageIO;
 import javax.swing.AbstractButton;
 import javax.swing.Action;
-import javax.swing.Box;
-import javax.swing.JComponent;
-import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -23,45 +19,31 @@ import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.ProgressMonitor;
 import javax.swing.SwingWorker;
-import javax.swing.Timer;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.text.DefaultEditorKit;
-import javax.swing.text.Document;
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.StyleSheet;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 import javax.swing.JTextArea;
 
 import uk.ac.ucl.cs.radar.model.AnalysisResult;
-import uk.ac.ucl.cs.radar.model.Decision;
 import uk.ac.ucl.cs.radar.model.Model;
 import uk.ac.ucl.cs.radar.model.ModelSolver;
 import uk.ac.ucl.cs.radar.model.Parser;
-import uk.ac.ucl.cs.radar.model.ScatterPlot3D;
-import uk.ac.ucl.cs.radar.model.ScatterPlotPanel3D;
-import uk.ac.ucl.cs.radar.model.TwoDPanelPlotter;
-import uk.ac.ucl.cs.radar.model.TwoDPlotter;
 import uk.ac.ucl.cs.radar.utilities.ConfigSetting;
 import uk.ac.ucl.cs.radar.utilities.Helper;
 
-import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
 import java.awt.print.PrinterException;
 import java.io.BufferedReader;
 import java.io.File;
@@ -69,28 +51,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.JCheckBox;
 import javax.swing.JButton;
-import javax.swing.ScrollPaneConstants;
 
 import org.apache.commons.lang3.StringUtils;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 
 import javax.swing.UIManager;
 
@@ -112,14 +79,6 @@ import com.github.jabbalaci.graphviz.GraphViz;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
-
-import java.awt.FlowLayout;
 
 import javax.swing.JRadioButton;
 import javax.swing.border.EtchedBorder;
@@ -136,7 +95,6 @@ public class RADAR_GUI implements PropertyChangeListener {
 	private int nbr_Simulation;
 	private String infoValueObjective;
 	private String subGraphObjective;
-	private boolean isBoardEnabled;
 	private boolean parsed;
 	private String openedFilePath;
 	private String solvedModel;
@@ -180,7 +138,6 @@ public class RADAR_GUI implements PropertyChangeListener {
 	private JButton btnCut;
 	private JMenuItem mntmUndo;
 	private JMenuItem mntmRedo;
-	private StringSelection ss;
 	private JButton btnParse;
 	private JButton btnSolve;
 	private JComboBox comboBox;
@@ -198,6 +155,59 @@ public class RADAR_GUI implements PropertyChangeListener {
 	private ImageLabel variableGraphImageLabel;
 	private ImageIcon decisionDependencyGraphIcon ;
 	private ImageIcon variableGraphIcon;
+	int progress;
+	boolean progressBarCancelled =false;
+	String progressMessage = "";
+	private JToolBar toolBar_1;
+	private JButton button;
+	private JButton button_1;
+	private JButton button_2;
+	private JMenu mnNewMenu;
+	private JCheckBoxMenuItem chckbxmntmOptimisationAnalysis;
+	private JCheckBoxMenuItem chckbxmntmInformationValueAnalysis;
+	private JCheckBoxMenuItem chckbxmntmVariableAndorGraph;
+	private JCheckBoxMenuItem chckbxmntmDecisionDependencyGraph;
+	private JCheckBoxMenuItem chckbxmntmParetoFront;
+	private JSeparator separator;
+	private JCheckBoxMenuItem chckbxmntmModelDecisions;
+	private JMenuItem mntmAnalysisSettings;
+	private JSeparator separator_23;
+	private JMenuItem mntmAlgorithmSettings;
+	private JPanel analysisSettingsPanel;
+	private JLabel lblNbrSimulation;
+	private JTextField textNbrSimulation;
+	private JTextField textInformationValueObjective;
+	private JTextField textSubgraphObjective;
+	private JLabel lblOutputDirectory;
+	private JTextField textOutputDirectory;
+	private JButton btnBrowseOutputPath;
+	private JMenu mnExamples;
+	private JSeparator separator_3;
+	private JMenuItem mntmRefactoringrdr;
+	private JMenuItem mntmFinancialFraudDetection;
+	private JMenuItem mntmSituationAwarenessSystem;
+	private JMenuItem mntmSatelliteImageProcessing;
+	private JMenuItem mntmBuildingSecurityPolicy;
+	private JSeparator separator_8;
+	private JSeparator separator_20;
+	private JSeparator separator_24;
+	private JSeparator separator_25;
+	private JMenu mnRadar;
+	private JMenuItem mntmAboutRadar;
+	private JMenuItem mntmHowToUseRADAR;
+	private JSeparator separator_26;
+	private JMenuItem mntmQuitRADAR;
+	private JSeparator separator_27;
+	private JTextField textFieldDecimalPrecision;
+	private JTextField textGraphvizExecutablePath;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JRadioButton rdbtnMAC;
+	private JRadioButton rdbtnWindows;
+	private JRadioButton rdbtnLinux;
+	private JRadioButton rdbtnOthers;
+	private JButton btnBrowseExecutablePath;
+	private JMenu mnView;
+	private JMenuItem mntmMaximise;
 	/**
 	 * Launch the application.
 	 */
@@ -211,7 +221,7 @@ public class RADAR_GUI implements PropertyChangeListener {
 			public void run() {
 				try {
 					
-		        	RADAR_GUI window = new RADAR_GUI();
+					RADAR_GUI window = new RADAR_GUI();
 					window.frame.setVisible(true);
 					
 				} catch (Exception e) {
@@ -230,11 +240,9 @@ public class RADAR_GUI implements PropertyChangeListener {
 	}
 	
 	private void createEvents (){
-		visualiseModelBoard();
 		openExistingModel ();
 		parseModelToolBar();
 		parseModelMenuBar();
-		findOutPutDirectory();
 		exitRadar();
 		printModel();
 		viewTutorial();
@@ -372,7 +380,7 @@ public class RADAR_GUI implements PropertyChangeListener {
 		mntmBuildingSecurityPolicy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modelExample = ConfigSetting.BSPDM;
-				initialiseModelSubgraphAndInfoValueObjective();
+				UserInterfaceUtility.initialiseModelSubgraphAndInfoValueObjective(modelExample,textSubgraphObjective,textInformationValueObjective);
 				viewModelExample(modelExample);
 			}
 		});
@@ -381,7 +389,7 @@ public class RADAR_GUI implements PropertyChangeListener {
 		mntmFinancialFraudDetection.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modelExample = ConfigSetting.FDM;
-				initialiseModelSubgraphAndInfoValueObjective();
+				UserInterfaceUtility.initialiseModelSubgraphAndInfoValueObjective(modelExample,textSubgraphObjective,textInformationValueObjective);
 				viewModelExample(modelExample);
 			}
 		});
@@ -390,7 +398,7 @@ public class RADAR_GUI implements PropertyChangeListener {
 		mntmSituationAwarenessSystem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modelExample = ConfigSetting.SAS;
-				initialiseModelSubgraphAndInfoValueObjective();
+				UserInterfaceUtility.initialiseModelSubgraphAndInfoValueObjective(modelExample,textSubgraphObjective,textInformationValueObjective);
 				viewModelExample(modelExample);
 			}
 		});
@@ -399,7 +407,7 @@ public class RADAR_GUI implements PropertyChangeListener {
 		mntmSatelliteImageProcessing.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modelExample = ConfigSetting.ECM;
-				initialiseModelSubgraphAndInfoValueObjective();
+				UserInterfaceUtility.initialiseModelSubgraphAndInfoValueObjective(modelExample,textSubgraphObjective,textInformationValueObjective);
 				viewModelExample(modelExample);
 			}
 		});
@@ -456,24 +464,10 @@ public class RADAR_GUI implements PropertyChangeListener {
 			}
 		});
 	}
-	void initialiseModelSubgraphAndInfoValueObjective(){
-		// dependencding on the selected examples
-		// populate the info value objective and subgraph objective 
-		String infoValueAndSubgraphObjective ="";
-		switch(modelExample){
-			case "CBA": infoValueAndSubgraphObjective = ConfigSetting.INFOVALUESUBGRAPHOBJECTIVE_CBA; break;
-			case "FDM": infoValueAndSubgraphObjective = ConfigSetting.INFOVALUESUBGRAPHOBJECTIVE_FDM; break;
-			case "ECS": infoValueAndSubgraphObjective = ConfigSetting.INFOVALUESUBGRAPHOBJECTIVE_ECM; break;
-			case "BSPDM": infoValueAndSubgraphObjective = ConfigSetting.INFOVALUESUBGRAPHOBJECTIVE_BSPDM; break;
-			case "SAS" : infoValueAndSubgraphObjective = ConfigSetting.INFOVALUESUBGRAPHOBJECTIVE_SAS; break;
-		}
-		textSubgraphObjective.setText(infoValueAndSubgraphObjective);
-		textInformationValueObjective.setText(infoValueAndSubgraphObjective);
-	}
 	void initialiseAnalysisSettings(){
 		textNbrSimulation.setText(String.valueOf(ConfigSetting.NUMBER_OF_SIMULATION));
 		textOutputDirectory.setText(outPutDirectory);
-		initialiseModelSubgraphAndInfoValueObjective();
+		UserInterfaceUtility.initialiseModelSubgraphAndInfoValueObjective(modelExample,textSubgraphObjective,textInformationValueObjective);
 		
 	}
 	void analysisSettings(){
@@ -488,40 +482,6 @@ public class RADAR_GUI implements PropertyChangeListener {
 			}
 		});
 	}
-	void displayModeldDecision(){
-		if (semanticModel != null){
-			//String modelResultPath = outPutDirectory + semanticModel.getModelName() + "/ICSE/AnalysisResult/" ;
-			String title = ConfigSetting.TABDECISIONS;
-			
-			JPanel  decision= new JPanel();
-			decision.setName(title);
-			decision.setForeground(Color.LIGHT_GRAY);
-			
-			JScrollPane scrollPaneDecision = new JScrollPane();
-			scrollPaneDecision.setPreferredSize(new Dimension(850, 590));
-			decision.add(scrollPaneDecision);
-			
-			JTable decisionTable = new JTable();
-			scrollPaneDecision.setViewportView(decisionTable);
-			
-			populateDecisionTable(decisionTable);
-			
-			Component [] allTabbedComponent = tabbedPane.getComponents();
-			for (Component comp: allTabbedComponent){
-				if (title.equals(comp.getName())){
-					tabbedPane.remove(comp);
-				}
-			}
-			tabbedPane.addTab(title, decision);
-			tabbedPane.setSelectedComponent(decision);
-			chckbxmntmModelDecisions.setSelected(true);
-		}else{
-			JOptionPane.showMessageDialog(null, "No model decision to disolay. Write a new model." , "", JOptionPane.WARNING_MESSAGE);
-			chckbxmntmModelDecisions.setSelected(false);
-			return;
-		}
-		
-	}
 	void displayModelDecisionsToolBar (){
 		chckbxmntmModelDecisions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -529,8 +489,8 @@ public class RADAR_GUI implements PropertyChangeListener {
 				AbstractButton aButton = (AbstractButton)e.getSource();
 				boolean selected = aButton.getModel().isSelected();
 				if (selected){
-					if (!tabbedComponentExits(tabName)){
-						displayModeldDecision();
+					if (!UserInterfaceUtility.tabbedComponentExits(tabName, tabbedPane)){
+						UserInterfaceUtility.displayModeldDecision( semanticModel,  decisionTableModel,  tabbedPane,  chckbxmntmModelDecisions);
 					}
 					
 				}
@@ -570,7 +530,7 @@ public class RADAR_GUI implements PropertyChangeListener {
 				AbstractButton aButton = (AbstractButton)e.getSource();
 				boolean selected = aButton.getModel().isSelected();
 				if (selected){
-					if (!tabbedComponentExits(tabName)){
+					if (!UserInterfaceUtility.tabbedComponentExits(tabName, tabbedPane)){
 						displayDecisionDependencyGraph();
 					}
 					
@@ -610,7 +570,7 @@ public class RADAR_GUI implements PropertyChangeListener {
 				AbstractButton aButton = (AbstractButton)e.getSource();
 				boolean selected = aButton.getModel().isSelected();
 				if (selected){
-					if (!tabbedComponentExits(tabName)){
+					if (!UserInterfaceUtility.tabbedComponentExits(tabName, tabbedPane)){
 						displayANDORGraph();
 					}
 					
@@ -627,47 +587,7 @@ public class RADAR_GUI implements PropertyChangeListener {
 			}
 		});
 	}
-	void displayParetoFront(){
-		if (result != null){
-			String modelResultPath = outPutDirectory + semanticModel.getModelName() + "/AnalysisResult/" ;
-			String imageOutput = modelResultPath + "/";
-			String title = ConfigSetting.TABPARETO;
-			if (result.getShortListObjectives().get(0).length == 2){
-				TwoDPanelPlotter twoDPlot = new TwoDPanelPlotter();
-				twoDPlot.setSize(editModel.getSize());
-				twoDPlot.setName(title);
-				twoDPlot.setLayout(new BorderLayout());
-				viewPareto(twoDPlot, title);
-				twoDPlot.plot(semanticModel,imageOutput, result);
-			}else if (result.getShortListObjectives().get(0).length == 3){
-				ScatterPlotPanel3D sc3D2= new ScatterPlotPanel3D( );
-				sc3D2.setSize(editModel.getSize());
-				sc3D2.setName(title);
-				sc3D2.setLayout(new BorderLayout());
-				viewPareto(sc3D2, title);
-				try {
-					sc3D2.plot(semanticModel, imageOutput, result);
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
-			chckbxmntmParetoFront.setSelected(true);
-		}else{
-			JOptionPane.showMessageDialog(null, "No analysis result to disolay." , "", JOptionPane.WARNING_MESSAGE);
-			chckbxmntmParetoFront.setSelected(false);
-			return;
-		}
-	}
-	boolean tabbedComponentExits(String componentName){
-		boolean exist =false;
-		Component [] allTabbedComponent = tabbedPane.getComponents();
-		for (Component comp: allTabbedComponent){
-			if (componentName.equals(comp.getName())){
-				exist = true;
-			}
-		}
-		return exist;
-	}
+
 	void displayParetoFrontMenuBar(){
 		chckbxmntmParetoFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -676,8 +596,9 @@ public class RADAR_GUI implements PropertyChangeListener {
 				boolean selected = aButton.getModel().isSelected();
 				// synonymous to when the chkbox is clicked
 				if (selected){
-					if (!tabbedComponentExits(tabName)){
-						displayParetoFront();
+					if (!UserInterfaceUtility.tabbedComponentExits(tabName, tabbedPane)){
+						//displayParetoFront();
+						UserInterfaceUtility.displayParetoFront(result, semanticModel, outPutDirectory,  editModel,  tabbedPane,  chckbxmntmParetoFront );
 					}
 					
 				}else{
@@ -696,7 +617,8 @@ public class RADAR_GUI implements PropertyChangeListener {
 	void displayParetoFrontToolBar(){
 		btnParetoFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				displayParetoFront();
+				//displayParetoFront();
+				UserInterfaceUtility.displayParetoFront(result, semanticModel, outPutDirectory,  editModel,  tabbedPane,  chckbxmntmParetoFront );
 				chckbxmntmParetoFront.setSelected(true);
 			}
 		});
@@ -704,7 +626,7 @@ public class RADAR_GUI implements PropertyChangeListener {
 	void displayInformationValueAnalysisToolBar(){
 		btnInfoValueAnalysis.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				displayInformationValueAnalysis();
+				UserInterfaceUtility.displayInformationValueAnalysis(semanticModel,  result,  decisionTableModel,  tabbedPane,  chckbxmntmInformationValueAnalysis);
 				chckbxmntmInformationValueAnalysis.setSelected(true);
 			}
 		});
@@ -717,8 +639,8 @@ public class RADAR_GUI implements PropertyChangeListener {
 				boolean selected = aButton.getModel().isSelected();
 				String tabName = ConfigSetting.TABINFOVALUEANALYSIS;
 				if (selected){
-					if (!tabbedComponentExits(tabName)){
-						displayInformationValueAnalysis();
+					if (!UserInterfaceUtility.tabbedComponentExits(tabName, tabbedPane)){
+						UserInterfaceUtility.displayInformationValueAnalysis(semanticModel,  result,  decisionTableModel,  tabbedPane,  chckbxmntmInformationValueAnalysis);
 					}
 				}else{
 					// remove it from tabbed bar
@@ -734,85 +656,11 @@ public class RADAR_GUI implements PropertyChangeListener {
 		});
 		
 	}
-	void displayInformationValueAnalysis(){
-		String tabName = ConfigSetting.TABINFOVALUEANALYSIS;
-		if (result != null){
-			
-			JPanel  infoValueAnalysis= new JPanel();
-			infoValueAnalysis.setName(tabName);
-			infoValueAnalysis.setForeground(Color.LIGHT_GRAY);
-			//tabbedPane.addTab(tabName, optimisationAnalysis);
 
-			JScrollPane scrollPaneInfoValueAnalysis = new JScrollPane();
-			scrollPaneInfoValueAnalysis.setPreferredSize(new Dimension(850, 590));
-			infoValueAnalysis.add(scrollPaneInfoValueAnalysis);
-			
-			
-			JTable infoValueAnalysisTable = new JTable();
-			populateTable(infoValueAnalysisTable, "infoValue");
-			scrollPaneInfoValueAnalysis.setViewportView(infoValueAnalysisTable);
-			
-			
-			Component [] allTabbedComponent = tabbedPane.getComponents();
-			for (Component comp: allTabbedComponent){
-				if (tabName.equals(comp.getName())){
-					tabbedPane.remove(comp);
-				}
-			}
-			tabbedPane.addTab(tabName, infoValueAnalysis);
-			tabbedPane.setSelectedComponent(infoValueAnalysis);
-			chckbxmntmInformationValueAnalysis.setSelected(true);
-
-		}else{
-			JOptionPane.showMessageDialog(null, "No analysis result to disolay." , "", JOptionPane.WARNING_MESSAGE);
-			chckbxmntmInformationValueAnalysis.setSelected(false);
-			return;
-		}
-	}
-	
-	void displayOptimisationAnalysis(){
-		String tabName = ConfigSetting.TABOPTIMISATIONANALYSIS;
-		if (result != null){
-			JPanel  optimisationAnalysis= new JPanel();
-			optimisationAnalysis.setName(tabName);
-			optimisationAnalysis.setForeground(Color.LIGHT_GRAY);
-			//tabbedPane.addTab(tabName, optimisationAnalysis);
-
-			JScrollPane scrollPaneOptimisationDetails = new JScrollPane();
-			scrollPaneOptimisationDetails.setPreferredSize(new Dimension(850, 155));
-			optimisationAnalysis.add(scrollPaneOptimisationDetails);
-			
-			
-			JTable optimisationTable = new JTable();
-			populateTable(optimisationTable, "optimisation");
-			scrollPaneOptimisationDetails.setViewportView(optimisationTable);
-			
-			JScrollPane scrollPaneOptimisationSolution = new JScrollPane();
-			scrollPaneOptimisationSolution.setPreferredSize(new Dimension(850, 440));
-			optimisationAnalysis.add(scrollPaneOptimisationSolution);
-			
-			JTable solutionTable = new JTable();
-			populateTable(solutionTable, "solution");
-			scrollPaneOptimisationSolution.setViewportView(solutionTable);
-			Component [] allTabbedComponent = tabbedPane.getComponents();
-			for (Component comp: allTabbedComponent){
-				if (tabName.equals(comp.getName())){
-					tabbedPane.remove(comp);
-				}
-			}
-			tabbedPane.addTab(tabName, optimisationAnalysis);
-			tabbedPane.setSelectedComponent(optimisationAnalysis);
-			chckbxmntmOptimisationAnalysis.setSelected(true);
-
-		}else{
-			JOptionPane.showMessageDialog(null, "No analysis result to disolay." , "", JOptionPane.WARNING_MESSAGE);
-			return;
-		}
-	}
 	void displayOptimisationAnalysisToolBar(){
     	btnOptimisationAnalysis.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				displayOptimisationAnalysis();
+				UserInterfaceUtility.displayOptimisationAnalysis( semanticModel,  result,  decisionTableModel,  tabbedPane,  chckbxmntmOptimisationAnalysis);
 				chckbxmntmOptimisationAnalysis.setSelected(true);
 			}
 		});
@@ -825,8 +673,8 @@ public class RADAR_GUI implements PropertyChangeListener {
 				boolean selected = aButton.getModel().isSelected();
 				// synonymous to wgen the chkbox is clicked
 				if (selected){
-					if (!tabbedComponentExits(tabName)){
-						displayOptimisationAnalysis();
+					if (!UserInterfaceUtility.tabbedComponentExits(tabName, tabbedPane)){
+						UserInterfaceUtility.displayOptimisationAnalysis( semanticModel,  result,  decisionTableModel,  tabbedPane,  chckbxmntmOptimisationAnalysis);
 					}
 					
 				}
@@ -844,59 +692,7 @@ public class RADAR_GUI implements PropertyChangeListener {
 			}
 		});
 	}
-	int progress;
-	boolean progressBarCancelled =false;
-	String progressMessage = "";
-	private JToolBar toolBar_1;
-	private JButton button;
-	private JButton button_1;
-	private JButton button_2;
-	private JMenu mnNewMenu;
-	private JCheckBoxMenuItem chckbxmntmOptimisationAnalysis;
-	private JCheckBoxMenuItem chckbxmntmInformationValueAnalysis;
-	private JCheckBoxMenuItem chckbxmntmVariableAndorGraph;
-	private JCheckBoxMenuItem chckbxmntmDecisionDependencyGraph;
-	private JCheckBoxMenuItem chckbxmntmParetoFront;
-	private JSeparator separator;
-	private JCheckBoxMenuItem chckbxmntmModelDecisions;
-	private JMenuItem mntmAnalysisSettings;
-	private JSeparator separator_23;
-	private JMenuItem mntmAlgorithmSettings;
-	private JPanel analysisSettingsPanel;
-	private JLabel lblNbrSimulation;
-	private JTextField textNbrSimulation;
-	private JTextField textInformationValueObjective;
-	private JTextField textSubgraphObjective;
-	private JLabel lblOutputDirectory;
-	private JTextField textOutputDirectory;
-	private JButton btnBrowseOutputPath;
-	private JMenu mnExamples;
-	private JSeparator separator_3;
-	private JMenuItem mntmRefactoringrdr;
-	private JMenuItem mntmFinancialFraudDetection;
-	private JMenuItem mntmSituationAwarenessSystem;
-	private JMenuItem mntmSatelliteImageProcessing;
-	private JMenuItem mntmBuildingSecurityPolicy;
-	private JSeparator separator_8;
-	private JSeparator separator_20;
-	private JSeparator separator_24;
-	private JSeparator separator_25;
-	private JMenu mnRadar;
-	private JMenuItem mntmAboutRadar;
-	private JMenuItem mntmHowToUseRADAR;
-	private JSeparator separator_26;
-	private JMenuItem mntmQuitRADAR;
-	private JSeparator separator_27;
-	private JTextField textFieldDecimalPrecision;
-	private JTextField textGraphvizExecutablePath;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private JRadioButton rdbtnMAC;
-	private JRadioButton rdbtnWindows;
-	private JRadioButton rdbtnLinux;
-	private JRadioButton rdbtnOthers;
-	private JButton btnBrowseExecutablePath;
-	private JMenu mnView;
-	private JMenuItem mntmMaximise;
+	
 	/*
 	 * http://www.javacreed.com/swing-worker-example/
 	 *  http://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html#ProgressMonitorDemo
@@ -979,33 +775,7 @@ public class RADAR_GUI implements PropertyChangeListener {
         }
 
     }
-  
-    void createPlot(String modelResultPath){
-    	try {
-	    	String imageOutput = modelResultPath + "/";
-			String title = ConfigSetting.TABPARETO;
-			if (result.getShortListObjectives().get(0).length == 2){
-				//TwoDPlotter twoDPlot = new TwoDPlotter();
-				TwoDPanelPlotter twoDPlot = new TwoDPanelPlotter();
-				twoDPlot.setSize(editModel.getSize());
-				twoDPlot.setName(title);
-				twoDPlot.setLayout(new BorderLayout());
-				//viewPareto(twoDPlot, title);
-				twoDPlot.plot(semanticModel,imageOutput, result);
-			}else if (result.getShortListObjectives().get(0).length == 3){
-				ScatterPlotPanel3D sc3D2= new ScatterPlotPanel3D( );
-				sc3D2.setSize(editModel.getSize());
-				sc3D2.setName(title);
-				sc3D2.setLayout(new BorderLayout());
-				//viewPareto(sc3D2, title);
-				sc3D2.plot(semanticModel, imageOutput, result);
-			}
-			chckbxmntmParetoFront.setSelected(true);
-    	} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage() , "", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-    }
+    
     void creatANDORGraph (String modelResultPath){
     	try {
     		String variableGraph = semanticModel.generateDOTRefinementGraph(semanticModel, result.getSubGraphObjective());
@@ -1048,11 +818,12 @@ public class RADAR_GUI implements PropertyChangeListener {
 			Helper.printResults (modelResultPath , analysisResultToCSV, semanticModel.getModelName() +".csv", false);
 			
 			if (true){
-				createPlot(modelResultPath);
+				UserInterfaceUtility.createPlot( semanticModel,  modelResultPath,  result,  editModel,  chckbxmntmParetoFront);
 			}
 			// generate graphs
 			if (true){
 				creatANDORGraph(modelResultPath);
+				
 			}
 			if (true){
 				createDecisionGraph(modelResultPath);
@@ -1091,7 +862,7 @@ public class RADAR_GUI implements PropertyChangeListener {
 		int returnVal = fileDialog.showOpenDialog(frame);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
            java.io.File file = fileDialog.getSelectedFile();
-           String fileExtension = getFileExtension(file);
+           String fileExtension = UserInterfaceUtility.getFileExtension(file);
            if (!fileExtension.equals("rdr")){
         	   JOptionPane.showMessageDialog(null, "Radar files must end with the (.rdr) extensions");
         	   return;
@@ -1164,62 +935,19 @@ public class RADAR_GUI implements PropertyChangeListener {
 		consoleTextArea.setText("");
 		consoleTextArea.setForeground(Color.BLACK);
 	}
-	void writeModelContent(TableModel model, File fileToExport ) throws IOException{
-        FileWriter out;
-		out = new FileWriter(fileToExport);
-		for(int i=0; i < model.getColumnCount(); i++) {
-            out.write(model.getColumnName(i) + ",");
-        }
-        out.write("\n");
-        for(int i=0; i< model.getRowCount(); i++) {
-            for(int j=0; j < model.getColumnCount(); j++) {
-                out.write(model.getValueAt(i,j).toString()+",");
-            }
-            out.write("\n");
-        }
-        out.close();
-	}
-	void exportAnalysisResult(){
-		try {
-			// only exports results.
-			if(tabbedPane.getSelectedComponent() != analysisResult){
-				JOptionPane.showMessageDialog(null, "You can only export analysis results." , "", JOptionPane.WARNING_MESSAGE);
-				return;
-			}
-			JFileChooser fileChooser =  new JFileChooser();
-			fileChooser.setDialogTitle("Export Result To CSV"); 
-			fileChooser.setAcceptAllFileFilterUsed(true);
-			int userSelection = fileChooser.showDialog(frame, "Export");
-			if (userSelection == JFileChooser.APPROVE_OPTION) {
-			    File fileToExport = fileChooser.getSelectedFile();
-			    writeModelContent(tableOptimisationDetails.getModel(), fileToExport);
-			    writeModelContent(tableOptimisationSolutions.getModel(), fileToExport);
-			    writeModelContent(tableInfoValueAnalysis.getModel(), fileToExport);
-			    JOptionPane.showMessageDialog(null, "Analysis Results exported successfully! \nLocation: " + fileToExport , "", JOptionPane.INFORMATION_MESSAGE);
-				return;
-			}
-			
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			JOptionPane.showMessageDialog(null, e1.getMessage() , "", JOptionPane.INFORMATION_MESSAGE);
-			return;
-		}
 
-		
-
-	}
 	private void exportFileToolBar(){
 		btnExportFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				exportAnalysisResult();
+				UserInterfaceUtility.exportAnalysisResult( frame,  tabbedPane,  analysisResult,  tableOptimisationDetails,  tableOptimisationSolutions,  tableInfoValueAnalysis);
 			}
 		});
 	}
 	private void exportFileMenuBar(){
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				exportAnalysisResult();
+				UserInterfaceUtility.exportAnalysisResult( frame,  tabbedPane,  analysisResult,  tableOptimisationDetails,  tableOptimisationSolutions,  tableInfoValueAnalysis);
+
 			}
 		});
 	}
@@ -1316,54 +1044,7 @@ public class RADAR_GUI implements PropertyChangeListener {
 		mntmHowToUseRADAR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//new TutorialFrame();
-				 // create jeditorpane
-		        JEditorPane jEditorPane = new JEditorPane();
-		        
-		        // make it read-only
-		        jEditorPane.setEditable(false);
-		        
-		        // create a scrollpane; modify its attributes as desired
-		        JScrollPane scrollPane = new JScrollPane(jEditorPane);
-		        
-		        // add an html editor kit
-		        HTMLEditorKit kit = new HTMLEditorKit();
-		        jEditorPane.setEditorKit(kit);
-		        
-		        // add some styles to the html
-		        StyleSheet styleSheet = kit.getStyleSheet();
-		        styleSheet.addRule("body {color:#000; font-family:times; margin: 4px; }");
-		        styleSheet.addRule("h1 {color: blue;}");
-		        styleSheet.addRule("h2 {color: #ff0000;}");
-		        styleSheet.addRule("pre {font : 10px monaco; color : black; background-color : #fafafa; }");
-
-		        // create some simple html as a string
-		        String htmlString = "<html>\n"
-	                    + "<body>\n"
-		        		+ "<h1>RADAR</h1>"
-	                    + "<p>RADAR is a lightweight modelling language and automated decision analysis tool to support multi-objective decision under uncertainty in requirements engineering and software architecture.</p>"
-	                    +"<h1> How to Use RADAR </h1>"
-	                    +"<p>RADAR has four main panels:"
-	                    +"<ul align =\"justify\">"
-	                    +"<li><strong>Editor</strong> where modellers can write their decision models and also load existing models for editing.</li>"	
-	                    +"<li><strong>Analysis Result</strong> where the results of the optimisation and information value analysis are displayed.</li>"
-	                    +"<li><strong>Analysis Settings</strong> for specifying parameters for model analysis and the path where Graphviz is installed to enable visualisation of the variable AND/OR graph and decision dependency graph. Examples of these parameters needed to be specified for analysis includes: the number of simulation (mandatory), output directory where model analysis results are stored (optional), information value objective for computing the expected value of total and partial perfect information (evtpi and evppi), sub-graph objective for restricting the AND/OR graph to a single specified objective, and some checkboxes used to indicate users' preferences on whether the tool should generate AND/OR dependency graph, decision dependency graph and the Pareto front.  </li>"
-	                    +"<li><strong>Model Decisions</strong> which displays all specified model decisions and their corresponding options, once the model has been parsed successfully.</li>"
-	                    +"</ul>"
-	                    +"<p>To analyse an existing model, the following steps can be followed:</p>"
-	                    +"<ol align =\"justify\">"
-	                    //+"<li>Enable the model board by either clicking <strong>enable model board </strong> under the Radar menu or clicking the <strong>write model</strong> under the Action menu.</li>"
-	                    +"<li>Open the RADAR file (we recommend starting with the first example below i.e. refactoring cost-benefit analysis) by simply clicking on the file menu and then click  <strong>open</strong> to load the existing model on the editor. if successful, you will see the model displayed in the editor. At this point, users can edit the model and save changes by clicking on <strong>save</strong> under the file menu. </li>"
-	                    +"<li>Go to the Action menu and  click  <strong>parse model </strong> to check that the specified model conforms to RADAR syntaxes defined in the paper. If not, an error message is displayed. If successful, you will be prompted to either continue with analysing the model or you could decide to further review the model and later analyse the model by clicking <strong>solve model</strong> under the Action menu. </li>"
-	                    +"<li> If you click continue with model analysis, RADAR analyses the model as described in the icse 2017 paper, and the analysis results, such as the optimisation analysis and information value analysis (if the information value objective is specified), are displayed in a tabular format within another tab. In addition, the model analysis result (in .csv and .out extensions), AND/OR variable dependency graph (DOT format), decision dependency graph (in DOT format) and the Pareto front (in .PNG) are saved in the specified output directory.  </li>"
-	                    +"</ol>"
-	                    +"<p align =\"justify\">To analyse your own model, simply follow the same steps after having edited your model in the tool or using an external text editor.</p>"
-	                    +"</body>\n";
-		        // create a document, set it on the jeditorpane, then add the html
-		        Document doc = kit.createDefaultDocument();
-		        jEditorPane.setDocument(doc);
-		        jEditorPane.setText(htmlString);
-		        tabbedPane.addTab("How to Use RADAR", scrollPane);
-		        tabbedPane.setSelectedComponent(scrollPane);
+				UserInterfaceUtility.viewTutorial(tabbedPane);
 			}
 		});
 	}
@@ -1371,41 +1052,7 @@ public class RADAR_GUI implements PropertyChangeListener {
 	private void aboutRadar(){
 		mntmAboutRadar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 // create jeditorpane
-		        JEditorPane jEditorPane = new JEditorPane();
-		        // make it read-only
-		        jEditorPane.setEditable(false);
-		        // create a scrollpane; modify its attributes as desired
-		        JScrollPane scrollPane = new JScrollPane(jEditorPane);
-		        // add an html editor kit
-		        HTMLEditorKit kit = new HTMLEditorKit();
-		        jEditorPane.setEditorKit(kit);
-		        
-		        // add some styles to the html
-		        StyleSheet styleSheet = kit.getStyleSheet();
-		        styleSheet.addRule("body {color:#000; font-family:times; margin: 4px; }");
-		        styleSheet.addRule("h1 {color: blue;}");
-		        styleSheet.addRule("h2 {color: #ff0000;}");
-		        styleSheet.addRule("pre {font : 10px monaco; color : black; background-color : #fafafa; }");
-
-		        // create some simple html as a string
-		        
-		        String htmlString = "<html>\n"
-	                    			+ "<body>\n"
-	                    			+ "<h1>RADAR: Requirements and Architecture Decision Analyser</h1>\n"
-	                    			+ "<h2><a href=\"http://www0.cs.ucl.ac.uk/staff/S.Busari/\">Saheed Busari</a> and <a href=\"http://letier.cs.ucl.ac.uk/\">Emmanuel Letier</a></h2>"
-		        					+"<p align =\"justify\">RADAR is a lightweight modelling language and decision analysis tool to support multi-objective decision under uncertainty in software requirements engineering and architectural design.</p>"
-		        					+"<p>Build ID: 20170305-1159 </p>"
-		        					+"<p>Version Nunmber: v1.1 </p>"
-		        					+"<p>Webpage: https://ucl-badass.github.io/radar/ </p>"
-		        					+"<p>Contact email: <a href=\"mailto:{saheed.busari.13, e.letier}@ucl.ac.uk\">{saheed.busari.13, e.letier}@ucl.ac.uk</a></p>"
-		        					+"</body>\n";
-		        // create a document, set it on the jeditorpane, then add the html
-		        Document doc = kit.createDefaultDocument();
-		        jEditorPane.setDocument(doc);
-		        jEditorPane.setText(htmlString);
-		        tabbedPane.addTab("About RADAR", scrollPane);
-		        tabbedPane.setSelectedComponent(scrollPane);
+				UserInterfaceUtility.aboutRadar(tabbedPane);
 			}
 		});
 	}
@@ -1416,14 +1063,6 @@ public class RADAR_GUI implements PropertyChangeListener {
 				//frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 			}
 		});
-	}
-	private String getFileExtension(File file) {
-	    String name = file.getName();
-	    try {
-	        return name.substring(name.lastIndexOf(".") + 1);
-	    } catch (Exception e) {
-	        return "";
-	    }
 	}
 	private void printModel(){
 		itemPrint.addActionListener(new ActionListener() {
@@ -1450,50 +1089,10 @@ public class RADAR_GUI implements PropertyChangeListener {
 			}
 		});
 	}
-	void saveModel(){
-		final JFileChooser  fileChooser = new JFileChooser();
-		try {
-			String savedPath ="";
-			if (!StringUtils.isEmpty(modelTextPane.getText())){
-				if (openedFilePath != null && !StringUtils.isEmpty(openedFilePath)){
-					Helper.writeToAFile(openedFilePath, modelTextPane.getText());
-					savedPath = openedFilePath;
-					JOptionPane.showMessageDialog(null, "File succesfully saved, check the path below: \n" + savedPath);
-	            	return;
-				}else{
-					fileChooser.setDialogTitle("Save file"); 
-					fileChooser.setAcceptAllFileFilterUsed(true);
-					fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-					int userSelection = fileChooser.showSaveDialog(frame);
-					if (userSelection == JFileChooser.APPROVE_OPTION) {
-					    File fileToSave = fileChooser.getSelectedFile();
-					    String fileExtension = getFileExtension(fileToSave);
-					    if (!fileExtension.equals("rdr")){
-		            	   JOptionPane.showMessageDialog(null, "RADAR files must end with  the (rdr) extensions", "", JOptionPane.ERROR_MESSAGE);
-		            	   return;
-					    }
-					    Helper.writeToAFile(fileToSave.getAbsolutePath(), modelTextPane.getText());
-					    System.out.println("Save as file: " + fileToSave.getAbsolutePath());
-					    savedPath = fileToSave.getAbsolutePath();
-					    JOptionPane.showMessageDialog(null, "File succesfully saved. Check the path below: \n" + savedPath);
-		            	return;
-					}
-				}
-				
-			}else{
-				JOptionPane.showMessageDialog(null, "You do not have any model written.");
-            	return;
-			}
-			
-		} catch (IOException e1) {
-			JOptionPane.showMessageDialog(null, "There was problem saving the file. \nEnsure the path stille exist.");
-        	return;
-		}
-	}
 	private void saveFileToolBar(){
 		btnSaveFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				saveModel();
+				UserInterfaceUtility.saveModel( frame,  modelTextPane,  openedFilePath);
 			}
 		});
 	}
@@ -1501,19 +1100,16 @@ public class RADAR_GUI implements PropertyChangeListener {
 		
 		itemSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				saveModel();
+				UserInterfaceUtility.saveModel( frame,  modelTextPane,  openedFilePath);
 			}
 		});
 	}
 	private void saveAsFileMenuBar(){
 		itemSaveAs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				saveModel();
+				UserInterfaceUtility.saveModel( frame,  modelTextPane,  openedFilePath);
 			}
 		});
-	}
-	
-	void visualiseModelBoard(){
 	}
 	void parseModel(){
 		if (modelTextPane.getText().isEmpty()){
@@ -1529,11 +1125,8 @@ public class RADAR_GUI implements PropertyChangeListener {
 		parse();
 		if (parsed ==true){
 			//check that info value objective exist
-			boolean infoValueObjExist = infoValueObjectiveExist();
+			boolean infoValueObjExist = UserInterfaceUtility.infoValueObjectiveExist(semanticModel, infoValueObjective);
 			if (!infoValueObjExist) return;
-			
-			
-			
 			//populateDecisionTable();
 			int selection = JOptionPane.showConfirmDialog( frame , "Model has been parsed successfully. \nDo you want to continue with analysis?" , "Confirmation "
                     , JOptionPane.YES_NO_CANCEL_OPTION , JOptionPane.INFORMATION_MESSAGE);
@@ -1649,77 +1242,10 @@ public class RADAR_GUI implements PropertyChangeListener {
 		}
 		return message;
 	}
-	private String validateOutputDirectoryPath (){
-		String message ="";
-		if(!textOutputDirectory.getText().isEmpty()){
-			Pattern pattern = Pattern.compile("([a-zA-Z]:)?(\\\\[a-zA-Z0-9_-]+)+\\\\?");
-			Matcher matcher = pattern.matcher(textOutputDirectory.getText());
-			if (!matcher.matches()){
-				message += "The path specified for the output directory is not valid.";
-			}
-		}else{
-			textOutputDirectory.setText(outPutDirectory); 
-			//message+= "You must specify the directory to store results.";
-		}
-		return message;
-	}
-	private void populateDecisionTable (JTable  decisionsTable){
-		if (semanticModel != null){
-			decisionTableModel.setNumRows(0);
-			List<Decision> decisions = semanticModel.getDecisions();
-			setDecisionTableHeader(decisionTableModel,decisionsTable);
-			populateDecisionOptionTable(decisionTableModel, decisions);
-		}
-	}
-	private void setDecisionTableHeader(DefaultTableModel decisionTableModel, JTable tableDecisionOptions){
-		ArrayList<String> decisionOption = new ArrayList<String>();
-		decisionOption.add("Decision");
-		decisionOption.add("Option");
-		String[]header =  decisionOption.toArray(new String[decisionOption.size()]);
-		decisionTableModel.setColumnIdentifiers(header);
-		tableDecisionOptions.setModel(decisionTableModel);
-		
-		
-	}
-	private void fillDecisionTable (Map<String, List<String>> decisionsEntry){
-		if (decisionsEntry != null){
-			for (Map.Entry<String, List<String>> entry: decisionsEntry.entrySet()){
-				Vector<Object> data = new Vector<Object>();
-				data.add(entry.getKey());
-				String options ="[";
-				for (String option : entry.getValue()){
-					options += option + ", ";
-				}
-				options = options.trim(); // remove last white space.
-				options = options.substring(0, options.length()-1);
-				options +="]";
-				data.add(options);
-				decisionTableModel.addRow(data);
-			}
-		}
-	}
-	private void populateDecisionOptionTable (DefaultTableModel decisionTableModel,List<Decision> decisions){
-		
-		Map<String, List<String>> decisionsEntry = new LinkedHashMap<String, List<String>>();
-		for (Decision d  : decisions){
-			decisionsEntry.put(d.getDecisionLabel(), d.getOptions());
-		}
-		fillDecisionTable(decisionsEntry);		
-	}
-	String validateOutputPath (String outputPath){
-		String message ="";
-		if (outputPath != null){
-			File modelFile = new File (outputPath.trim());
-    		if (!modelFile.exists()){
-    			message = "The file '"+ outputPath+ "' does not exist."; 
-    		}
-		}
-		return message;
-	}
 	void parse (){
 		try {
 			if (textOutputDirectory.getText() != "" && !textOutputDirectory.getText().isEmpty()){
-				String message = validateOutputPath(textOutputDirectory.getText());
+				String message = UserInterfaceUtility.validateOutputPath(textOutputDirectory.getText());
 				if (message != "") {
 					JOptionPane.showMessageDialog(null, message);
 					parsed =false;
@@ -1734,66 +1260,13 @@ public class RADAR_GUI implements PropertyChangeListener {
 				modelParsed = true;
 			}
 		} catch (Exception e) {
+			clearConsole();
 			parsed =false;
 			String err = e.getMessage();
 			consoleTextArea.append(err);
 			tabbedPane.setSelectedComponent(console);
 			//JOptionPane.showMessageDialog(null, err);
 		}
-	}
-	
-	void loadSolutionTable (DefaultTableModel solutionTableModel){
-		List<String> solutions= result.solutionTable();
-		for (int i =0; i < solutions.size(); i ++){
-			String [] entry = solutions.get(i).split(",");
-			Vector<Object> data = new Vector<Object>();
-			for (String value: entry){
-				data.add(value);
-			}
-			solutionTableModel.addRow(data);
-		}
-	}
-	void loadOptimisationTable (DefaultTableModel optimiastionTableModel){
-		List<String> optimisationDetail= result.optimisationAnalysisDetails();
-		for (int i =0; i < optimisationDetail.size(); i ++){
-			String [] entry = optimisationDetail.get(i).split(",");
-			Vector<Object> data = new Vector<Object>();
-			for (String value: entry){
-				data.add(value);
-			}
-			optimiastionTableModel.addRow(data);
-		}
-	}
-	void loadInfoValueTable (DefaultTableModel infoValueTableModel){
-		List<String> infoValueDetail= result.infoValueDetails();
-		for (int i =0; i < infoValueDetail.size(); i ++){
-			String [] entry = infoValueDetail.get(i).split(",");
-			Vector<Object> data = new Vector<Object>();
-			for (String value: entry){
-				data.add(value);
-			}
-			infoValueTableModel.addRow(data);
-		}
-	}
-
-	
-	void populateTable (JTable table, String detail){
-		DefaultTableModel tableModel =  new DefaultTableModel( );
-		if (detail.equals("solution")){
-			tableModel.setColumnIdentifiers(result.getSolutionTableColumnIdentifier().split(","));
-			loadSolutionTable(tableModel);
-		}else if (detail.equals("optimisation")){
-			tableModel.setColumnIdentifiers(new String[]{"Optimisation Analysis", " "});
-			loadOptimisationTable(tableModel);
-		}else if (detail.equals("infoValue")){
-			tableModel.setColumnIdentifiers(new String[]{"Information Value Analysis", " "});
-			loadInfoValueTable(tableModel);
-		}
-		table.setModel(tableModel);
-		table.setPreferredScrollableViewportSize(table.getPreferredSize());
-		table.changeSelection(0, 0, false, false);
-		table.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-	
 	}
 	void loadResultInFrame (){
 		if (result == null  || result.getShortListObjectives().size() <= 0){
@@ -1807,12 +1280,11 @@ public class RADAR_GUI implements PropertyChangeListener {
 		modelResultFrame  = new ModelResultFrame();
 		
 		JTable solutionTable = tableOptimisationSolutions;
-		populateTable(solutionTable, "solution");
+		UserInterfaceUtility.populateTable(solutionTable, "solution", result);
 		//JTable optimisationTable = tableOptimisationDetails;
 		//populateTable(optimisationTable, "optimisation");
 		JTable infoValueTable = tableInfoValueAnalysis;
-		populateTable(infoValueTable, "infoValue");
-		
+		UserInterfaceUtility.populateTable(infoValueTable, "infoValue", result);
 		//tabbedPane.setSelectedComponent(analysisResult);
 		boolean analysisComponentExist =false;
 		Component [] allTabbedComponent = tabbedPane.getComponents();
@@ -1827,17 +1299,6 @@ public class RADAR_GUI implements PropertyChangeListener {
 			tabbedPane.addTab(ConfigSetting.TABANALYSISRESULT, analysisResult);
 		}
 		tabbedPane.setSelectedComponent(console);
-	}
-	void viewPareto (JPanel panel, String title){
-		Component [] allTabbedComponent = tabbedPane.getComponents();
-		for (Component comp: allTabbedComponent){
-			if (panel.getName().equals(comp.getName())){
-				tabbedPane.remove(comp);
-			}
-		}
-		tabbedPane.addTab(title,panel);
-		tabbedPane.setSelectedComponent(panel); // added this part to ensure the pareto front is focussed
-		
 	}
 	void resizeGraphOnPanel(String graphType, ImageIcon imageIcon, ImageLabel imageLabel, String resizeType){
 		imageLabel.setIcon(imageIcon);
@@ -1948,77 +1409,6 @@ public class RADAR_GUI implements PropertyChangeListener {
 		tabbedPane.addTab(graphType,graphPanel);
 		return imageIcon;
 	}
-
-	void solve (){
-		try {
-			// analyse model
-			result = ModelSolver.solve(semanticModel);
-			String analysisResult = result.analysisToString();
-			String analysisResultToCSV = result.analysisResultToCSV();
-			String modelResultPath = outPutDirectory + semanticModel.getModelName() + "/AnalysisResult/" ;
-			
-			Helper.printResults (modelResultPath , analysisResult, semanticModel.getModelName() +".out", false);
-			Helper.printResults (modelResultPath , analysisResultToCSV, semanticModel.getModelName() +".csv", false);
-			
-			// generate graphs
-			if (true){
-				createPlot(modelResultPath);
-			}
-			// generate graphs
-			if (true){
-				creatANDORGraph(modelResultPath);
-			}
-			if (true){
-				createDecisionGraph(modelResultPath);
-			}
-			System.out.println("Finished!");
-			modelSolved =true;
-			solvedModel = ""; // textModelArea.getText();
-		
-		} 
-		catch (IOException e) {
-			modelSolved = false;
-			JOptionPane.showMessageDialog(null, "There was a problem writing the results to directory. \nCheck that the path exist: ");
-			return;
-		}
-		catch (NullPointerException e){
-			modelSolved = false;
-			JOptionPane.showMessageDialog(null,"There was a problem during model analysis. \nDetails:" + e.getMessage());
-			return;
-		}
-		catch ( RuntimeException e){
-			modelSolved = false;
-			JOptionPane.showMessageDialog(null, "There was a problem during model analysis. \nDetails:" + e.getMessage());
-			return;
-		}
-		
-	}
-	private boolean infoValueObjectiveExist(){
-		boolean result = true;
-		try{
-			if (infoValueObjective != null){
-				InputValidator.objectiveExist(semanticModel, infoValueObjective);
-			}
-		}catch(Exception e){
-			result = false;
-			JOptionPane.showMessageDialog(null, "There was a problem during model analysis. \nDetails:" + e.getMessage());
-
-		}
-		return result;
-	}
-	private boolean subGraphObjectiveExist(){
-		boolean result = true;
-		try{
-			if(subGraphObjective != null){
-				InputValidator.objectiveExist(semanticModel, subGraphObjective);
-			}
-		}catch (Exception e){
-			result = false;
-			JOptionPane.showMessageDialog(null, "There was a problem during model analysis. \nDetails:" + e.getMessage());
-
-		}
-		return result;
-	}
 	private Model loadModel () throws Exception{
 		Model semanticModel =null;
 		try {
@@ -2028,11 +1418,13 @@ public class RADAR_GUI implements PropertyChangeListener {
 			semanticModel = new Parser().parseUIModel(modelTextPane.getText(), nbr_Simulation, infoValueObjective,subGraphObjective);
 			
 		}catch (RuntimeException re){
+			clearConsole();
 			parsed = false;
 			String err = re.getMessage();
 			consoleTextArea.append(err);
 			consoleTextArea.setForeground(Color.RED);
 			tabbedPane.setSelectedComponent(console);
+			
 			//JOptionPane.showMessageDialog(null, err);
 		}
 		return semanticModel;
@@ -2055,10 +1447,6 @@ public class RADAR_GUI implements PropertyChangeListener {
         }
 		return done;
 	}
-
-	private void findOutPutDirectory(){
-		final JFileChooser  fileDialog = new JFileChooser();
-	}
 	void updateWindowItemsOnTabClosed(String clossedTab ){
 		switch (clossedTab){
 			case "Decisions": chckbxmntmModelDecisions.setSelected(false); break;
@@ -2068,39 +1456,6 @@ public class RADAR_GUI implements PropertyChangeListener {
 			case "Decision Graph": chckbxmntmDecisionDependencyGraph.setSelected(false); break;
 			case "Pareto Front": chckbxmntmParetoFront.setSelected(false); break;
 		}
-	}
-	void addDirectorySlash(String path, char separator){
-		if (path != "" && path.trim().charAt(path.length()-1) != separator){
-			path =path.trim() +"/";
-			
-		}
-	}
-	void processJarLocationPath(){
-		File f = new File(outPutDirectory);
-		char separator = f.separator.toCharArray()[0];
-		boolean filebeginningHasSeparator = false;
-		if (outPutDirectory != null && outPutDirectory != "" ){
-			if (outPutDirectory.toCharArray()[0] == separator){
-				filebeginningHasSeparator = true;
-			}
-			String[] foldersInPath = StringUtils.split(outPutDirectory,f.separator);
-			
-			// check if the path where the jar is stored contains the jar itself. if yes, remove the jar name to have only folders
-			if (foldersInPath != null && foldersInPath[foldersInPath.length-1].contains(".jar")){
-				String jarPath = "";
-				for (int i =0; i< foldersInPath.length-1; i++){
-					jarPath += foldersInPath[i] + f.separator;
-				}
-				// did this because the splitting of the path removes the separator at the beginning if it exist.
-				if(filebeginningHasSeparator){
-					jarPath = f.separator + jarPath;
-				}
-				outPutDirectory = jarPath;
-			}
-			
-		}
-		
-		addDirectorySlash(outPutDirectory, separator);
 	}
 	/**
 	 * Initialize the contents of the frame.
@@ -2115,7 +1470,7 @@ public class RADAR_GUI implements PropertyChangeListener {
 		frame.setTitle("RADAR- Requirements engineering And Architecture Decisions Analyser");
 		
 		outPutDirectory = RADAR_GUI.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-		processJarLocationPath();
+		UserInterfaceUtility.processJarLocationPath(outPutDirectory);
 	
 		undoManager = new UndoManager();
 		
@@ -2617,7 +1972,7 @@ public class RADAR_GUI implements PropertyChangeListener {
 		modelTextPane = new ModelTextPane(cursorLabel);
 		
 		scrollPaneEditModel = new JScrollPane(modelTextPane);
-		scrollPaneEditModel.setPreferredSize(new Dimension(850, 450));
+		scrollPaneEditModel.setPreferredSize(new Dimension(860, 450));
 		editModel.add(scrollPaneEditModel);
 		
 		console = new JPanel();
@@ -2849,9 +2204,9 @@ public class RADAR_GUI implements PropertyChangeListener {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 875, Short.MAX_VALUE)
-								.addComponent(toolBar, GroupLayout.DEFAULT_SIZE, 875, Short.MAX_VALUE))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(toolBar, GroupLayout.DEFAULT_SIZE, 875, Short.MAX_VALUE)
+								.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 896, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(toolFile, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
@@ -2866,10 +2221,10 @@ public class RADAR_GUI implements PropertyChangeListener {
 					.addGap(5)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(toolFile, GroupLayout.PREFERRED_SIZE, 5, GroupLayout.PREFERRED_SIZE)
-						.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 515, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(15)
 					.addComponent(cursorLabel)
-					.addContainerGap(11, Short.MAX_VALUE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		initialiseAnalysisSettings();
 		frame.getContentPane().setLayout(groupLayout);
@@ -2879,3 +2234,4 @@ public class RADAR_GUI implements PropertyChangeListener {
 	    return Toolkit.getDefaultToolkit().getImage(url);
 	}
 }
+

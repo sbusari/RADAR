@@ -13,7 +13,7 @@ public class UnderlineModelExceptionListener extends BaseErrorListener {
 			RecognitionException e)
 	{
 		String err = underlineError(recognizer,(Token)offendingSymbol,line, charPositionInLine);
-		errorMessage += "Syntax error at line "+line+ ", character position "+(charPositionInLine+1)+".\nCheck the section of the model with the input below: " + "\n" + err;
+		errorMessage += "Syntax error at line "+line+ ", character position "+(charPositionInLine+1)+".\nCheck the section of the model with the input: " + err;
 	    System.err.println("Syntax error at line "+line+":"+charPositionInLine+" "+msg + ".\nCheck the input below: " + "\n" + err);
 	}
 	public String getErrorMsg (){
