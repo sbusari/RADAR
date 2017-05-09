@@ -38,6 +38,7 @@ import uk.ac.ucl.cs.radar.model.Model;
 import uk.ac.ucl.cs.radar.model.ModelSolver;
 import uk.ac.ucl.cs.radar.model.Parser;
 import uk.ac.ucl.cs.radar.utilities.ConfigSetting;
+import uk.ac.ucl.cs.radar.utilities.GraphViz;
 import uk.ac.ucl.cs.radar.utilities.Helper;
 
 import java.awt.datatransfer.StringSelection;
@@ -74,7 +75,8 @@ import java.awt.Color;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
-import com.github.jabbalaci.graphviz.GraphViz;
+//import com.github.jabbalaci.graphviz.GraphViz;
+
 
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
