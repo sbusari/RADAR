@@ -10,6 +10,7 @@ public class ConfigSetting {
 	public static String MACEXE = "/usr/local/bin/dot";
 	public static String WINEXE = "c:/Program Files (x86)/Graphviz 2.28/bin/dot.exe";
 	public static String LINUXEXE = "/usr/bin/dot";
+	
 	public static String EDITORTAB = "Editor";
 	public static String CONSOLETAB = "Console";
 	public static String TABANALYSISRESULT = "Analysis Result";

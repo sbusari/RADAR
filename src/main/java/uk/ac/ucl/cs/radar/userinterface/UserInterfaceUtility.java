@@ -616,13 +616,15 @@ public class UserInterfaceUtility {
 		}
 		return message;
 	}
-	static void addDirectorySlash(String path, char separator){
+	static String addDirectorySlash(String path, char separator){
 		if (path != "" && path.trim().charAt(path.length()-1) != separator){
 			path =path.trim() +"/";
 			
 		}
+		return path;
 	}
-	static void processJarLocationPath(String  outPutDirectory){
+	static String processJarLocationPath(String  outPutDirectory){
+		String result = outPutDirectory;
 		File f = new File(outPutDirectory);
 		char separator = f.separator.toCharArray()[0];
 		boolean filebeginningHasSeparator = false;
@@ -647,6 +649,7 @@ public class UserInterfaceUtility {
 			
 		}
 		
-		addDirectorySlash(outPutDirectory, separator);
+		result = addDirectorySlash(outPutDirectory, separator);
+		return result;
 	}
 }

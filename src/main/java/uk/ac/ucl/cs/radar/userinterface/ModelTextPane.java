@@ -36,6 +36,7 @@ public class ModelTextPane extends JTextPane {
     private static final long serialVersionUID = 6270183148379328084L;
     private Logger logger = Logger.getLogger(getClass().getName());
     JLabel status;
+    //cursorLabel
     public ModelTextPane(JLabel label) {
     	status = label;
         // Set editor kit

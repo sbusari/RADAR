@@ -32,7 +32,6 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 import javax.swing.JTextArea;
-
 import uk.ac.ucl.cs.radar.model.AnalysisResult;
 import uk.ac.ucl.cs.radar.model.Model;
 import uk.ac.ucl.cs.radar.model.ModelSolver;
@@ -51,6 +50,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -76,6 +76,8 @@ import java.awt.Color;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 //import com.github.jabbalaci.graphviz.GraphViz;
+
+
 
 
 import java.awt.Component;
@@ -1472,7 +1474,7 @@ public class RADAR_GUI implements PropertyChangeListener {
 		frame.setTitle("RADAR- Requirements engineering And Architecture Decisions Analyser");
 		
 		outPutDirectory = RADAR_GUI.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-		UserInterfaceUtility.processJarLocationPath(outPutDirectory);
+		outPutDirectory = UserInterfaceUtility.processJarLocationPath(outPutDirectory);
 	
 		undoManager = new UndoManager();
 		
@@ -2042,19 +2044,20 @@ public class RADAR_GUI implements PropertyChangeListener {
 		b = modelTextPane.getActionMap().get(DefaultEditorKit.copyAction);
 		c = modelTextPane.getActionMap().get(DefaultEditorKit.pasteAction);
 		
-		//a.putValue(Action.SMALL_ICON, new ImageIcon(RADAR_GUI2.class.getResource("/src/main/resources/uk.ac.ucl.cs.icons/CutFileIcon.png")));
+		//a.putValue(Action.SMALL_ICON, new ImageIcon(RADAR_GUI.class.getResource("/resources/CutFileIcon.png")));
 		//Using this approach due to maven.
-		//a.putValue(Action.SMALL_ICON, new ImageIcon(getImage("uk.ac.ucl.cs.icons/CutFileIcon.png")));
+		//a.putValue(Action.SMALL_ICON, new ImageIcon(getImage("/uk.ac.ucl.cs.icons/CutFileIcon.png")));
+		
 		a.putValue(Action.SMALL_ICON, new ImageIcon(getImage("uk.ac.ucl.cs.icons/CutFileIcon.png")));
 		a.putValue(Action.NAME, "Cut");
 		
 		
-		//b.putValue(Action.SMALL_ICON, new ImageIcon(RADAR_GUI2.class.getResource("/resources/CopyFileIcon.png")));
+		//b.putValue(Action.SMALL_ICON, new ImageIcon(RADAR_GUI.class.getResource("/resources/CopyFileIcon.png")));
 		b.putValue(Action.SMALL_ICON, new ImageIcon(getImage("uk.ac.ucl.cs.icons/CopyFileIcon.png")));
 		b.putValue(Action.NAME, "Copy");
 	
 		
-		//c.putValue(Action.SMALL_ICON, new ImageIcon(RADAR_GUI2.class.getResource("/resources/PasteFileIcon.png")));
+		//c.putValue(Action.SMALL_ICON, new ImageIcon(RADAR_GUI.class.getResource("/resources/PasteFileIcon.png")));
 		c.putValue(Action.SMALL_ICON, new ImageIcon(getImage("uk.ac.ucl.cs.icons/PasteFileIcon.png")));
 		c.putValue(Action.NAME, "Paste");
 				
@@ -2062,28 +2065,28 @@ public class RADAR_GUI implements PropertyChangeListener {
 		
 		btnNewFile = new JButton("");
 		btnNewFile.setToolTipText("New Model");
-		//btnNewFile.setIcon(new ImageIcon(RADAR_GUI2.class.getResource("/resources/NewFileIcon.png")));
+		//btnNewFile.setIcon(new ImageIcon(RADAR_GUI.class.getResource("/resources/NewFileIcon.png")));
 		btnNewFile.setIcon(new ImageIcon(getImage("uk.ac.ucl.cs.icons/NewFileIcon.png")));
 		toolBar.add(btnNewFile);
 		
 		btnOpenFile = new JButton("");
 		
 		btnOpenFile.setToolTipText("Open Model");
-		//btnOpenFile.setIcon(new ImageIcon(RADAR_GUI2.class.getResource("/resources/OpenFileIcon.png")));
+		//btnOpenFile.setIcon(new ImageIcon(RADAR_GUI.class.getResource("/resources/OpenFileIcon.png")));
 		btnOpenFile.setIcon(new ImageIcon(getImage("uk.ac.ucl.cs.icons/OpenFileIcon.png")));
 		toolBar.add(btnOpenFile);
 		
 		btnSaveFile = new JButton("");
 		
 		btnSaveFile.setToolTipText("Save Model");
-		//btnSaveFile.setIcon(new ImageIcon(RADAR_GUI2.class.getResource("/resources/SaveFileIcon.png")));
+		//btnSaveFile.setIcon(new ImageIcon(RADAR_GUI.class.getResource("/resources/SaveFileIcon.png")));
 		btnSaveFile.setIcon(new ImageIcon(getImage("uk.ac.ucl.cs.icons/SaveFileIcon.png")));
 		toolBar.add(btnSaveFile);
 		
 		btnExportFile = new JButton("");
 		
 		btnExportFile.setToolTipText("Export Result");
-		//btnExportFile.setIcon(new ImageIcon(RADAR_GUI2.class.getResource("/resources/ExportIcon.png")));
+		//btnExportFile.setIcon(new ImageIcon(RADAR_GUI.class.getResource("/resources/ExportIcon.png")));
 		btnExportFile.setIcon(new ImageIcon(getImage("uk.ac.ucl.cs.icons/ExportIcon.png")));
 		toolBar.add(btnExportFile);
 		
@@ -2107,7 +2110,7 @@ public class RADAR_GUI implements PropertyChangeListener {
 			btnUndo.setEnabled(false);
 			
 			btnUndo.setToolTipText("Undo");
-			//btnUndo.setIcon(new ImageIcon(RADAR_GUI2.class.getResource("/resources/UndoIcon.png")));
+			//btnUndo.setIcon(new ImageIcon(RADAR_GUI.class.getResource("/resources/UndoIcon.png")));
 			btnUndo.setIcon(new ImageIcon(getImage("uk.ac.ucl.cs.icons/UndoIcon.png")));
 			toolBar_1.add(btnUndo);
 			
@@ -2115,24 +2118,24 @@ public class RADAR_GUI implements PropertyChangeListener {
 			btnRedo.setEnabled(false);
 			
 			btnRedo.setToolTipText("Redo");
-			//btnRedo.setIcon(new ImageIcon(RADAR_GUI2.class.getResource("/resources/RedoIcon.png")));
+			//btnRedo.setIcon(new ImageIcon(RADAR_GUI.class.getResource("/resources/RedoIcon.png")));
 			btnRedo.setIcon(new ImageIcon(getImage("uk.ac.ucl.cs.icons/RedoIcon.png")));
 			toolBar_1.add(btnRedo);
 			
 			buttonMaximise = new JButton("");
 			buttonMaximise.setToolTipText("Maximise Image");
 			
-			//buttonMaximise.setIcon(new ImageIcon(RADAR_GUI2.class.getResource("/resources/MaximiseIcon.png")));
-			//buttonMaximise.setSelectedIcon(new ImageIcon(RADAR_GUI2.class.getResource("/resources/MaximiseIcon.png")));
+			//buttonMaximise.setIcon(new ImageIcon(RADAR_GUI.class.getResource("/resources/MaximiseIcon.png")));
+			//buttonMaximise.setSelectedIcon(new ImageIcon(RADAR_GUI.class.getResource("/uk.ac.ucl.cs.icons/MaximiseIcon.png")));
 			buttonMaximise.setIcon(new ImageIcon(getImage("uk.ac.ucl.cs.icons/MaximiseIcon.png")));
-			buttonMaximise.setSelectedIcon(new ImageIcon(getImage("uk.ac.ucl.cs.icons/MaximiseIcon.png")));
+			//buttonMaximise.setSelectedIcon(new ImageIcon(getImage("/uk.ac.ucl.cs.icons/MaximiseIcon.png")));
 			
 			toolBar_1.add(buttonMaximise);
 			
 			buttonMinimise = new JButton("");
 			
 			buttonMinimise.setToolTipText("Minimise Image");
-			//buttonMinimise.setIcon(new ImageIcon(RADAR_GUI2.class.getResource("/resources/MinimiseIcon.png")));
+			//buttonMinimise.setIcon(new ImageIcon(RADAR_GUI.class.getResource("/resources/MinimiseIcon.png")));
 			buttonMinimise.setIcon(new ImageIcon(getImage("uk.ac.ucl.cs.icons/MinimiseIcon.png")));
 			toolBar_1.add(buttonMinimise);
 			
@@ -2142,14 +2145,14 @@ public class RADAR_GUI implements PropertyChangeListener {
 			btnParse = new JButton("");
 			
 			btnParse.setToolTipText("Parse Model");
-			//btnParse.setIcon(new ImageIcon(RADAR_GUI2.class.getResource("/resources/ParseIcon.png")));
+			//btnParse.setIcon(new ImageIcon(RADAR_GUI.class.getResource("/resources/ParseIcon.png")));
 			btnParse.setIcon(new ImageIcon(getImage("uk.ac.ucl.cs.icons/ParseIcon.png")));
 			toolBar_2.add(btnParse);
 			
 			btnSolve = new JButton("");
 			
 			btnSolve.setToolTipText("Solve Model");
-			//btnSolve.setIcon(new ImageIcon(RADAR_GUI2.class.getResource("/resources/SolveIcon.png")));
+			//btnSolve.setIcon(new ImageIcon(RADAR_GUI.class.getResource("/resources/SolveIcon.png")));
 			btnSolve.setIcon(new ImageIcon(getImage("uk.ac.ucl.cs.icons/SolveIcon.png")));
 			toolBar_2.add(btnSolve);
 			
@@ -2167,21 +2170,21 @@ public class RADAR_GUI implements PropertyChangeListener {
 			btnOptimisationAnalysis = new JButton("");
 			
 			btnOptimisationAnalysis.setToolTipText("Optimisation Analysis");
-			//btnOptimisationAnalysis.setIcon(new ImageIcon(RADAR_GUI2.class.getResource("/resources/OptimisationIcon.png")));
+			//btnOptimisationAnalysis.setIcon(new ImageIcon(RADAR_GUI.class.getResource("/resources/OptimisationIcon.png")));
 			btnOptimisationAnalysis.setIcon(new ImageIcon(getImage("uk.ac.ucl.cs.icons/OptimisationIcon.png")));
 			toolBar_3.add(btnOptimisationAnalysis);
 			
 			btnInfoValueAnalysis = new JButton("");
 			
 			btnInfoValueAnalysis.setToolTipText("Information value Analysis");
-			//btnInfoValueAnalysis.setIcon(new ImageIcon(RADAR_GUI2.class.getResource("/resources/InfoValueIcon.png")));
+			//btnInfoValueAnalysis.setIcon(new ImageIcon(RADAR_GUI.class.getResource("/resources/InfoValueIcon.png")));
 			btnInfoValueAnalysis.setIcon(new ImageIcon(getImage("uk.ac.ucl.cs.icons/InfoValueIcon.png")));
 			toolBar_3.add(btnInfoValueAnalysis);
 			
 			btnParetoFront = new JButton("");
 			
 			btnParetoFront.setToolTipText("Pareto Front");
-			//btnParetoFront.setIcon(new ImageIcon(RADAR_GUI2.class.getResource("/resources/ParetoFrontIcon.png")));
+			//btnParetoFront.setIcon(new ImageIcon(RADAR_GUI.class.getResource("/resources/ParetoFrontIcon.png")));
 			btnParetoFront.setIcon(new ImageIcon(getImage("uk.ac.ucl.cs.icons/ParetoFrontIcon.png")));
 			
 			toolBar_3.add(btnParetoFront);
@@ -2233,7 +2236,10 @@ public class RADAR_GUI implements PropertyChangeListener {
 		frame.getContentPane().setLayout(groupLayout);
 	}
 	public static Image getImage(final String pathAndFileName) {
-	    final URL url = Thread.currentThread().getContextClassLoader().getResource(pathAndFileName);
+		//InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream(pathAndFileName);
+	    System.out.print("file name:" + pathAndFileName);
+		final URL url = Thread.currentThread().getContextClassLoader().getResource(pathAndFileName);
+	    //final URL url = Thread.currentThread().getClass().getResource(pathAndFileName);
 	    return Toolkit.getDefaultToolkit().getImage(url);
 	}
 }
