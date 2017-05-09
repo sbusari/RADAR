@@ -11,7 +11,7 @@
    <repositories>
     	<repository>
         	<id>maven-repository</id>
-        	<url>file:///${project.basedir}/src/main/resources/uk.ac.ucl.cs.lib</url>
+        	<url>file://${project.basedir}/src/main/resources/uk.ac.ucl.cs.lib</url>
     	</repository>
   	</repositories>
   	

@@ -157,10 +157,10 @@ public class OR_Refinement extends Expression {
 		}else{
 			// get the size of the options
 			// generate the bit array for selecting an option
-			// for each row A of the 2 X 2 matrix  
+			// for each row A of the generated matrix  
 			//     Initialise main solution set SS
 			//     for each element in A
-			//         Initialise a solution S
+			//         Initialise a solution set S
 			//         for each option to be selected
 			//			 get the AND-Ref and its solution set ss
 			//           S.add(ss)
