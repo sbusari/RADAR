@@ -68,7 +68,7 @@ We have applied the tool to the following examples.
 
 ## 1. Refactoring cost-benefit analysis
 
-This is the small [refactoring example](http://www0.cs.ucl.ac.uk/staff/S.Busari/RADAR/refactoring_result.html) used in the paper to introduce the language and decision analysis method. The full model and analysis results can be downloaded [here](http://www0.cs.ucl.ac.uk/staff/S.Busari/RADAR/CBA.rdr).
+This is the small [refactoring example](https://ucl-badass.github.io/radar/) used in the paper to introduce the language and decision analysis method. The full model and analysis results can be downloaded [here](http://www0.cs.ucl.ac.uk/staff/S.Busari/RADAR/CBA.rdr).
 
 ## 2. Plastic card fraud detection system
 
